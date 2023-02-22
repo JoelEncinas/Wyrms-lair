@@ -26,6 +26,6 @@
   }
 
   body {
-    background-color: #0c0909;
-    color: #eeeeee;
+    background-color: #0c0909 !important;
+    color: #eeeeee !important;
   }
