@@ -5,14 +5,6 @@ $(document).ready(function () {
   let location_img = $("#location-img");
   let location_text = $("#location-text");
 
-  // elements
-  let player_stats = $("#player");
-  let log = $("#log");
-  let enemy = $("#enemy");
-  let quests = $("#quests");
-  let controls = $("#controls");
-  let inventory = $("#inventory");
-
   // player stats
   let player_name = $("#player-name");
   let player_level = $("#player-level");
@@ -24,6 +16,23 @@ $(document).ready(function () {
   let enemy_level = $("#enemy-level");
   let enemy_health = $("#enemy-health");
   let enemy_attack = $("#enemy-attack");
+
+  // log
+  let log = $("#log");
+
+  // quests
+  let quests = $("quests-container");
+
+  // controls
+  let north = $("north");
+  let south = $("south");
+  let west = $("west");
+  let east = $("east");
+  let attack = $("attack");
+  let flee = $("flee");
+
+  // inventory
+  let inventory = $("inventory-container");
 
   class Character {
     constructor(name, level, health, attack) {

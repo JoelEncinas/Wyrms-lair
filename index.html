@@ -112,29 +112,40 @@
         <div class="row">
           <div id="quests" class="col-md-5">
             <h2 class="h3">Quests</h2>
-            <ul class="text-warning">
+            <ul id="quests-container" class="text-warning">
               <li><p>Fix 3 bugs [0/3]</p></li>
               <li><p>Defeat 5 pull-requests [0/5]</p></li>
             </ul>
           </div>
           <div id="controls" class="col-md-3 pb-3">
             <div id="compass">
-              <div class="direction north btn btn-outline-light">North</div>
+              <div id="north" class="direction north btn btn-outline-light">
+                North
+              </div>
 
-              <div class="direction west btn btn-outline-light">West</div>
+              <div id="west" class="direction west btn btn-outline-light">
+                West
+              </div>
 
-              <div class="direction east btn btn-outline-light">East</div>
+              <div id="east" class="direction east btn btn-outline-light">
+                East
+              </div>
 
-              <div class="direction south btn btn-outline-light">South</div>
+              <div id="south" class="direction south btn btn-outline-light">
+                South
+              </div>
             </div>
-            <div id="actions" class="d-flex flex-row align-items-center justify-content-between">
-              <div class="btn btn-outline-light">Attack</div>
-              <div class="btn btn-outline-light">Flee</div>
+            <div
+              id="actions"
+              class="d-flex flex-row align-items-center justify-content-between"
+            >
+              <div id="attack" class="btn btn-outline-light">Attack</div>
+              <div id="flee" class="btn btn-outline-light">Flee</div>
             </div>
           </div>
           <div id="inventory" class="col-md-4">
             <h2 class="h3">Inventory</h2>
-            <ul class="text-white">
+            <ul id="inventory-container" class="text-white">
               <li><p>x3 Array</p></li>
               <li><p>x4 if</p></li>
               <li><p>x1 try-catch</p></li>
