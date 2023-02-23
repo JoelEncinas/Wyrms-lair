@@ -3,13 +3,23 @@
     color: #eeeeee !important;
   }
 
-  ul {
+  p {
+    margin: 0 !important;
+  }
+
+  .no-list {
     list-style-type: none;
     padding-left: 0;
   }
 
   /* LAYOUT */
-  #player, #log, #enemy, #quests, #controls, #inventory {
+
+  #player,
+  #log,
+  #enemy,
+  #quests,
+  #controls,
+  #inventory {
     border: 1px solid #fff;
   }
 
@@ -23,6 +33,12 @@
     max-height: 100px;
     max-width: 480px;
     width: 100%;
+  }
+
+  /* LOG */
+  #log {
+    max-height: 400px;
+    overflow-y: auto;
   }
 
   /* FOOTER */

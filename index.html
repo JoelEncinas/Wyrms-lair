@@ -26,36 +26,35 @@
     <div
       class="container d-flex flex-column justify-content-center align-items-center vh-100"
     >
-      <header class="">
-        <h1 class="text-center">Old Quest</h1>
+      <header>
+        <h1 class="text-center">Developer Quest</h1>
       </header>
       <main class="container py-1 px-0">
         <div class="row">
           <div
             id="location"
-            class="col-md-12 d-flex flex-column align-items-center"
+            class="col-md-12 d-flex flex-column align-items-center mb-3"
           >
-            <img id="location-img" src="img/forest.jpg" alt="nature" />
+            <img id="location-img" src="img/fcc.png" alt="nature" />
             <p
               id="location-text"
               class="text-center text-secondary font-italic m-0 p-1"
             >
-              Edwyn Forest
+              FreeCodeCamp
             </p>
           </div>
         </div>
         <div class="row">
-          <div id="player" class="col-md-4">
-            <ul>
+          <div id="player" class="col-md-3">
+            <ul class="no-list">
               <li>
-                <i class="fa-solid fa-user text-warning"></i> <span
-                  id="player-name"
-                ></span>
+                <i class="fa-solid fa-user text-warning"></i>
+                <span id="player-name"></span>
               </li>
               <li>
-                <i class="fa-solid fa-book text-primary"></i> Level <span
-                  id="player-level"
-                ></span>
+                <i class="fa-solid fa-book text-primary"></i>
+                <span>Level </span>
+                <span id="player-level"></span>
               </li>
               <li>
                 <i class="fa-sharp fa-solid fa-heart text-danger"></i>
@@ -67,16 +66,57 @@
               </li>
             </ul>
           </div>
-          <div id="log" class="col-md-4">
-            <p class="text-center">Combat Log</p>
+          <div id="log" class="col-md-6 pl-5">
+            <p>- Bug attacked for 3 dmg</p>
+            <p>- Gerard attacked for 3 dmg</p>
+            <p>- Bug attacked for 3 dmg</p>
+            <p>- Gerard attacked for 3 dmg</p>
+            <p>- Bug attacked for 3 dmg</p>
+            <p>- Gerard attacked for 3 dmg</p>
+            <p>- Bug attacked for 3 dmg</p>
+            <p>- Gerard attacked for 3 dmg</p>
+            <p>- Bug attacked for 3 dmg</p>
+            <p>- Gerard attacked for 3 dmg</p>
+            <p>- Bug attacked for 3 dmg</p>
+            <p>- Gerard attacked for 3 dmg</p>
+            <p>- Bug attacked for 3 dmg</p>
+            <p>- Gerard attacked for 3 dmg</p>
+            <p>- Bug attacked for 3 dmg</p>
+            <p>- Gerard attacked for 3 dmg</p>
+            <p>- Bug attacked for 3 dmg</p>
+            <p>- Gerard attacked for 3 dmg</p>
+            <p>- Bug attacked for 3 dmg</p>
           </div>
-          <div id="enemy" class="col-md-4">
-            <p class="text-center">Enemy</p>
+          <div id="enemy" class="col-md-3 text-right">
+            <ul class="no-list">
+              <li>
+                <span id="enemy-name"></span>
+                <i class="fa-solid fa-skull text-white"></i>
+              </li>
+              <li>
+                <span>Level </span>
+                <span id="enemy-level"></span>
+                <i class="fa-solid fa-book text-primary"></i>
+              </li>
+              <li>
+                <span id="enemy-health"></span>
+                <i class="fa-sharp fa-solid fa-heart text-danger"></i>
+              </li>
+              <li>
+                <span id="enemy-attack"></span>
+                <img src="./img/sword.png" alt="sword" width="16px" />
+              </li>
+            </ul>
           </div>
         </div>
         <div class="row">
           <div id="quests" class="col-md-4">
-            <p class="text-center">Quests</p>
+            <h2 class="h3">Quests</h2>
+            <ul class="text-warning">
+              <li><p>Fix 3 bugs [0/3]</p></li>
+              <li><p>Fix 3 bugs [0/3]</p></li>
+              <li><p>Fix 3 bugs [0/3]</p></li>
+            </ul>
           </div>
           <div id="controls" class="col-md-4">
             <p class="text-center">Action</p>

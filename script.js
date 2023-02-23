@@ -13,11 +13,17 @@ $(document).ready(function () {
   let controls = $("#controls");
   let inventory = $("#inventory");
 
-  // stats
+  // player stats
   let player_name = $("#player-name");
   let player_level = $("#player-level");
   let player_health = $("#player-health");
   let player_attack = $("#player-attack");
+
+  // enemy
+  let enemy_name = $("#enemy-name");
+  let enemy_level = $("#enemy-level");
+  let enemy_health = $("#enemy-health");
+  let enemy_attack = $("#enemy-attack");
 
   class Character {
     constructor(name, level, health, attack) {
@@ -69,15 +75,27 @@ $(document).ready(function () {
     }
   }
 
-  // player
+  // test player
   player = new Character("Gerard", 1, 10, 2);
 
-  function showStats() {
+  // test enemy
+  enemy = new Character("Bug", 3, 14, 3);
+
+  function showPlayerStats() {
     player_name.text(`${player._name}`);
     player_level.text(`${player._level}`);
     player_health.text(`${player._health} / ${player._maxHeath}`);
     player_attack.text(`${player._attack}`);
   }
 
-  showStats();
+  showPlayerStats();
+
+  function showEnemyStats() {
+    enemy_name.text(`${enemy._name}`);
+    enemy_level.text(`${enemy._level}`);
+    enemy_health.text(`${enemy._health} / ${enemy._maxHeath}`);
+    enemy_attack.text(`${enemy._attack}`);
+  }
+
+  showEnemyStats();
 });
