@@ -1,31 +1,18 @@
-*, *::before, *::after {
-    box-sizing: border-box;
-  }
-  * {
-    margin: 0;
-  }
-  html, body {
-    height: 100%;
-  }
-  body {
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
-  img, picture, video, canvas, svg {
-    display: block;
-    max-width: 100%;
-  }
-  input, button, textarea, select {
-    font: inherit;
-  }
-  p, h1, h2, h3, h4, h5, h6 {
-    overflow-wrap: break-word;
-  }
-  #root, #__next {
-    isolation: isolate;
-  }
-
   body {
     background-color: #0c0909 !important;
     color: #eeeeee !important;
+  }
+
+  #ubication {
+    max-height: 100px;
+  }
+
+  /* FOOTER */
+
+  #optimal-resolution {
+    font-size: 0.85rem;
+  }
+
+  #made-by {
+    font-size: 0.75rem;
   }
