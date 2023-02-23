@@ -1,60 +1,83 @@
 $(document).ready(function () {
-    console.log("loaded");
+  console.log("loaded");
 
-    // location
-    let location_img = $("#location-img")
-    let location_text = $("#location-text")
+  // location
+  let location_img = $("#location-img");
+  let location_text = $("#location-text");
 
-    // elements
-    let player_stats = $("#player")
-    let log = $("#log")
-    let enemy = $("#enemy")
-    let quests = $("#quests")
-    let controls = $("#controls")
-    let inventory = $("#inventory")
+  // elements
+  let player_stats = $("#player");
+  let log = $("#log");
+  let enemy = $("#enemy");
+  let quests = $("#quests");
+  let controls = $("#controls");
+  let inventory = $("#inventory");
 
-    class Character {
-        constructor(level, health, attack) {
-            this._level = level;
-            this._health = health;
-            this._attack = attack;
-        }
+  // stats
+  let player_name = $("#player-name");
+  let player_level = $("#player-level");
+  let player_health = $("#player-health");
+  let player_attack = $("#player-attack");
 
-        get level() {
-            return this._level;
-        }
-
-        set level(level) {
-            this._level = level;
-        }
-
-        get health() {
-            return this._health;
-        }
-
-        set health(health) {
-            this._health = health;
-        }
-
-        get attack() {
-            return this._attack;
-        }
-
-        set attack(attack) {
-            this._attack = attack;
-        }
+  class Character {
+    constructor(name, level, health, attack) {
+      this._name = name;
+      this._level = level;
+      this._health = health;
+      this._maxHeath = health;
+      this._attack = attack;
     }
 
-    // player
-    player = new Character(1, 10, 2)
-    let player_stats_list = $(
-        `<ul>
-            <li>${player._level}</li>
-            <li>${player._health}</li>
-            <li>${player._attack}</li>
-        </ul>`)
+    get name() {
+      return this._name;
+    }
 
+    set name(name) {
+      this._name = name;
+    }
 
-    player_stats.append(player_stats_list);
-}
-);
+    get level() {
+      return this._level;
+    }
+
+    set level(level) {
+      this._level = level;
+    }
+
+    get health() {
+      return this._health;
+    }
+
+    set health(health) {
+      this._health = health;
+    }
+
+    get maxHealth() {
+      return this._maxHeath;
+    }
+
+    set maxHealth(health) {
+      this._maxHeath = health;
+    }
+
+    get attack() {
+      return this._attack;
+    }
+
+    set attack(attack) {
+      this._attack = attack;
+    }
+  }
+
+  // player
+  player = new Character("Gerard", 1, 10, 2);
+
+  function showStats() {
+    player_name.text(`${player._name}`);
+    player_level.text(`${player._level}`);
+    player_health.text(`${player._health} / ${player._maxHeath}`);
+    player_attack.text(`${player._attack}`);
+  }
+
+  showStats();
+});
