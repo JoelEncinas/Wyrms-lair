@@ -84,11 +84,65 @@ $(document).ready(function () {
     }
   }
 
+  class Player extends Character {
+    constructor(name, level, health, attack, quests, inventory) {
+      super(name, level, health, attack);
+      this._quests = quests;
+      this._inventory = inventory;
+    }
+
+    get quests() {
+      return this._quests;
+    }
+
+    addQuest(quest) {
+      this._quests.push(quest);
+    }
+
+    removeQuest(questToRemove) {
+      this._inventory = this._inventory.filter((item) => item != questToRemove);
+    }
+
+    get inventory() {
+      return this._inventory;
+    }
+
+    addItem(item) {
+      this._inventory.push(item);
+    }
+
+    removeItem(itemToRemove) {
+      this._inventory = this._inventory.filter((item) => item != itemToRemove);
+    }
+  }
+
+  class Enemy extends Character {
+    constructor(name, level, health, attack, drop) {
+      super(name, level, health, attack);
+      this._drop = drop;
+    }
+  }
+
+  class Item {
+    constructor(id, name, value) {
+      this._id = id;
+      this._name = name;
+      this._value = value;
+    }
+  }
+
+  class Weapon extends Item {
+    constructor(id, name) {
+      super(id, name, damage);
+      this._damage = damage;
+    }
+  }
+
   // test player
-  player = new Character("Gerard", 1, 10, 2);
+  player = new Player("Gerard", 1, 10, 2, [], []);
 
   // test enemy
-  enemy = new Character("Bug", 3, 14, 3);
+  enemy = new Enemy("Bug", 3, 14, 3, []);
 
   function showPlayerStats() {
     player_name.text(`${player._name}`);
@@ -107,4 +161,8 @@ $(document).ready(function () {
   }
 
   showEnemyStats();
+
+  function showInventory() {
+    player._inventory.map((number) => number * 2);
+  }
 });
