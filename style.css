@@ -31,13 +31,58 @@
 
   #location-img {
     max-height: 100px;
-    max-width: 480px;
+    max-width: 350px;
     width: 100%;
   }
 
   /* LOG */
   #log {
     max-height: 400px;
+    overflow-y: auto;
+  }
+
+  /* QUESTS */
+  #quests {
+    overflow-y: auto;
+  }
+
+  /* CONTROLS */
+  #compass {
+    position: relative;
+    min-height: 180px;
+  }
+
+  .direction {
+    position: absolute;
+    text-align: center;
+  }
+
+  .north {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .west {
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+  }
+
+  .east {
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+
+  .south {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* INVENTORY */
+  #inventory {
     overflow-y: auto;
   }
 
