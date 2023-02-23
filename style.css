@@ -3,8 +3,16 @@
     color: #eeeeee !important;
   }
 
-  #ubication {
+/* LOCATION */
+
+  #location-text {
+    font-size: 0.90rem;
+  }
+
+  #location-img {
     max-height: 100px;
+    max-width: 480px;
+    width: 100%;
   }
 
   /* FOOTER */
