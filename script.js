@@ -117,17 +117,43 @@ $(document).ready(function () {
   }
 
   class Enemy extends Character {
-    constructor(name, level, health, attack, drop) {
+    constructor(name, level, health, id, attack, dropInventory) {
       super(name, level, health, attack);
-      this._drop = drop;
+      this._id = id;
+      this._dropInventory = dropInventory;
+    }
+
+    get id() {
+      return this._id;
+    }
+
+    get dropInventory() {
+      return this._dropInventory;
     }
   }
 
   class Item {
-    constructor(id, name, value) {
+    constructor(id, name, value, dropChance) {
       this._id = id;
       this._name = name;
       this._value = value;
+      this._dropChance = dropChance;
+    }
+
+    get id() {
+      return this._id;
+    }
+
+    get name() {
+      return this._name;
+    }
+
+    get value() {
+      return this._value;
+    }
+
+    get dropChance() {
+      return this._dropChance;
     }
   }
 
@@ -136,10 +162,75 @@ $(document).ready(function () {
       super(id, name, damage);
       this._damage = damage;
     }
+
+    get damage() {
+      return this._damage;
+    }
   }
 
+  class Quest {
+    constructor(
+      id,
+      name,
+      progress,
+      progressTotal,
+      isDone,
+      goldReward,
+      itemReward
+    ) {
+      this._id = id;
+      this._name = name;
+      this._progress = progress;
+      this._progressTotal = progressTotal;
+      this._isDone = isDone;
+      this._goldReward = goldReward;
+      this._itemReward = itemReward;
+    }
+
+    get id() {
+      return this._id;
+    }
+
+    get name() {
+      return this._name;
+    }
+
+    get progress() {
+      return this._progress;
+    }
+
+    get progressTotal() {
+      return this._progressTotal;
+    }
+
+    get isDone() {
+      return this._isDone;
+    }
+
+    get goldReward() {
+      return this._goldReward;
+    }
+
+    get itemReward() {
+      return this._itemReward;
+    }
+  }
+
+  class Location {
+    constructor(id, name, quest, vendor) {
+      this._id = id;
+      this._name = name;
+      this._quest = quest;
+      this._vendor = vendor;
+    }
+  }
+
+  // quest
+  quest1 = new Quest(1, "Resolve 3 flowcharts", 0, 3, false, 10, null);
+
   // test player
-  player = new Player("Gerard", 1, 10, 2, [], []);
+  player = new Player("Gerard", 1, 10, 2, [quest1], []);
+  console.log(player.quests[0]);
 
   // test enemy
   enemy = new Enemy("Bug", 3, 14, 3, []);
@@ -165,4 +256,16 @@ $(document).ready(function () {
   function showInventory() {
     player._inventory.map((number) => number * 2);
   }
+
+  function showQuests() {
+    player._quests.map((quest) => {
+      quests.append(
+        $("<li>").text(
+          `${quest._name} [${quest._progress}/${quest._progressTotal}]`
+        )
+      );
+    });
+  }
+
+  showQuests();
 });
