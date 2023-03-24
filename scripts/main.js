@@ -31,10 +31,21 @@ const MOVE_EAST = 'East';
 const MOVE_SOUTH = 'South';
 const MOVE_WEST = 'West';
 
-// Functionality
+// Move Player
 northBtn.click(() => {
     addLog(movePlayer(MOVE_NORTH));
+});
 
+eastBtn.click(() => {
+    addLog(movePlayer(MOVE_EAST));
+});
+
+southBtn.click(() => {
+    addLog(movePlayer(MOVE_SOUTH));
+});
+
+westBtn.click(() => {
+    addLog(movePlayer(MOVE_WEST));
 });
 
 function movePlayer(direction){
