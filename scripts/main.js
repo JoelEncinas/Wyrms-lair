@@ -1,11 +1,8 @@
 // Test
-import number from './test.js';
-import { url, myFunc } from "./test.js";
-
-console.log(url);
-console.log(number);
+import Character from './characters/Character.js';
 
 // UI
+const playerNameText = $('.player-name');
 const logText = $('.log');
 
 const northBtn = $('.north');
@@ -78,3 +75,5 @@ function movePlayer(direction){
     return `To ${direction} ${addLine()}`;
 }
 
+let player = new Character('Jhon');
+playerNameText.text(player.getName);
