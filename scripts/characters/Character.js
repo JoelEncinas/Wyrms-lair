@@ -1,13 +1,13 @@
 export default class Character {
-    constructor(name) {
-        this.name = name;
-    }
+  constructor(name) {
+    this.name = name;
+  }
 
-    get getName() {
-        return this.name;
-    }
+  get getName() {
+    return this.name;
+  }
 
-    set setName(name) {
-        this.name = name;
-    }
+  set setName(name) {
+    this.name = name;
+  }
 }
