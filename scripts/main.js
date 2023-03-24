@@ -13,6 +13,9 @@ const eastBtn = $('.east');
 const southBtn = $('.south');
 const westBtn = $('.west');
 
+const eraseDataBtn = $('.erase-data');
+const loadDataBtn =  $('.load-data');
+
 // Game data
 let log = '';
 
@@ -26,6 +29,28 @@ function addLog(text){
     logText.html(log);
 }
 
+function clearData(){
+    window.localStorage.clear();
+}
+
+eraseDataBtn.click(() => {
+    clearData();
+})
+
+function saveData(){
+    window.localStorage.setItem('log', log);
+}
+
+function loadData(){
+    log = window.localStorage.getItem('log');
+    logText.html(window.localStorage.getItem('log'));
+}
+
+loadDataBtn.click(() => {
+    loadData();
+})
+
+// Directions
 const MOVE_NORTH = 'North';
 const MOVE_EAST = 'East';
 const MOVE_SOUTH = 'South';
@@ -49,6 +74,7 @@ westBtn.click(() => {
 });
 
 function movePlayer(direction){
+    saveData();
     return `To ${direction} ${addLine()}`;
 }
 
