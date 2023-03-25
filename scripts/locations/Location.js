@@ -33,4 +33,36 @@ export default class Location {
   set setDescription(description) {
     this.description = description;
   }
+
+  get locationToNorth() {
+    return this.locationToNorth;
+  }
+
+  set locationToNorth(location) {
+    this.locationToNorth = location;
+  }
+
+  get locationToEast() {
+    return this.locationToEast;
+  }
+
+  set locationToEast(location) {
+    this.locationToEast = location;
+  }
+
+  get locationToSouth() {
+    return this.locationToSouth;
+  }
+
+  set locationToSouth(location) {
+    this.locationToSouth = location;
+  }
+
+  get locationToWest() {
+    return this.locationToWest;
+  }
+
+  set locationToWest(location) {
+    this.locationToWest = location;
+  }
 }
