@@ -3,11 +3,11 @@ export default class Character {
     this.name = name;
   }
 
-  get getName() {
+  get name() {
     return this.name;
   }
 
-  set setName(name) {
+  set name(name) {
     this.name = name;
   }
 }
