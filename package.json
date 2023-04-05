@@ -1,0 +1,22 @@
+{
+  "name": "js-rpg",
+  "version": "1.0.0",
+  "description": "rpg in js",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoelEncinas/js-rpg.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoelEncinas/js-rpg/issues"
+  },
+  "homepage": "https://github.com/JoelEncinas/js-rpg#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
