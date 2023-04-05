@@ -24,8 +24,8 @@ mongoose
   .then(() => console.log("Connected to DB"))
   .catch(console.error);
 
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/game", (req, res) => {
+  res.render("game");
 });
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
