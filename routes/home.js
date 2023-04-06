@@ -5,4 +5,8 @@ router.get("/", function (req, res) {
   res.render("home");
 });
 
+router.post("/", function (req, res) {
+  res.render("home");
+});
+
 module.exports = router;
