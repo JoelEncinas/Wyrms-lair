@@ -5,6 +5,9 @@ const cors = require("cors");
 const hsb = require("hbs");
 require("dotenv").config();
 
+// routes
+const home = require("./routes/home");
+
 const port = process.env.PORT || 5000;
 
 app.use(cors());
@@ -24,8 +27,6 @@ mongoose
   .then(() => console.log("Connected to DB"))
   .catch(console.error);
 
-app.get("/game", (req, res) => {
-  res.render("game");
-});
+app.use("/", home);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
