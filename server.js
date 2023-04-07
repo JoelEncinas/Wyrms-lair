@@ -3,12 +3,13 @@ const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
 const hsb = require("hbs");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 require("dotenv").config();
 
 // routes
 const home = require("./routes/home");
 const game = require("./routes/game");
+const auth = require("./routes/auth");
 
 const port = process.env.PORT || 5000;
 
@@ -32,5 +33,6 @@ mongoose
 
 app.use("/", home);
 app.use("/game", game);
+app.use("/auth", auth);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

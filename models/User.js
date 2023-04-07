@@ -1,7 +1,7 @@
-var mongoose = require("mongoose"),
-  Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var userSchema = new Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     required: [true, "username not provided "],
