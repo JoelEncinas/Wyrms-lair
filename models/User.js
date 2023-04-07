@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: {
     type: String,
-    required: [true, "username not provided "],
-    unique: [true, "username already exists in database!"],
+    required: true,
+    unique: true,
   },
   password: {
     type: String,
