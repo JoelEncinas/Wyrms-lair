@@ -45,7 +45,7 @@ router.post("/login", async (req, res) => {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).json({ error: "Invalid username or password" });
+      return res.render("login", { username_not_found: true });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
         expiresIn: "1h",
       });
       res.cookie("token", token);
-      res.redirect("/protected");
+      return res.redirect("/protected");
     } else {
       return res.status(401).json({ error: "Invalid username or password" });
     }

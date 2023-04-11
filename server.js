@@ -21,6 +21,7 @@ app.use(express.static("public"));
 // handlebars
 app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
+hbs.registerPartials(__dirname + "/partials");
 
 // routes
 const authRoutes = require("./routes/auth");
