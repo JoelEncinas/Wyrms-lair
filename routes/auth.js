@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
     const { username, password } = req.body;
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      return res.status(400).json({ error: "Username already exists" });
+      return res.render("register", { existing_user: true });
     }
 
     // Hash password
@@ -26,8 +26,7 @@ router.post("/register", async (req, res) => {
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
-    // Return success message
-    res.json({ message: "Registration successful" });
+    res.redirect("/auth/login");
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal Server Error" });

@@ -27,12 +27,8 @@
         </div>
       </form>
 
-      {{#if username_not_found}}
-        {{> username_not_found}}
-      {{/if}}
-
-      {{#if invalid_credentials}}
-        {{> invalid_credentials}}
+      {{#if existing_user}}
+        {{> existing_user}}
       {{/if}}
 
       <div class="text-center mt-5">
