@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
         expiresIn: "1h",
       });
       res.cookie("token", token);
-      res.render("protected", { username: user.username });
+      res.redirect("/protected");
     } else {
       return res.status(401).json({ error: "Invalid username or password" });
     }
