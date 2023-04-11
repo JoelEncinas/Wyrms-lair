@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>Protected Route</title>
+  </head>
+  <body>
+    <h1>Protected Route</h1>
+    <p>Welcome, {{username}}!</p>
+
+    <p>This is a protected route that requires authentication.</p>
+    <form action="/auth/logout" method="post">
+      <button type="submit">Logout</button>
+    </form>
+  </body>
+</html>
