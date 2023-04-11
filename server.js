@@ -31,6 +31,11 @@ app.use('/auth', authRoutes);
 app.use('/protected', protectedRoutes);
 
 // 404
+app.get("/", (req, res) => {
+  res.render("index")
+});
+
+// 404
 app.get("*", (req, res) => {
   res.json({message: "404"})
 });

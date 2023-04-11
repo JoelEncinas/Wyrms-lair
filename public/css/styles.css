@@ -1,0 +1,8 @@
+/* AUTH */
+
+#login-main,
+#register-main {
+  max-width: 576px;
+  width: 100%;
+  margin: auto;
+}
