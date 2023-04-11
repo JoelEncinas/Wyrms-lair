@@ -9,48 +9,7 @@
   </head>
   <body>
 
-    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">JS-RPG</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarColor01"
-          aria-controls="navbarColor01"
-          aria-expanded="true"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse show" id="navbarColor01" style="">
-          <ul class="navbar-nav me-auto text-center">
-            <li class="nav-item">
-              <a class="nav-link" href="/api">Api</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/about">About</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav ms-auto d-flex align-items-center">
-            <li class="nav-item mx-2 py-2">
-              <a
-                id="navbar-login-btn"
-                class="nav-link btn btn-outline-success py-2"
-                href="/auth/login"
-              >Login</a>
-            </li>
-            <li class="nav-item mx-2 py-2">
-              <a
-                id="navbar-register-btn"
-                class="nav-link btn btn-outline-info py-2"
-                href="/auth/register"
-              >Register</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    {{> main_navbar}}
 
     <div id="index-container" class="container text-center">
       <div class="cta my-5 mx-1 pb-5">
