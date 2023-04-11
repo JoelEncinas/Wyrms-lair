@@ -1,8 +1,28 @@
+/* NAVBAR */
+#navbar-login-btn,
+#navbar-register-btn {
+  min-width: 70px;
+  max-width: 80px;
+}
+
+/* INDEX */
+
+#index-container {
+  max-width: 768px;
+}
+
 /* AUTH */
 
 #login-main,
 #register-main {
   max-width: 576px;
   width: 100%;
+  margin: auto;
+}
+
+/* FOOTER */
+
+#footer {
+  max-width: 768px;
   margin: auto;
 }
