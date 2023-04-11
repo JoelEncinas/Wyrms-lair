@@ -1,4 +1,5 @@
 /* NAVBAR */
+
 #navbar-login-btn,
 #navbar-register-btn {
   min-width: 70px;
@@ -23,8 +24,7 @@
 /* FOOTER */
 
 #footer {
-  max-width: 768px;
-  margin: auto;
+  width: 100%;
 }
 
 #footer li {
