@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 const hbs = require("hbs");
 
 require("dotenv").config();
@@ -26,18 +26,15 @@ hbs.registerPartials(__dirname + "/partials");
 // routes
 const authRoutes = require("./routes/auth");
 const protectedRoutes = require("./routes/protected");
+const indexRoutes = require("./routes/index");
 
-app.use('/auth', authRoutes);
-app.use('/protected', protectedRoutes);
-
-// 404
-app.get("/", (req, res) => {
-  res.render("index")
-});
+app.use("/auth", authRoutes);
+app.use("/protected", protectedRoutes);
+app.use("/", indexRoutes);
 
 // 404
 app.get("*", (req, res) => {
-  res.json({message: "404"})
+  res.json({ message: "404" });
 });
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.pug2uxj.mongodb.net/?retryWrites=true&w=majority`;
