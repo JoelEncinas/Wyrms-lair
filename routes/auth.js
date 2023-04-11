@@ -49,14 +49,14 @@ router.post("/login", async (req, res) => {
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
+    if (isMatch) {
       const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
         expiresIn: "1h",
       });
       res.cookie("token", token);
       return res.redirect("/protected");
     } else {
-      return res.status(401).json({ error: "Invalid username or password" });
+      return res.render("login", { invalid_credentials: true });
     }
   } catch (err) {
     console.error(err);

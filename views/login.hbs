@@ -19,6 +19,10 @@
       {{> username_not_found}}
     {{/if}}
 
+    {{#if invalid_credentials}}
+      {{> invalid_credentials}}
+    {{/if}}
+
     <p>Don't have an account? <a href="/auth/register">Register</a></p>
 
     <script

@@ -30,6 +30,7 @@ const protectedRoutes = require("./routes/protected");
 app.use('/auth', authRoutes);
 app.use('/protected', protectedRoutes);
 
+// 404
 app.get("*", (req, res) => {
   res.json({message: "404"})
 });
