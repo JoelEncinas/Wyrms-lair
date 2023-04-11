@@ -11,14 +11,12 @@
 
     {{> game_navbar}}
 
-    <h1>Protected Route</h1>
-    <p>Welcome, {{username}}!</p>
+    <div class="game">
+      <h1>Protected Route</h1>
+      <p>Welcome, {{username}}!</p>
+    </div>
 
-    <p>This is a protected route that requires authentication.</p>
-    <form action="/auth/logout" method="post">
-      <button type="submit">Logout</button>
-    </form>
-
+    {{> footer}}
 
     <!-- BOOTSTRAP DEPENDENCIES -->
     <script

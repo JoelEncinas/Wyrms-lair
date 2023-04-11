@@ -26,3 +26,13 @@
   max-width: 768px;
   margin: auto;
 }
+
+#footer li {
+  float: left;
+  margin-right: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.float-end {
+  float: right !important;
+}
