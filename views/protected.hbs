@@ -10,9 +10,80 @@
   </head>
   <body>
 
-    <div id="game" class="container">
-      <div class="row">
+    <div id="game" class="container p-3">
+      <h1 class="text-center">JS-RPG</h1>
+      <p class="text-muted text-center fs-6 fst-italic">*Optimal Resolution
+        +768px</p>
 
+      <div class="row">
+        <div id="character-stats" class="col-md-6">
+          <p>Hp <span id="hit-points"></span></p>
+          <p>Gold <span id="gold"></span></p>
+          <p>Exp <span id="experience"></span></p>
+          <p>Lv <span id="level"></span></p>
+        </div>
+        <div id="location" class="col-md-6 text-center">
+          <p id="location-name">Alchemist's Garden</p>
+          <p id="location-description">Many plants are growing here</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="inventory" class="col-md-6">
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Quantity</th>
+            </tr>
+            <tr>
+              <td>Rusty Sword</td>
+              <td>1</td>
+            </tr>
+          </table>
+        </div>
+        <div id="log" class="col-md-6">
+          <p id="log-display">
+            You see a Rat here! You do 2 damage to the Rat
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="quests" class="col-md-6">
+
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Completed</th>
+            </tr>
+            <tr>
+              <td>Clear the garden</td>
+              <td>No</td>
+            </tr>
+          </table>
+        </div>
+        <div id="character-actions" class="col-md-6">
+          <div id="character-movement">
+            <button id="north">
+              North
+            </button>
+            <button id="east">
+              East
+            </button>
+            <button id="south">
+              South
+            </button>
+            <button id="west">
+              West
+            </button>
+          </div>
+          <div id="character-actions">
+            <select>
+              <option value="Rusty sword">Rusty sword</option>
+            </select>
+            <button>Use</button>
+          </div>
+        </div>
       </div>
     </div>
 
