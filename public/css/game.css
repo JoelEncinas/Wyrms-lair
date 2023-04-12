@@ -1,1 +1,15 @@
 /* UTILS */
+
+/* GAME */
+
+#stats-location {
+  min-height: 20vh;
+}
+
+#inventory-log {
+  min-height: 30vh;
+}
+
+#quests-actions {
+  min-height: 20vh;
+}
