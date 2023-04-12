@@ -1,4 +1,7 @@
+// Wyrm's Lair
+
 import { Player } from "./Player.js";
+import { HealingPotion } from "./HealingPotion.js";
 
 // character stats
 const hpText = document.getElementById("hit-points");
@@ -13,5 +16,3 @@ hpText.innerText = player.currentHitpoints;
 goldText.innerText = player.gold;
 experienceText.innerText = player.experience;
 levelText.innerText = player.level;
-
-console.log(player.currentHitpoints);

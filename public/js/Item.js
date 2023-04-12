@@ -1,9 +1,8 @@
-export class HealingPotion {
-  constructor(id, name, namePlural, amountToHeal) {
+export class Item {
+  constructor(id, name, namePlural) {
     this._id = id;
     this._name = name;
     this._namePlural = namePlural;
-    this._amountToHeal = amountToHeal;
   }
 
   get id() {
@@ -28,13 +27,5 @@ export class HealingPotion {
 
   set namePlural(namePlural) {
     this._namePlural = namePlural;
-  }
-
-  get amountToHeal() {
-    return this._amountToHeal;
-  }
-
-  set amountToHeal(amountToHeal) {
-    this._amountToHeal = amountToHeal;
   }
 }
