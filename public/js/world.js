@@ -240,19 +240,19 @@ function populateLocations() {
 }
 
 export function itemByID(id) {
-  return items.find((item) => item._ID === id) || null;
+  return items.find((item) => item.ID === id) || null;
 }
 
 export function monsterByID(id) {
-  return monsters.find((monster) => monster._ID === id) || null;
+  return monsters.find((monster) => monster.ID === id) || null;
 }
 
 export function questByID(id) {
-  return quests.find((quest) => quest._ID === id) || null;
+  return quests.find((quest) => quest.ID === id) || null;
 }
 
 export function locationByID(id) {
-  return locations.find((location) => location._ID === id) || null;
+  return locations.find((location) => location.ID === id) || null;
 }
 
 // create world
