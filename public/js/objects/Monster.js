@@ -16,6 +16,7 @@ export class Monster extends LivingCreature {
     this._maximumDamage = maximumDamage;
     this._rewardExperiencePoints = rewardExperiencePoints;
     this._rewardGold = rewardGold;
+    this._lootTable = [];
   }
 
   get id() {
@@ -56,5 +57,13 @@ export class Monster extends LivingCreature {
 
   set rewardGold(rewardGold) {
     this._rewardGold = rewardGold;
+  }
+
+  get lootTable() {
+    return this._lootTable;
+  }
+
+  set lootTable(lootTable) {
+    this._lootTable = lootTable;
   }
 }

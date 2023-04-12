@@ -1,5 +1,16 @@
 export class Location {
-  constructor(id, name, description) {
+  constructor(
+    id,
+    name,
+    description,
+    itemToEnter,
+    questAvailableHere,
+    monsterLivingHere,
+    locationToNorth,
+    locationToEast,
+    locationToSouth,
+    locationToWest
+  ) {
     this._id = id;
     this._name = name;
     this._description = description;

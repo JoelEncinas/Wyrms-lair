@@ -6,6 +6,8 @@ export class Player extends LivingCreature {
     this._gold = gold;
     this._experience = experience;
     this._level = level;
+    this._inventory = [];
+    this._quests = [];
   }
 
   get gold() {
@@ -30,5 +32,21 @@ export class Player extends LivingCreature {
 
   set level(level) {
     this._level = level;
+  }
+
+  get inventory() {
+    return this._inventory;
+  }
+
+  set inventory(_inventory) {
+    this._inventory = inventory;
+  }
+
+  get quests() {
+    return this._quests;
+  }
+
+  set quests(quests) {
+    this._quests = quests;
   }
 }

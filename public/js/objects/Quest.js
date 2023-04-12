@@ -1,11 +1,19 @@
 export class Quest {
-  constructor(id, name, description, rewardExperiencePoints, rewardGold) {
+  constructor(
+    id,
+    name,
+    description,
+    rewardExperiencePoints,
+    rewardGold,
+    rewardItem
+  ) {
     this._id = id;
     this._name = name;
     this._description = description;
     this._rewardExperiencePoints = rewardExperiencePoints;
     this._rewardGold = rewardGold;
     this._rewardItem = rewardItem;
+    this._questCompletionItems = [];
   }
 
   get id() {
@@ -54,5 +62,13 @@ export class Quest {
 
   set rewardItem(rewardItem) {
     this._rewardItem = rewardItem;
+  }
+
+  get questCompletionItems() {
+    return this._questCompletionItems;
+  }
+
+  set questCompletionItems(questCompletionItems) {
+    this._questCompletionItems = questCompletionItems;
   }
 }
