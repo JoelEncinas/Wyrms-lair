@@ -3,14 +3,14 @@ import { Item } from "./Item.js";
 export class HealingPotion extends Item {
   constructor(id, name, namePlural, amountToHeal) {
     super(id, name, namePlural);
-    this._amountToHeal = amountToHeal;
+    this._AmountToHeal = amountToHeal;
   }
 
-  get amountToHeal() {
-    return this._amountToHeal;
+  get AmountToHeal() {
+    return this._AmountToHeal;
   }
 
-  set amountToHeal(amountToHeal) {
-    this._amountToHeal = amountToHeal;
+  set AmountToHeal(value) {
+    this._AmountToHeal = value;
   }
 }

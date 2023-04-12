@@ -7,68 +7,68 @@ export class Quest {
     rewardGold,
     rewardItem
   ) {
-    this._id = id;
-    this._name = name;
-    this._description = description;
-    this._rewardExperiencePoints = rewardExperiencePoints;
-    this._rewardGold = rewardGold;
-    this._rewardItem = rewardItem;
-    this._questCompletionItems = [];
+    this._ID = id;
+    this._Name = name;
+    this._Description = description;
+    this._RewardExperiencePoints = rewardExperiencePoints;
+    this._RewardGold = rewardGold;
+    this._RewardItem = rewardItem;
+    this._QuestCompletionItems = [];
   }
 
-  get id() {
-    return this._id;
+  get ID() {
+    return this._ID;
   }
 
-  set id(id) {
-    this._id = id;
+  set ID(value) {
+    this._ID = value;
   }
 
-  get name() {
-    return this._name;
+  get Name() {
+    return this._Name;
   }
 
-  set name(name) {
-    this._name = name;
+  set Name(value) {
+    this._Name = value;
   }
 
-  get description() {
-    return this._description;
+  get Description() {
+    return this._Description;
   }
 
-  set description(description) {
-    this._description = description;
+  set Description(value) {
+    this._Description = value;
   }
 
-  get rewardExperiencePoints() {
-    return this._rewardExperiencePoints;
+  get RewardExperiencePoints() {
+    return this._RewardExperiencePoints;
   }
 
-  set rewardExperiencePoints(rewardExperiencePoints) {
-    this._rewardExperiencePoints = rewardExperiencePoints;
+  set RewardExperiencePoints(value) {
+    this._RewardExperiencePoints = value;
   }
 
-  get rewardGold() {
-    return this._rewardGold;
+  get RewardGold() {
+    return this._RewardGold;
   }
 
-  set rewardGold(rewardGold) {
-    this._rewardGold = rewardGold;
+  set RewardGold(value) {
+    this._RewardGold = value;
   }
 
-  get rewardItem() {
-    return this._rewardItem;
+  get RewardItem() {
+    return this._ewardItem;
   }
 
-  set rewardItem(rewardItem) {
-    this._rewardItem = rewardItem;
+  set RewardItem(value) {
+    this._RewardItem = value;
   }
 
-  get questCompletionItems() {
-    return this._questCompletionItems;
+  get QuestCompletionItems() {
+    return this._QuestCompletionItems;
   }
 
-  set questCompletionItems(questCompletionItems) {
-    this._questCompletionItems = questCompletionItems;
+  set QuestCompletionItems(value) {
+    this._QuestCompletionItems = value;
   }
 }

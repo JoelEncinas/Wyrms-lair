@@ -1,23 +1,23 @@
 export class Weapon {
   constructor(id, name, namePlural, minimumDamage, maximumDamage) {
     super(id, name, namePlural);
-    this._minimumDamage = minimumDamage;
-    this._maximumDamage = maximumDamage;
+    this._MinimumDamage = minimumDamage;
+    this._MaximumDamage = maximumDamage;
   }
 
-  get minimumDamage() {
-    return this._minimumDamage;
+  get MinimumDamage() {
+    return this._MinimumDamage;
   }
 
-  set minimumDamage(minimumDamage) {
-    this._minimumDamage = minimumDamage;
+  set MinimumDamage(value) {
+    this._MinimumDamage = value;
   }
 
-  get maximumDamage() {
-    return this._maximumDamage;
+  get MaximumDamage() {
+    return this._MaximumDamage;
   }
 
-  set maximumDamage(maximumDamage) {
-    this._maximumDamage = maximumDamage;
+  set MaximumDamage(value) {
+    this._MaximumDamage = value;
   }
 }

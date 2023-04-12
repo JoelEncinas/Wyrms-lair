@@ -1,22 +1,22 @@
 export class InventoryItem {
   constructor(details, quantity) {
-    this._details = details;
-    this._quantity = quantity;
+    this._Details = details;
+    this._Quantity = quantity;
   }
 
-  get details() {
-    return this._details;
+  get Details() {
+    return this._Details;
   }
 
-  set details(details) {
-    this._details = details;
+  set Details(value) {
+    this._Details = value;
   }
 
-  get quantity() {
-    return this._quantity;
+  get Quantity() {
+    return this._Quantity;
   }
 
-  set quantity(quantity) {
-    this._quantity = quantity;
+  set Quantity(value) {
+    this._Quantity = value;
   }
 }

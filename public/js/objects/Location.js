@@ -11,95 +11,95 @@ export class Location {
     locationToSouth,
     locationToWest
   ) {
-    this._id = id;
-    this._name = name;
-    this._description = description;
-    this._itemToEnter = itemToEnter;
-    this._questAvailableHere = questAvailableHere;
-    this._monsterLivingHere = monsterLivingHere;
-    this._locationToNorth = locationToNorth;
-    this._locationToEast = locationToEast;
-    this._locationToSouth = locationToSouth;
-    this._locationToWest = locationToWest;
+    this._ID = id;
+    this._Name = name;
+    this._Description = description;
+    this._ItemToEnter = itemToEnter;
+    this._QuestAvailableHere = questAvailableHere;
+    this._MonsterLivingHere = monsterLivingHere;
+    this._LocationToNorth = locationToNorth;
+    this._LocationToEast = locationToEast;
+    this._LocationToSouth = locationToSouth;
+    this._LocationToWest = locationToWest;
   }
 
-  get id() {
-    return this._id;
+  get ID() {
+    return this._ID;
   }
 
-  set id(id) {
-    this._id = id;
+  set ID(value) {
+    this._ID = value;
   }
 
-  get name() {
-    return this._name;
+  get Name() {
+    return this._Name;
   }
 
-  set name(name) {
-    this._name = name;
+  set Name(value) {
+    this._Name = value;
   }
 
-  get description() {
-    return this._description;
+  get Description() {
+    return this._Description;
   }
 
-  set description(description) {
-    this._description = description;
+  set Description(value) {
+    this._Description = value;
   }
 
-  get itemToEnter() {
-    return this._itemToEnter;
+  get ItemToEnter() {
+    return this._ItemToEnter;
   }
 
-  set itemToEnter(itemToEnter) {
-    this._itemToEnter = itemToEnter;
+  set ItemToEnter(value) {
+    this._ItemToEnter = value;
   }
 
-  get questAvailableHere() {
-    return this._questAvailableHere;
+  get QuestAvailableHere() {
+    return this._QuestAvailableHere;
   }
 
-  set questAvailableHere(questAvailableHere) {
-    this._questAvailableHere = questAvailableHere;
+  set QuestAvailableHere(value) {
+    this._QuestAvailableHere = value;
   }
 
-  get monsterLivingHere() {
-    return this._monsterLivingHere;
+  get MonsterLivingHere() {
+    return this._MonsterLivingHere;
   }
 
-  set monsterLivingHere(monsterLivingHere) {
-    this._monsterLivingHere = monsterLivingHere;
+  set MonsterLivingHere(value) {
+    this._MonsterLivingHere = value;
   }
 
-  get locationToNorth() {
-    return this._locationToNorth;
+  get LocationToNorth() {
+    return this._LocationToNorth;
   }
 
-  set locationToNorth(locationToNorth) {
-    this._locationToNorth = locationToNorth;
+  set LocationToNorth(value) {
+    this._LocationToNorth = value;
   }
 
-  get locationToEast() {
-    return this._locationToEast;
+  get LocationToEast() {
+    return this._LocationToEast;
   }
 
-  set locationToEast(locationToEast) {
-    this._locationToEast = locationToEast;
+  set LocationToEast(value) {
+    this._LocationToEast = value;
   }
 
-  get locationToSouth() {
-    return this._locationToSouth;
+  get LocationToSouth() {
+    return this._LocationToSouth;
   }
 
-  set locationToSouth(locationToSouth) {
-    this._locationToSouth = locationToSouth;
+  set LocationToSouth(value) {
+    this._LocationToSouth = value;
   }
 
-  get locationToWest() {
-    return this._locationToWest;
+  get LocationToWest() {
+    return this._LocationToWest;
   }
 
-  set locationToWest(locationToWest) {
-    this._locationToWest = locationToWest;
+  set LocationToWest(value) {
+    this._LocationToWest = value;
   }
 }

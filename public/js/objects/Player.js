@@ -3,50 +3,50 @@ import { LivingCreature } from "./LivingCreature.js";
 export class Player extends LivingCreature {
   constructor(currentHitpoints, maximumHitpoints, gold, experience, level) {
     super(maximumHitpoints, currentHitpoints);
-    this._gold = gold;
-    this._experience = experience;
-    this._level = level;
-    this._inventory = [];
-    this._quests = [];
+    this._Gold = gold;
+    this._Experience = experience;
+    this._Level = level;
+    this._Inventory = [];
+    this._Quests = [];
   }
 
-  get gold() {
-    return this._gold;
+  get Gold() {
+    return this._Gold;
   }
 
-  set gold(gold) {
-    this._gold = gold;
+  set Gold(value) {
+    this._Gold = value;
   }
 
-  get experience() {
-    return this._experience;
+  get Experience() {
+    return this._Experience;
   }
 
-  set experience(experience) {
-    this._experience = experience;
+  set Experience(value) {
+    this._Experience = value;
   }
 
-  get level() {
-    return this._level;
+  get Level() {
+    return this._Level;
   }
 
-  set level(level) {
-    this._level = level;
+  set Level(value) {
+    this._Level = value;
   }
 
-  get inventory() {
-    return this._inventory;
+  get Inventory() {
+    return this._Inventory;
   }
 
-  set inventory(_inventory) {
-    this._inventory = inventory;
+  set Inventory(value) {
+    this._Inventory = value;
   }
 
-  get quests() {
-    return this._quests;
+  get Quests() {
+    return this._Quests;
   }
 
-  set quests(quests) {
-    this._quests = quests;
+  set Quests(value) {
+    this._Quests = value;
   }
 }

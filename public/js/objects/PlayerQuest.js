@@ -1,22 +1,22 @@
 export class PlayerQuest {
   constructor(details) {
-    this._details = details;
-    this._isCompleted = false;
+    this._Details = details;
+    this._IsCompleted = false;
   }
 
-  get details() {
-    return this._details;
+  get Details() {
+    return this._Details;
   }
 
-  set details(details) {
-    this._details = details;
+  set Details(value) {
+    this._Details = value;
   }
 
-  get isCompleted() {
-    return this._isCompleted;
+  get IsCompleted() {
+    return this._IsCompleted;
   }
 
-  set isCompleted(isCompleted) {
-    this._isCompleted = isCompleted;
+  set IsCompleted(value) {
+    this._IsCompleted = value;
   }
 }

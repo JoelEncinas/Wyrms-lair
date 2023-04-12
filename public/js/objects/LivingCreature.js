@@ -1,22 +1,22 @@
 export class LivingCreature {
   constructor(maximumHitpoints, currentHitpoints) {
-    this._maximumHitpoints = maximumHitpoints;
-    this._currentHitpoints = currentHitpoints;
+    this._MaximumHitpoints = maximumHitpoints;
+    this._CurrentHitpoints = currentHitpoints;
   }
 
-  get maximumHitpoints() {
-    return this._maximumHitpoints;
+  get MaximumHitpoints() {
+    return this._MaximumHitpoints;
   }
 
-  set maximumHitpoints(maximumHitpoints) {
-    this._maximumHitpoints = maximumHitpoints;
+  set MaximumHitpoints(value) {
+    this._MaximumHitpoints = value;
   }
 
-  get currentHitpoints() {
-    return this._currentHitpoints;
+  get CurrentHitpoints() {
+    return this._CurrentHitpoints;
   }
 
-  set currentHitpoints(currentHitpoints) {
-    this._currentHitpoints = currentHitpoints;
+  set CurrentHitpoints(value) {
+    this._CurrentHitpoints = value;
   }
 }

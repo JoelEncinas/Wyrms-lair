@@ -1,31 +1,31 @@
 export class Item {
   constructor(id, name, namePlural) {
-    this._id = id;
-    this._name = name;
-    this._namePlural = namePlural;
+    this._ID = id;
+    this._Name = name;
+    this._NamePlural = namePlural;
   }
 
-  get id() {
-    return this._id;
+  get ID() {
+    return this._ID;
   }
 
-  set id(id) {
-    this._id = id;
+  set ID(value) {
+    this._ID = value;
   }
 
-  get name() {
-    return this._name;
+  get Name() {
+    return this._Name;
   }
 
-  set name(name) {
-    this._name = name;
+  set Name(value) {
+    this._Name = value;
   }
 
-  get namePlural() {
-    return this._namePlural;
+  get NamePlural() {
+    return this._NamePlural;
   }
 
-  set namePlural(namePlural) {
-    this._namePlural = namePlural;
+  set NamePlural(value) {
+    this._NamePlural = value;
   }
 }

@@ -1,69 +1,61 @@
 import { LivingCreature } from "./LivingCreature.js";
 
 export class Monster extends LivingCreature {
-  constructor(
-    id,
-    name,
-    maximumHitpoints,
-    currentHitpoints,
-    maximumDamage,
-    rewardExperiencePoints,
-    rewardGold
-  ) {
-    super(maximumHitpoints, currentHitpoints);
-    this._id = id;
-    this._name = name;
-    this._maximumDamage = maximumDamage;
-    this._rewardExperiencePoints = rewardExperiencePoints;
-    this._rewardGold = rewardGold;
-    this._lootTable = [];
+  constructor(id, name, maximumDamage, rewardExperiencePoints, rewardGold, currentHitPoints, maximumHitPoints) {
+      super(currentHitPoints, maximumHitPoints);
+      this._ID = id;
+      this._Name = name;
+      this._MaximumDamage = maximumDamage;
+      this._RewardExperiencePoints = rewardExperiencePoints;
+      this._RewardGold = rewardGold;
+      this._LootTable = [];
   }
 
-  get id() {
-    return this._id;
+  get ID() {
+      return this._ID;
   }
 
-  set id(id) {
-    this._id = id;
+  set ID(value) {
+      this._ID = value;
   }
 
-  get name() {
-    return this._name;
+  get Name() {
+      return this._Name;
   }
 
-  set name(name) {
-    this._name = name;
+  set Name(value) {
+      this._Name = value;
   }
 
-  get maximumDamage() {
-    return this._maximumDamage;
+  get MaximumDamage() {
+      return this._MaximumDamage;
   }
 
-  set maximumDamage(maximumDamage) {
-    this._maximumDamage = maximumDamage;
+  set MaximumDamage(value) {
+      this._MaximumDamage = value;
   }
 
-  get rewardExperiencePoints() {
-    return this._rewardExperiencePoints;
+  get RewardExperiencePoints() {
+      return this._RewardExperiencePoints;
   }
 
-  set rewardExperiencePoints(rewardExperiencePoints) {
-    this._rewardExperiencePoints = rewardExperiencePoints;
+  set RewardExperiencePoints(value) {
+      this._RewardExperiencePoints = value;
   }
 
-  get rewardGold() {
-    return this._rewardGold;
+  get RewardGold() {
+      return this._RewardGold;
   }
 
-  set rewardGold(rewardGold) {
-    this._rewardGold = rewardGold;
+  set RewardGold(value) {
+      this._RewardGold = value;
   }
 
-  get lootTable() {
-    return this._lootTable;
+  get LootTable() {
+      return this._LootTable;
   }
 
-  set lootTable(lootTable) {
-    this._lootTable = lootTable;
+  set LootTable(value) {
+      this._LootTable = value;
   }
 }

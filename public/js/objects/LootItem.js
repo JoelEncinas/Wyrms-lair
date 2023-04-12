@@ -1,31 +1,31 @@
 export class LootItem {
   constructor(details, dropPercentage, isDefaultItem) {
-    this._details = details;
-    this._dropPercentage = dropPercentage;
-    this._isDefaultItem = isDefaultItem;
+    this._Details = details;
+    this._DropPercentage = dropPercentage;
+    this._IsDefaultItem = isDefaultItem;
   }
 
-  get details() {
-    return this._details;
+  get Details() {
+    return this._Details;
   }
 
-  set details(details) {
-    this._details = details;
+  set Details(value) {
+    this._Details = value;
   }
 
-  get dropPercentage() {
-    return this._dropPercentage;
+  get DropPercentage() {
+    return this._DropPercentage;
   }
 
-  set dropPercentage(dropPercentage) {
-    this._dropPercentage = dropPercentage;
+  set DropPercentage(value) {
+    this._DropPercentage = value;
   }
 
-  get isDefaultItem() {
-    return this._isDefaultItem;
+  get IsDefaultItem() {
+    return this._IsDefaultItem;
   }
 
-  set isDefaultItem(isDefaultItem) {
-    this._isDefaultItem = isDefaultItem;
+  set IsDefaultItem(value) {
+    this._IsDefaultItem = value;
   }
 }
