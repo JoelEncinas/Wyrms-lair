@@ -5,6 +5,7 @@ export class Quest {
     this._description = description;
     this._rewardExperiencePoints = rewardExperiencePoints;
     this._rewardGold = rewardGold;
+    this._rewardItem = rewardItem;
   }
 
   get id() {
@@ -45,5 +46,13 @@ export class Quest {
 
   set rewardGold(rewardGold) {
     this._rewardGold = rewardGold;
+  }
+
+  get rewardItem() {
+    return this._rewardItem;
+  }
+
+  set rewardItem(rewardItem) {
+    this._rewardItem = rewardItem;
   }
 }
