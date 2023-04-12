@@ -1,4 +1,6 @@
-export class Monster {
+import { LivingCreature } from "./LivingCreature.js";
+
+export class Monster extends LivingCreature {
   constructor(
     id,
     name,
@@ -8,10 +10,9 @@ export class Monster {
     rewardExperiencePoints,
     rewardGold
   ) {
+    super(maximumHitpoints, currentHitpoints);
     this._id = id;
     this._name = name;
-    this._maximumHitpoints = maximumHitpoints;
-    this._currentHitpoints = currentHitpoints;
     this._maximumDamage = maximumDamage;
     this._rewardExperiencePoints = rewardExperiencePoints;
     this._rewardGold = rewardGold;
@@ -31,22 +32,6 @@ export class Monster {
 
   set name(name) {
     this._name = name;
-  }
-
-  get maximumHitpoints() {
-    return this._maximumHitpoints;
-  }
-
-  set maximumHitpoints(maximumHitpoints) {
-    this._maximumHitpoints = maximumHitpoints;
-  }
-
-  get currentHitpoints() {
-    return this._currentHitpoints;
-  }
-
-  set currentHitpoints(currentHitpoints) {
-    this._currentHitpoints = currentHitpoints;
   }
 
   get maximumDamage() {

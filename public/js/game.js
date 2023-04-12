@@ -1,7 +1,7 @@
 // Wyrm's Lair
 
-import { Player } from "./Player.js";
-import { HealingPotion } from "./HealingPotion.js";
+import { Player } from "./scripts/Player.js";
+import { HealingPotion } from "./scripts/HealingPotion.js";
 
 // character stats
 const hpText = document.getElementById("hit-points");

@@ -1,26 +1,11 @@
-export class Player {
+import { LivingCreature } from "./LivingCreature.js";
+
+export class Player extends LivingCreature {
   constructor(currentHitpoints, maximumHitpoints, gold, experience, level) {
-    this._currentHitpoints = currentHitpoints;
-    this._maximumHitpoints = maximumHitpoints;
+    super(maximumHitpoints, currentHitpoints);
     this._gold = gold;
     this._experience = experience;
     this._level = level;
-  }
-
-  get currentHitpoints() {
-    return this._currentHitpoints;
-  }
-
-  set currentHitpoints(currentHitpoints) {
-    this._currentHitpoints = currentHitpoints;
-  }
-
-  get maximumHitpoints() {
-    return this._maximumHitpoints;
-  }
-
-  set maximumHitpoints(maximumHitpoints) {
-    this._maximumHitpoints = maximumHitpoints;
   }
 
   get gold() {
