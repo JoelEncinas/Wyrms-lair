@@ -12,33 +12,41 @@ export const monsters = [];
 export const quests = [];
 export const locations = [];
 
-const ITEM_ID_RUSTY_SWORD = 1;
-const ITEM_ID_RAT_TAIL = 2;
-const ITEM_ID_PIECE_OF_FUR = 3;
-const ITEM_ID_SNAKE_FANG = 4;
-const ITEM_ID_SNAKESKIN = 5;
-const ITEM_ID_CLUB = 6;
-const ITEM_ID_HEALING_POTION = 7;
-const ITEM_ID_SPIDER_FANG = 8;
-const ITEM_ID_SPIDER_SILK = 9;
-const ITEM_ID_ADVENTURER_PASS = 10;
+export const ITEM_IDS = {
+  RUSTY_SWORD: 1,
+  RAT_TAIL: 2,
+  PIECE_OF_FUR: 3,
+  SNAKE_FANG: 4,
+  SNAKESKIN: 5,
+  CLUB: 6,
+  HEALING_POTION: 7,
+  SPIDER_FANG: 8,
+  SPIDER_SILK: 9,
+  ADVENTURER_PASS: 10,
+};
 
-const MONSTER_ID_RAT = 1;
-const MONSTER_ID_SNAKE = 2;
-const MONSTER_ID_GIANT_SPIDER = 3;
+export const MONSTER_IDS = {
+  RAT: 1,
+  SNAKE: 2,
+  GIANT_SPIDER: 3,
+};
 
-const QUEST_ID_CLEAR_ALCHEMIST_GARDEN = 1;
-const QUEST_ID_CLEAR_FARMERS_FIELD = 2;
+export const QUEST_IDS = {
+  CLEAR_ALCHEMIST_GARDEN: 1,
+  CLEAR_FARMERS_FIELD: 2,
+};
 
-const LOCATION_ID_HOME = 1;
-const LOCATION_ID_TOWN_SQUARE = 2;
-const LOCATION_ID_GUARD_POST = 3;
-const LOCATION_ID_ALCHEMIST_HUT = 4;
-const LOCATION_ID_ALCHEMISTS_GARDEN = 5;
-const LOCATION_ID_FARMHOUSE = 6;
-const LOCATION_ID_FARM_FIELD = 7;
-const LOCATION_ID_BRIDGE = 8;
-const LOCATION_ID_SPIDER_FIELD = 9;
+export const LOCATION_IDS = {
+  HOME: 1,
+  TOWN_SQUARE: 2,
+  GUARD_POST: 3,
+  ALCHEMIST_HUT: 4,
+  ALCHEMISTS_GARDEN: 5,
+  FARMHOUSE: 6,
+  FARM_FIELD: 7,
+  BRIDGE: 8,
+  SPIDER_FIELD: 9,
+};
 
 function populateWorld() {
   populateItems();
@@ -49,39 +57,39 @@ function populateWorld() {
 
 function populateItems() {
   items.push(
-    new Weapon(ITEM_ID_RUSTY_SWORD, "Rusty sword", "Rusty swords", 0, 5)
+    new Weapon(ITEM_IDS.RUSTY_SWORD, "Rusty sword", "Rusty swords", 0, 5)
   );
-  items.push(new Item(ITEM_ID_RAT_TAIL, "Rat tail", "Rat tails"));
-  items.push(new Item(ITEM_ID_PIECE_OF_FUR, "Piece of fur", "Pieces of fur"));
-  items.push(new Item(ITEM_ID_SNAKE_FANG, "Snake fang", "Snake fangs"));
-  items.push(new Item(ITEM_ID_SNAKESKIN, "Snakeskin", "Snakeskins"));
-  items.push(new Weapon(ITEM_ID_CLUB, "Club", "Clubs", 3, 10));
+  items.push(new Item(ITEM_IDS.RAT_TAIL, "Rat tail", "Rat tails"));
+  items.push(new Item(ITEM_IDS.PIECE_OF_FUR, "Piece of fur", "Pieces of fur"));
+  items.push(new Item(ITEM_IDS.SNAKE_FANG, "Snake fang", "Snake fangs"));
+  items.push(new Item(ITEM_IDS.SNAKESKIN, "Snakeskin", "Snakeskins"));
+  items.push(new Weapon(ITEM_IDS.CLUB, "Club", "Clubs", 3, 10));
   items.push(
     new HealingPotion(
-      ITEM_ID_HEALING_POTION,
+      ITEM_IDS.HEALING_POTION,
       "Healing potion",
       "Healing potions",
       5
     )
   );
-  items.push(new Item(ITEM_ID_SPIDER_FANG, "Spider fang", "Spider fangs"));
-  items.push(new Item(ITEM_ID_SPIDER_SILK, "Spider silk", "Spider silks"));
+  items.push(new Item(ITEM_IDS.SPIDER_FANG, "Spider fang", "Spider fangs"));
+  items.push(new Item(ITEM_IDS.SPIDER_SILK, "Spider silk", "Spider silks"));
   items.push(
-    new Item(ITEM_ID_ADVENTURER_PASS, "Adventurer pass", "Adventurer passes")
+    new Item(ITEM_IDS.ADVENTURER_PASS, "Adventurer pass", "Adventurer passes")
   );
 }
 
 function populateMonsters() {
-  const rat = new Monster(MONSTER_ID_RAT, "Rat", 5, 3, 10, 3, 3);
-  rat.LootTable.push(new LootItem(itemByID(ITEM_ID_RAT_TAIL), 75, false));
-  rat.LootTable.push(new LootItem(itemByID(ITEM_ID_PIECE_OF_FUR), 75, true));
+  const rat = new Monster(MONSTER_IDS.RAT, "Rat", 5, 3, 10, 3, 3);
+  rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.RAT_TAIL), 75, false));
+  rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.PIECE_OF_FUR), 75, true));
 
-  const snake = new Monster(MONSTER_ID_SNAKE, "Snake", 5, 3, 10, 3, 3);
-  snake.LootTable.push(new LootItem(itemByID(ITEM_ID_SNAKE_FANG), 75, false));
-  snake.LootTable.push(new LootItem(itemByID(ITEM_ID_SNAKESKIN), 75, true));
+  const snake = new Monster(MONSTER_IDS.SNAKE, "Snake", 5, 3, 10, 3, 3);
+  snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKE_FANG), 75, false));
+  snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKESKIN), 75, true));
 
   const giantSpider = new Monster(
-    MONSTER_ID_GIANT_SPIDER,
+    MONSTER_IDS.GIANT_SPIDER,
     "Giant spider",
     20,
     5,
@@ -90,10 +98,10 @@ function populateMonsters() {
     10
   );
   giantSpider.LootTable.push(
-    new LootItem(itemByID(ITEM_ID_SPIDER_FANG), 75, true)
+    new LootItem(itemByID(ITEM_IDS.SPIDER_FANG), 75, true)
   );
   giantSpider.LootTable.push(
-    new LootItem(itemByID(ITEM_ID_SPIDER_SILK), 25, false)
+    new LootItem(itemByID(ITEM_IDS.SPIDER_SILK), 25, false)
   );
 
   monsters.push(rat);
@@ -103,7 +111,7 @@ function populateMonsters() {
 
 function populateQuests() {
   const clearAlchemistGarden = new Quest(
-    QUEST_ID_CLEAR_ALCHEMIST_GARDEN,
+    QUEST_IDS.CLEAR_ALCHEMIST_GARDEN,
     "Clear the alchemist's garden",
     "Kill rats in the alchemist's garden and bring back 3 rat tails. You will receive a healing potion and 10 gold pieces.",
     20,
@@ -111,13 +119,13 @@ function populateQuests() {
   );
 
   clearAlchemistGarden.QuestCompletionItems.push(
-    new QuestCompletionItem(itemByID(ITEM_ID_RAT_TAIL), 3)
+    new QuestCompletionItem(itemByID(ITEM_IDS.RAT_TAIL), 3)
   );
 
-  clearAlchemistGarden.RewardItem = itemByID(ITEM_ID_HEALING_POTION);
+  clearAlchemistGarden.RewardItem = itemByID(ITEM_IDS.HEALING_POTION);
 
   const clearFarmersField = new Quest(
-    QUEST_ID_CLEAR_FARMERS_FIELD,
+    QUEST_IDS.CLEAR_FARMERS_FIELD,
     "Clear the farmer's field",
     "Kill snakes in the farmer's field and bring back 3 snake fangs. You will receive an adventurer's pass and 20 gold pieces.",
     20,
@@ -125,10 +133,10 @@ function populateQuests() {
   );
 
   clearFarmersField.QuestCompletionItems.push(
-    new QuestCompletionItem(itemByID(ITEM_ID_SNAKE_FANG), 3)
+    new QuestCompletionItem(itemByID(ITEM_IDS.SNAKE_FANG), 3)
   );
 
-  clearFarmersField.RewardItem = itemByID(ITEM_ID_ADVENTURER_PASS);
+  clearFarmersField.RewardItem = itemByID(ITEM_IDS.ADVENTURER_PASS);
 
   quests.push(clearAlchemistGarden);
   quests.push(clearFarmersField);
@@ -136,64 +144,64 @@ function populateQuests() {
 
 function populateLocations() {
   const home = new Location(
-    LOCATION_ID_HOME,
+    LOCATION_IDS.HOME,
     "Home",
     "Your house. You really need to clean up the place."
   );
 
   const townSquare = new Location(
-    LOCATION_ID_TOWN_SQUARE,
+    LOCATION_IDS.TOWN_SQUARE,
     "Town square",
     "You see a fountain."
   );
 
   const alchemistHut = new Location(
-    LOCATION_ID_ALCHEMIST_HUT,
+    LOCATION_IDS.ALCHEMIST_HUT,
     "Alchemist's hut",
     "There are many strange plants on the shelves."
   );
-  alchemistHut.QuestAvailableHere = questByID(QUEST_ID_CLEAR_ALCHEMIST_GARDEN);
+  alchemistHut.QuestAvailableHere = questByID(QUEST_IDS.CLEAR_ALCHEMIST_GARDEN);
 
   const alchemistsGarden = new Location(
-    LOCATION_ID_ALCHEMISTS_GARDEN,
+    LOCATION_IDS.ALCHEMISTS_GARDEN,
     "Alchemist's garden",
     "Many plants are growing here."
   );
-  alchemistsGarden.MonsterLivingHere = monsterByID(MONSTER_ID_RAT);
+  alchemistsGarden.MonsterLivingHere = monsterByID(MONSTER_IDS.RAT);
 
   const farmhouse = new Location(
-    LOCATION_ID_FARMHOUSE,
+    LOCATION_IDS.FARMHOUSE,
     "Farmhouse",
     "There is a small farmhouse, with a farmer in front."
   );
-  farmhouse.QuestAvailableHere = questByID(QUEST_ID_CLEAR_FARMERS_FIELD);
+  farmhouse.QuestAvailableHere = questByID(QUEST_IDS.CLEAR_FARMERS_FIELD);
 
   const farmersField = new Location(
-    LOCATION_ID_FARM_FIELD,
+    LOCATION_IDS.FARM_FIELD,
     "Farmer's field",
     "You see rows of vegetables growing here."
   );
-  farmersField.MonsterLivingHere = monsterByID(MONSTER_ID_SNAKE);
+  farmersField.MonsterLivingHere = monsterByID(MONSTER_IDS.SNAKE);
 
   const guardPost = new Location(
-    LOCATION_ID_GUARD_POST,
+    LOCATION_IDS.GUARD_POST,
     "Guard post",
     "There is a large, tough-looking guard here.",
-    itemByID(ITEM_ID_ADVENTURER_PASS)
+    itemByID(ITEM_IDS.ADVENTURER_PASS)
   );
 
   const bridge = new Location(
-    LOCATION_ID_BRIDGE,
+    LOCATION_IDS.BRIDGE,
     "Bridge",
     "A stone bridge crosses a wide river."
   );
 
   const spiderField = new Location(
-    LOCATION_ID_SPIDER_FIELD,
+    LOCATION_IDS.SPIDER_FIELD,
     "Forest",
     "You see spider webs covering covering the trees in this forest."
   );
-  spiderField.MonsterLivingHere = monsterByID(MONSTER_ID_GIANT_SPIDER);
+  spiderField.MonsterLivingHere = monsterByID(MONSTER_IDS.GIANT_SPIDER);
 
   home.LocationToNorth = townSquare;
 
@@ -231,19 +239,19 @@ function populateLocations() {
   locations.push(spiderField);
 }
 
-function itemByID(id) {
+export function itemByID(id) {
   return items.find((item) => item._ID === id) || null;
 }
 
-function monsterByID(id) {
+export function monsterByID(id) {
   return monsters.find((monster) => monster._ID === id) || null;
 }
 
-function questByID(id) {
+export function questByID(id) {
   return quests.find((quest) => quest._ID === id) || null;
 }
 
-function locationByID(id) {
+export function locationByID(id) {
   return locations.find((location) => location._ID === id) || null;
 }
 

@@ -1,13 +1,21 @@
 import { LivingCreature } from "./LivingCreature.js";
 
 export class Player extends LivingCreature {
-  constructor(currentHitpoints, maximumHitpoints, gold, experience, level) {
+  constructor(
+    currentHitpoints,
+    maximumHitpoints,
+    gold,
+    experience,
+    level,
+    currentLocation
+  ) {
     super(maximumHitpoints, currentHitpoints);
     this._Gold = gold;
     this._Experience = experience;
     this._Level = level;
     this._Inventory = [];
     this._Quests = [];
+    this._CurrentLocation = currentLocation;
   }
 
   get Gold() {
@@ -48,5 +56,13 @@ export class Player extends LivingCreature {
 
   set Quests(value) {
     this._Quests = value;
+  }
+
+  get CurrentLocation() {
+    return this._CurrentLocation;
+  }
+
+  set CurrentLocation(value) {
+    this._CurrentLocation = value;
   }
 }
