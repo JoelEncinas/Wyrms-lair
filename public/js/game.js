@@ -46,6 +46,11 @@ player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.RUSTY_SWORD), 1));
 locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
 
+updateButtonClass(northBtn, player.CurrentLocation.LocationToNorth);
+updateButtonClass(eastBtn, player.CurrentLocation.LocationToEast);
+updateButtonClass(southBtn, player.CurrentLocation.LocationToSouth);
+updateButtonClass(westBtn, player.CurrentLocation.LocationToWest);
+
 // set character stats
 hpText.innerText = `${player.CurrentHitpoints} / ${player.MaximumHitpoints}`;
 goldText.innerText = player.Gold;
@@ -87,6 +92,7 @@ function moveTo(newLocation) {
 
     if (!playerHasRequiredItem) {
       // We didn't find the required item in their inventory, so display a message and stop trying to move
+      // TODO
       logDisplay =
         logDisplay.innerHTML +
         "You must have a " +
@@ -103,4 +109,20 @@ function moveTo(newLocation) {
   // update location UI
   locationName.innerText = player.CurrentLocation.Name;
   locationDescription.innerText = player.CurrentLocation.Description;
+
+  // Show/hide available movement buttons
+  updateButtonClass(northBtn, newLocation.LocationToNorth);
+  updateButtonClass(eastBtn, newLocation.LocationToEast);
+  updateButtonClass(southBtn, newLocation.LocationToSouth);
+  updateButtonClass(westBtn, newLocation.LocationToWest);
+}
+
+function updateButtonClass(button, location) {
+  if (location !== undefined) {
+    button.classList.remove("d-none");
+    button.classList.add("d-block");
+  } else {
+    button.classList.add("d-none");
+    button.classList.remove("d-block");
+  }
 }
