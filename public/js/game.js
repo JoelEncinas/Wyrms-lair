@@ -50,11 +50,14 @@ const eastBtn = document.getElementById("east");
 const southBtn = document.getElementById("south");
 const westBtn = document.getElementById("west");
 
+// quests
+const questsContainer = document.getElementById("quests");
+
 // character actions
 const weaponBtn = document.getElementById("weapon-btn");
 const potionBtn = document.getElementById("potion-btn");
 
-// default
+// FIRST LOAD
 let currentMonster;
 let player = new Player(10, 10, 20, 0, 1, locationByID(LOCATION_IDS.HOME));
 player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.RUSTY_SWORD), 1));
@@ -67,11 +70,12 @@ updateButtonClass(eastBtn, player.CurrentLocation.LocationToEast);
 updateButtonClass(southBtn, player.CurrentLocation.LocationToSouth);
 updateButtonClass(westBtn, player.CurrentLocation.LocationToWest);
 
-// set character stats
 hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 goldText.innerText = player.Gold;
 experienceText.innerText = player.Experience;
 levelText.innerText = player.Level;
+
+updateQuestsTable();
 
 // location btns
 northBtn.addEventListener("click", function (e) {
@@ -161,6 +165,31 @@ function addLine(text) {
   newLine.textContent = text;
   logDisplay.appendChild(newLine);
   logDisplay.scrollTop = logDisplay.scrollHeight;
+}
+
+function updateQuestsTable() {
+  const questsTable = questsContainer.querySelector("table");
+  questsTable.innerHTML = "";
+
+  const headerRow = document.createElement("tr");
+  headerRow.innerHTML =
+    '<th scope="col">Name</th><th scope="col">Completed</th>';
+  questsTable.appendChild(headerRow);
+
+  for (const quest of player.Quests) {
+    const questRow = document.createElement("tr");
+    const checkBoxCell = document.createElement("td");
+    const checkBox = document.createElement("input");
+    checkBox.className = "form-check-input";
+    checkBox.type = "checkbox";
+    checkBox.id = `flexSwitchCheck${quest.IsCompleted ? "Checked" : "Default"}`;
+    checkBox.checked = quest.IsCompleted;
+    checkBox.disabled = true;
+    checkBoxCell.appendChild(checkBox);
+    questRow.innerHTML = `<td>${quest.Details.Name}</td>`;
+    questRow.appendChild(checkBoxCell);
+    questsTable.appendChild(questRow);
+  }
 }
 
 function moveTo(newLocation) {
@@ -306,8 +335,8 @@ function moveTo(newLocation) {
   // TODO
   // Refresh player's inventory list
 
-  // TODO
   // Refresh player's quest list
+  updateQuestsTable();
 
   // TODO
   // Refresh player's weapons combobox
