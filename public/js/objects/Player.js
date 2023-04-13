@@ -79,4 +79,17 @@ export class Player extends LivingCreature {
 
     return false;
   }
+
+  hasThisQuest(quest) {
+    return this._Quests.some(
+      (playerQuest) => playerQuest.Details.ID === quest.ID
+    );
+  }
+
+  hasCompletedThisQuest(quest) {
+    const completedQuest = this._Quests.find(
+      (playerQuest) => playerQuest.Details.ID === quest.ID
+    );
+    return completedQuest ? completedQuest.IsCompleted : false;
+  }
 }

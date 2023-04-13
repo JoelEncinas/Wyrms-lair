@@ -197,18 +197,12 @@ function moveTo(newLocation) {
   // Does the location have a quest?
   if (newLocation.QuestAvailableHere !== undefined) {
     // See if the player already has the quest, and if they've completed it
-    let playerAlreadyHasQuest = false;
-    let playerAlreadyCompletedQuest = false;
-
-    player.Quests.forEach((playerQuest) => {
-      if (playerQuest.Details.ID === newLocation.QuestAvailableHere.ID) {
-        playerAlreadyHasQuest = true;
-
-        if (playerQuest.IsCompleted) {
-          playerAlreadyCompletedQuest = true;
-        }
-      }
-    });
+    let playerAlreadyHasQuest = player.hasThisQuest(
+      newLocation.QuestAvailableHere
+    );
+    let playerAlreadyCompletedQuest = player.hasCompletedThisQuest(
+      newLocation.QuestAvailableHere
+    );
 
     // See if the player already has the quest
     if (playerAlreadyHasQuest) {
