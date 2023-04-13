@@ -21,13 +21,17 @@ import { randomNumberGenerator } from "./utils/RandomNumberGenerator.js";
 
 // UI
 // character stats
-const hpText = document.getElementById("hit-points");
-const goldText = document.getElementById("gold");
-const experienceText = document.getElementById("experience");
-const levelText = document.getElementById("level");
+let hpText = document.getElementById("hit-points");
+let goldText = document.getElementById("gold");
+let experienceText = document.getElementById("experience");
+let levelText = document.getElementById("level");
+
+// location
+let locationName = document.getElementById("location-name");
+let locationDescription = document.getElementById("location-description");
 
 // log
-const logDisplay = document.getElementById("log-display");
+let logDisplay = document.getElementById("log-display");
 
 // character movement
 const northBtn = document.getElementById("north");
@@ -39,6 +43,9 @@ const westBtn = document.getElementById("west");
 let player = new Player(10, 10, 20, 0, 1, locationByID(LOCATION_IDS.HOME));
 player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.RUSTY_SWORD), 1));
 
+locationName.innerText = player.CurrentLocation.Name;
+locationDescription.innerText = player.CurrentLocation.Description;
+
 // set character stats
 hpText.innerText = `${player.CurrentHitpoints} / ${player.MaximumHitpoints}`;
 goldText.innerText = player.Gold;
@@ -46,6 +53,23 @@ experienceText.innerText = player.Experience;
 levelText.innerText = player.Level;
 
 console.log(player);
+
+// location btns
+northBtn.addEventListener("click", function (e) {
+  moveTo(player.CurrentLocation.LocationToNorth);
+});
+
+eastBtn.addEventListener("click", function (e) {
+  moveTo(player.CurrentLocation.LocationToEast);
+});
+
+southBtn.addEventListener("click", function (e) {
+  moveTo(player.CurrentLocation.LocationToSouth);
+});
+
+westBtn.addEventListener("click", function (e) {
+  moveTo(player.CurrentLocation.LocationToWest);
+});
 
 function moveTo(newLocation) {
   //Does the location have any required items
@@ -74,21 +98,9 @@ function moveTo(newLocation) {
 
   // Update the player's current location
   player.CurrentLocation = newLocation;
+  console.log(player);
+
+  // update location UI
+  locationName.innerText = player.CurrentLocation.Name;
+  locationDescription.innerText = player.CurrentLocation.Description;
 }
-
-// location btns
-northBtn.addEventListener("click", function (e) {
-  moveTo(player.CurrentLocation.LocationToNorth);
-});
-
-eastBtn.addEventListener("click", function (e) {
-  moveTo(player.CurrentLocation.LocationToEast);
-});
-
-southBtn.addEventListener("click", function (e) {
-  moveTo(player.CurrentLocation.LocationToSouth);
-});
-
-westBtn.addEventListener("click", function (e) {
-  moveTo(player.CurrentLocation.LocationToWest);
-});
