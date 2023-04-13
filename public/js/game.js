@@ -90,6 +90,15 @@ westBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToWest);
 });
 
+// action btns
+weaponBtn.addEventListener("click", function (e) {
+  // TODO
+});
+
+potionBtn.addEventListener("click", function (e) {
+  // TODO
+});
+
 function updateButtonClass(button, location) {
   if (location !== undefined) {
     if (button.classList.length > 0) {
@@ -148,39 +157,23 @@ function updatePlayerStats(
 }
 
 function addLine(text) {
-  // Create a new paragraph element
   const newLine = document.createElement("p");
-  // Set the text content of the paragraph to the provided text
   newLine.textContent = text;
-  // Append the paragraph element to the text container
   logDisplay.appendChild(newLine);
-  // Scroll to the bottom of the text container to show the latest line
   logDisplay.scrollTop = logDisplay.scrollHeight;
 }
 
 function moveTo(newLocation) {
-  //Does the location have any required items
-  if (newLocation.ItemToEnter !== undefined) {
-    // See if the player has the required item in their inventory
-    let playerHasRequiredItem = false;
+  console.log(player);
 
-    for (let ii of player.Inventory) {
-      if (ii.Details.ID === newLocation.ItemToEnter.ID) {
-        // We found the required item
-        playerHasRequiredItem = true;
-        break; // Exit out of the loop
-      }
-    }
+  if (!player.hasRequiredItemToEnter(newLocation)) {
+    addLine(
+      "You must have a " +
+        newLocation.ItemToEnter.Name +
+        " to enter this location."
+    );
 
-    if (!playerHasRequiredItem) {
-      // We didn't find the required item in their inventory, so display a message and stop trying to move
-      addLine(
-        "You must have a " +
-          newLocation.ItemToEnter.Name +
-          " to enter this location."
-      );
-      return;
-    }
+    return;
   }
 
   // Update the player's current location
@@ -341,13 +334,13 @@ function moveTo(newLocation) {
       // Iterate through the quest completion items
       for (let qci of newLocation.QuestAvailableHere.QuestCompletionItems) {
         if (qci.Quantity === 1) {
-          addLine(qci.Quantity.toString() + " " + qci.Details.Name);
+          addLine("- " + qci.Quantity.toString() + " " + qci.Details.Name);
         } else {
-          addLine(qci.Quantity.toString() + " " + qci.Details.NamePlural);
+          addLine(
+            "- " + qci.Quantity.toString() + " " + qci.Details.NamePlural
+          );
         }
       }
-
-      addLine("");
 
       // Add the quest to the player's quest list
       player.Quests.push(new PlayerQuest(newLocation.QuestAvailableHere));

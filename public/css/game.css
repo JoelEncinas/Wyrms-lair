@@ -1,5 +1,10 @@
 /* UTILS */
 
+#log-display p {
+  min-height: 24px;
+  padding: 2px 0;
+}
+
 /* GAME */
 
 #stats-location {

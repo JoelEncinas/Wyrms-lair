@@ -65,4 +65,18 @@ export class Player extends LivingCreature {
   set CurrentLocation(value) {
     this._CurrentLocation = value;
   }
+
+  hasRequiredItemToEnter(location) {
+    if (location.ItemToEnter === undefined) {
+      return true;
+    }
+
+    for (let ii of this.Inventory) {
+      if (ii.Details.ID === location.ItemToEnter.ID) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }
