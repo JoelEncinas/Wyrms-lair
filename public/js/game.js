@@ -41,6 +41,9 @@ let levelText = document.getElementById("level");
 let locationName = document.getElementById("location-name");
 let locationDescription = document.getElementById("location-description");
 
+// inventory
+const inventoryContainer = document.getElementById("inventory");
+
 // log
 let logDisplay = document.getElementById("log-display");
 
@@ -55,7 +58,9 @@ const questsContainer = document.getElementById("quests");
 
 // character actions
 const weaponBtn = document.getElementById("weapon-btn");
+const weaponOptions = document.getElementById("weapon-options");
 const potionBtn = document.getElementById("potion-btn");
+const potionOptions = document.getElementById("potion-options");
 
 // FIRST LOAD
 let currentMonster;
@@ -76,6 +81,11 @@ experienceText.innerText = player.Experience;
 levelText.innerText = player.Level;
 
 updateQuestsTable();
+updateInventoryTable(player.Inventory);
+
+updateWeaponListInUI();
+hideElement(weaponBtn);
+hideElement(potionOptions);
 
 // location btns
 northBtn.addEventListener("click", function (e) {
@@ -125,26 +135,26 @@ function updateButtonClass(button, location) {
   }
 }
 
-function showButton(button) {
-  if (button.classList.length > 0) {
-    [...button.classList].forEach((className) => {
+function showElement(element) {
+  if (element.classList.length > 0) {
+    [...element.classList].forEach((className) => {
       if (className === "d-none") {
-        button.classList.remove("d-none");
+        element.classList.remove("d-none");
       }
     });
   }
-  button.classList.add("d-block");
+  element.classList.add("d-block");
 }
 
-function hideButton(button) {
-  if (button.classList.length > 0) {
-    [...button.classList].forEach((className) => {
+function hideElement(element) {
+  if (element.classList.length > 0) {
+    [...element.classList].forEach((className) => {
       if (className === "d-block") {
-        button.classList.remove("d-block");
+        element.classList.remove("d-block");
       }
     });
   }
-  button.classList.add("d-none");
+  element.classList.add("d-none");
 }
 
 function updatePlayerStats(
@@ -189,6 +199,84 @@ function updateQuestsTable() {
     questRow.innerHTML = `<td>${quest.Details.Name}</td>`;
     questRow.appendChild(checkBoxCell);
     questsTable.appendChild(questRow);
+  }
+}
+
+function updateInventoryTable(inventory) {
+  const inventoryTable = inventoryContainer.querySelector("table");
+  inventoryTable.innerHTML = "";
+
+  const headerRow = document.createElement("tr");
+  headerRow.innerHTML =
+    '<th scope="col">Name</th><th scope="col">Quantity</th>';
+  inventoryTable.appendChild(headerRow);
+
+  for (const item of inventory) {
+    const itemRow = document.createElement("tr");
+    itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td>`;
+    inventoryTable.appendChild(itemRow);
+  }
+}
+
+function updateWeaponListInUI() {
+  var weapons = [];
+  var inventory = player.Inventory;
+
+  for (var i = 0; i < inventory.length; i++) {
+    var inventoryItem = inventory[i];
+    if (inventoryItem.Details instanceof Weapon) {
+      if (inventoryItem.Quantity > 0) {
+        weapons.push(inventoryItem.Details);
+      }
+    }
+  }
+
+  if (weapons.length === 0) {
+    hideElement(weaponOptions);
+    hideElement(weaponBtn);
+  } else {
+    weaponOptions.innerHTML = "";
+
+    for (var j = 0; j < weapons.length; j++) {
+      var weapon = weapons[j];
+      var option = document.createElement("option");
+      option.value = weapon.ID;
+      option.text = weapon.Name;
+      weaponOptions.add(option);
+    }
+
+    weaponOptions.selectedIndex = 0;
+  }
+}
+
+function updatePotionListInUI() {
+  var potions = [];
+  var inventory = player.Inventory;
+
+  for (var i = 0; i < inventory.length; i++) {
+    var inventoryItem = inventory[i];
+    if (inventoryItem.Details instanceof HealingPotion) {
+      if (inventoryItem.Quantity > 0) {
+        potions.push(inventoryItem.Details);
+      }
+    }
+  }
+
+  if (potions.length === 0) {
+    hideElement(potionOptions);
+    hideElement(potionBtn);
+  } else {
+    potionOptions.innerHTML = "";
+
+    for (var j = 0; j < potions.length; j++) {
+      var potion = potions[j];
+      var option = document.createElement("option");
+      option.value = potion.ID;
+      option.text = potion.Name;
+      potionOptions.add(option);
+    }
+
+    potionOptions.selectedIndex = 0;
   }
 }
 
@@ -323,25 +411,22 @@ function moveTo(newLocation) {
     );
 
     // TODO - hide and show everything not only buttons
-    showButton(weaponBtn);
-    showButton(potionBtn);
+    showElement(weaponBtn);
+    showElement(potionBtn);
   } else {
     currentMonster = null;
 
-    hideButton(weaponBtn);
-    hideButton(potionBtn);
+    hideElement(weaponBtn);
+    hideElement(potionBtn);
   }
 
-  // TODO
-  // Refresh player's inventory list
+  updateInventoryTable(player.Inventory);
 
-  // Refresh player's quest list
   updateQuestsTable();
 
-  // TODO
-  // Refresh player's weapons combobox
+  updateWeaponListInUI();
 
-  // TODO
-  // Refresh player's potions combobox
+  updatePotionListInUI();
+
   console.log(player);
 }

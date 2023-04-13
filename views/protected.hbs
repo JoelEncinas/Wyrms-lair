@@ -30,7 +30,7 @@
 
       <div id="inventory-log" class="row my-2">
         <div id="inventory" class="col-md-6">
-          <table>
+          <table id="inventory-table" class="table table-hover">
             <tr>
               <th>Name</th>
               <th>Quantity</th>
@@ -51,14 +51,6 @@
       <div id="quests-actions" class="row my-2">
         <div id="quests" class="col-md-6">
           <table id="quests-table" class="table table-hover">
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Completed</th>
-            </tr>
-            <tr>
-              <td>Clear the garden</td>
-              <td>No</td>
-            </tr>
           </table>
         </div>
         <div id="character-actions" class="col-md-6">
@@ -77,13 +69,11 @@
             </button>
           </div>
           <div id="character-actions">
-            <select>
-              <option value="Rusty sword">Rusty sword</option>
+            <select id="weapon-options">
             </select>
             <button id="weapon-btn">Use</button>
 
-            <select>
-              <option value="Healing potion">Healing potion</option>
+            <select id="potion-options">
             </select>
             <button id="potion-btn">Use</button>
           </div>

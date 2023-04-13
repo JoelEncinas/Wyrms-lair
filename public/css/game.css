@@ -5,6 +5,14 @@
   padding: 2px 0;
 }
 
+table {
+  table-layout: fixed;
+}
+
+th {
+  padding-bottom: 10px !important;
+}
+
 /* GAME */
 
 #stats-location {
