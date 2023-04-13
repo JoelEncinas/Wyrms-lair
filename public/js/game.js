@@ -101,7 +101,7 @@ function updatePlayerStats(
 
 function addLine(text) {
   // Create a new paragraph element
-  const newLine = document.createElement('p');
+  const newLine = document.createElement("p");
   // Set the text content of the paragraph to the provided text
   newLine.textContent = text;
   // Append the paragraph element to the text container
@@ -126,7 +126,11 @@ function moveTo(newLocation) {
 
     if (!playerHasRequiredItem) {
       // We didn't find the required item in their inventory, so display a message and stop trying to move
-      addLine("You must have a " + newLocation.ItemToEnter + " to enter this location.");
+      addLine(
+        "You must have a " +
+          newLocation.ItemToEnter +
+          " to enter this location."
+      );
       return;
     }
   }
@@ -207,11 +211,15 @@ function moveTo(newLocation) {
         // The player has all items required to complete the quest
         if (playerHasAllItemsToCompleteQuest) {
           // Display message
-          addLine("You complete the '" + newLocation.QuestAvailableHere.Name + "' quest.");
+          addLine(
+            "You complete the '" +
+              newLocation.QuestAvailableHere.Name +
+              "' quest."
+          );
 
           // Remove quest items from inventory
-          newLocation.QuestAvailableHere.QuestCompletionItems.forEach(qci => {
-            player.Inventory.forEach(ii => {
+          newLocation.QuestAvailableHere.QuestCompletionItems.forEach((qci) => {
+            player.Inventory.forEach((ii) => {
               if (ii.Details.ID === qci.Details.ID) {
                 // Subtract the quantity from the player's inventory that was needed to complete the quest
                 ii.Quantity -= qci.Quantity;
@@ -222,17 +230,81 @@ function moveTo(newLocation) {
 
           // Give quest rewards
           addLine("You receive: ");
-          addLine(newLocation.QuestAvailableHere.RewardExperiencePoints.ToString() + " experience points.");
-          addLine(newLocation.QuestAvailableHere.RewardGold.ToString() + " gold.");
+          addLine(
+            newLocation.QuestAvailableHere.RewardExperiencePoints.ToString() +
+              " experience points."
+          );
+          addLine(
+            newLocation.QuestAvailableHere.RewardGold.ToString() + " gold."
+          );
           addLine(newLocation.QuestAvailableHere.RewardItem.Name + " .");
           addLine("");
 
-          player.ExperiencePoints += newLocation.QuestAvailableHere.RewardExperiencePoints;
+          player.ExperiencePoints +=
+            newLocation.QuestAvailableHere.RewardExperiencePoints;
           player.Gold += newLocation.QuestAvailableHere.RewardGold;
 
+          // Add the reward item to the player's inventory
+          let addedItemToPlayerInventory = false;
+
+          // Iterate through the player's inventory to find the reward item
+          for (let ii of player.Inventory) {
+            if (
+              ii.Details.ID === newLocation.QuestAvailableHere.RewardItem.ID
+            ) {
+              // They have the item in their inventory, so increase the quantity by one
+              ii.Quantity++;
+
+              addedItemToPlayerInventory = true;
+
+              break;
+            }
+          }
+
+          // They didn't have the item, so add it to their inventory, with a quantity of 1
+          if (!addedItemToPlayerInventory) {
+            player.Inventory.push(
+              new InventoryItem(newLocation.QuestAvailableHere.RewardItem, 1)
+            );
+          }
+
+          // Mark the quest as completed
+          // Find the quest in the player's quest list
+          for (let pq of player.Quests) {
+            if (pq.Details.ID === newLocation.QuestAvailableHere.ID) {
+              // Mark it as completed
+              pq.IsCompleted = true;
+
+              break;
+            }
+          }
         }
-
-
       }
+    } else {
+      // The player does not already have the quest
+
+      // Display the messages
+      addLine(
+        "You receive the " + newLocation.QuestAvailableHere.Name + " quest."
+      );
+      addLine(newLocation.QuestAvailableHere.Description);
+      addLine("To complete it, return with:");
+
+      // Iterate through the quest completion items
+      for (let qci of newLocation.QuestAvailableHere.QuestCompletionItems) {
+        if (qci.Quantity === 1) {
+          addLine(qci.Quantity.toString() + " " + qci.Details.Name);
+        } else {
+          addLine(qci.Quantity.toString() + " " + qci.Details.NamePlural);
+        }
+      }
+
+      addLine("");
+
+      // Add the quest to the player's quest list
+      player.Quests.push(new PlayerQuest(newLocation.QuestAvailableHere));
+    }
   }
+
+  //
 }
