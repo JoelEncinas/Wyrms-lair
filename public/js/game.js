@@ -64,7 +64,14 @@ const potionOptions = document.getElementById("potion-options");
 
 // FIRST LOAD
 let currentMonster;
-let player = new Player(10, 10, 20, 0, 1, locationByID(LOCATION_IDS.HOME));
+let player = new Player(
+  10,
+  10,
+  20,
+  0,
+  1,
+  locationByID(LOCATION_IDS.ALCHEMIST_HUT)
+);
 player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.RUSTY_SWORD), 1));
 
 locationName.innerText = player.CurrentLocation.Name;
@@ -108,7 +115,28 @@ westBtn.addEventListener("click", function (e) {
 
 // action btns
 weaponBtn.addEventListener("click", function (e) {
-  // TODO
+  // Get the currently selected weapon from the cboWeapons ComboBox
+  let currentWeapon = itemByID(
+    parseInt(weaponOptions.options[weaponOptions.selectedIndex].value)
+  );
+
+  // Determine the amount of damage to do to the monster
+  let damageToMonster = randomNumberGenerator(
+    currentWeapon.MinimumDamage,
+    currentWeapon.MaximumDamage
+  );
+
+  // Apply the damage to the monster's CurrentHitPoints
+  currentMonster.CurrentHitPoints -= damageToMonster;
+
+  // Display message
+  addLine(
+    "You hit the " +
+      currentMonster.Name +
+      " for " +
+      damageToMonster +
+      " points."
+  );
 });
 
 potionBtn.addEventListener("click", function (e) {
