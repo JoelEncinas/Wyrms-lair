@@ -85,6 +85,8 @@ updateInventoryTable(player.Inventory);
 
 updateWeaponListInUI();
 hideElement(weaponBtn);
+hideElement(weaponOptions);
+hideElement(potionBtn);
 hideElement(potionOptions);
 
 // location btns
@@ -410,14 +412,17 @@ function moveTo(newLocation) {
       ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
     );
 
-    // TODO - hide and show everything not only buttons
     showElement(weaponBtn);
+    showElement(weaponOptions);
     showElement(potionBtn);
+    showElement(potionOptions);
   } else {
     currentMonster = null;
 
     hideElement(weaponBtn);
+    hideElement(weaponOptions);
     hideElement(potionBtn);
+    hideElement(potionOptions);
   }
 
   updateInventoryTable(player.Inventory);
