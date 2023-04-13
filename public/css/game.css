@@ -3,15 +3,15 @@
 /* GAME */
 
 #stats-location {
-  min-height: 20vh;
+  height: 200px;
 }
 
 #inventory-log {
-  min-height: 30vh;
+  height: 200px;
 }
 
 #quests-actions {
-  min-height: 20vh;
+  height: 200px;
 }
 
 /* LOG */

@@ -1,7 +1,18 @@
 // Wyrm's Lair
 
-import { Player } from "./objects/Player.js";
+import { HealingPotion } from "./objects/HealingPotion.js";
 import { InventoryItem } from "./objects/InventoryItem.js";
+import { Item } from "./objects/Item.js";
+import { LivingCreature } from "./objects/LivingCreature.js";
+import { Location } from "./objects/Location.js";
+import { LootItem } from "./objects/LootItem.js";
+import { Monster } from "./objects/Monster.js";
+import { Player } from "./objects/Player.js";
+import { PlayerQuest } from "./objects/PlayerQuest.js";
+import { Quest } from "./objects/Quest.js";
+import { QuestCompletionItem } from "./objects/QuestCompletionItem.js";
+import { Weapon } from "./objects/Weapon.js";
+
 import {
   items,
   monsters,
@@ -39,8 +50,13 @@ const eastBtn = document.getElementById("east");
 const southBtn = document.getElementById("south");
 const westBtn = document.getElementById("west");
 
+// character actions
+const weaponBtn = document.getElementById("weapon-btn");
+const potionBtn = document.getElementById("potion-btn");
+
 // default
-let player = new Player(5, 10, 20, 0, 1, locationByID(LOCATION_IDS.HOME));
+let currentMonster;
+let player = new Player(10, 10, 20, 0, 1, locationByID(LOCATION_IDS.HOME));
 player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.RUSTY_SWORD), 1));
 
 locationName.innerText = player.CurrentLocation.Name;
@@ -56,8 +72,6 @@ hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 goldText.innerText = player.Gold;
 experienceText.innerText = player.Experience;
 levelText.innerText = player.Level;
-
-console.log(player);
 
 // location btns
 northBtn.addEventListener("click", function (e) {
@@ -78,12 +92,46 @@ westBtn.addEventListener("click", function (e) {
 
 function updateButtonClass(button, location) {
   if (location !== undefined) {
-    button.classList.remove("d-none");
+    if (button.classList.length > 0) {
+      [...button.classList].forEach((className) => {
+        if (className === "d-none") {
+          button.classList.remove("d-none");
+        }
+      });
+    }
     button.classList.add("d-block");
   } else {
     button.classList.add("d-none");
-    button.classList.remove("d-block");
+    if (button.classList.length > 0) {
+      [...button.classList].forEach((className) => {
+        if (className === "d-block") {
+          button.classList.remove("d-block");
+        }
+      });
+    }
   }
+}
+
+function showButton(button) {
+  if (button.classList.length > 0) {
+    [...button.classList].forEach((className) => {
+      if (className === "d-none") {
+        button.classList.remove("d-none");
+      }
+    });
+  }
+  button.classList.add("d-block");
+}
+
+function hideButton(button) {
+  if (button.classList.length > 0) {
+    [...button.classList].forEach((className) => {
+      if (className === "d-block") {
+        button.classList.remove("d-block");
+      }
+    });
+  }
+  button.classList.add("d-none");
 }
 
 function updatePlayerStats(
@@ -107,7 +155,7 @@ function addLine(text) {
   // Append the paragraph element to the text container
   logDisplay.appendChild(newLine);
   // Scroll to the bottom of the text container to show the latest line
-  logDisplay.scrollTop = textContainer.scrollHeight;
+  logDisplay.scrollTop = logDisplay.scrollHeight;
 }
 
 function moveTo(newLocation) {
@@ -128,7 +176,7 @@ function moveTo(newLocation) {
       // We didn't find the required item in their inventory, so display a message and stop trying to move
       addLine(
         "You must have a " +
-          newLocation.ItemToEnter +
+          newLocation.ItemToEnter.Name +
           " to enter this location."
       );
       return;
@@ -305,6 +353,48 @@ function moveTo(newLocation) {
       player.Quests.push(new PlayerQuest(newLocation.QuestAvailableHere));
     }
   }
+  // Does the location have a monster?
+  if (newLocation.MonsterLivingHere !== undefined) {
+    addLine("You see a " + newLocation.MonsterLivingHere.Name);
 
-  //
+    // Make a new monster, using the values from the standard monster in the World.Monster list
+    let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
+
+    currentMonster = new Monster(
+      standardMonster.ID,
+      standardMonster.Name,
+      standardMonster.MaximumDamage,
+      standardMonster.RewardExperiencePoints,
+      standardMonster.RewardGold,
+      standardMonster.CurrentHitPoints,
+      standardMonster.MaximumHitPoints
+    );
+
+    // Iterate through the loot items
+    currentMonster.LootTable.push(
+      ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
+    );
+
+    // TODO - hide and show everything not only buttons
+    showButton(weaponBtn);
+    showButton(potionBtn);
+  } else {
+    currentMonster = null;
+
+    hideButton(weaponBtn);
+    hideButton(potionBtn);
+  }
+
+  // TODO
+  // Refresh player's inventory list
+
+  // TODO
+  // Refresh player's quest list
+
+  // TODO
+  // Refresh player's weapons combobox
+
+  // TODO
+  // Refresh player's potions combobox
+  console.log(player);
 }
