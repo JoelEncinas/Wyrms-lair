@@ -40,7 +40,7 @@ const southBtn = document.getElementById("south");
 const westBtn = document.getElementById("west");
 
 // default
-let player = new Player(10, 10, 20, 0, 1, locationByID(LOCATION_IDS.HOME));
+let player = new Player(5, 10, 20, 0, 1, locationByID(LOCATION_IDS.HOME));
 player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.RUSTY_SWORD), 1));
 
 locationName.innerText = player.CurrentLocation.Name;
@@ -52,7 +52,7 @@ updateButtonClass(southBtn, player.CurrentLocation.LocationToSouth);
 updateButtonClass(westBtn, player.CurrentLocation.LocationToWest);
 
 // set character stats
-hpText.innerText = `${player.CurrentHitpoints} / ${player.MaximumHitpoints}`;
+hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 goldText.innerText = player.Gold;
 experienceText.innerText = player.Experience;
 levelText.innerText = player.Level;
@@ -76,6 +76,40 @@ westBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToWest);
 });
 
+function updateButtonClass(button, location) {
+  if (location !== undefined) {
+    button.classList.remove("d-none");
+    button.classList.add("d-block");
+  } else {
+    button.classList.add("d-none");
+    button.classList.remove("d-block");
+  }
+}
+
+function updatePlayerStats(
+  player,
+  hpText,
+  goldText,
+  experienceText,
+  levelText
+) {
+  hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
+  goldText.innerText = player.Gold;
+  experienceText.innerText = player.Experience;
+  levelText.innerText = player.Level;
+}
+
+function addLine(text) {
+  // Create a new paragraph element
+  const newLine = document.createElement('p');
+  // Set the text content of the paragraph to the provided text
+  newLine.textContent = text;
+  // Append the paragraph element to the text container
+  logDisplay.appendChild(newLine);
+  // Scroll to the bottom of the text container to show the latest line
+  logDisplay.scrollTop = textContainer.scrollHeight;
+}
+
 function moveTo(newLocation) {
   //Does the location have any required items
   if (newLocation.ItemToEnter !== undefined) {
@@ -92,19 +126,13 @@ function moveTo(newLocation) {
 
     if (!playerHasRequiredItem) {
       // We didn't find the required item in their inventory, so display a message and stop trying to move
-      // TODO
-      logDisplay =
-        logDisplay.innerHTML +
-        "You must have a " +
-        newLocation.ItemToEnter +
-        " to enter this location.";
+      addLine("You must have a " + newLocation.ItemToEnter + " to enter this location.");
       return;
     }
   }
 
   // Update the player's current location
   player.CurrentLocation = newLocation;
-  console.log(player);
 
   // update location UI
   locationName.innerText = player.CurrentLocation.Name;
@@ -115,14 +143,96 @@ function moveTo(newLocation) {
   updateButtonClass(eastBtn, newLocation.LocationToEast);
   updateButtonClass(southBtn, newLocation.LocationToSouth);
   updateButtonClass(westBtn, newLocation.LocationToWest);
-}
 
-function updateButtonClass(button, location) {
-  if (location !== undefined) {
-    button.classList.remove("d-none");
-    button.classList.add("d-block");
-  } else {
-    button.classList.add("d-none");
-    button.classList.remove("d-block");
+  // Completely heal the player
+  player.CurrentHitPoints = player.MaximumHitPoints;
+
+  updatePlayerStats(player, hpText, goldText, experienceText, levelText);
+
+  // Does the location have a quest?
+  if (newLocation.QuestAvailableHere !== undefined) {
+    // See if the player already has the quest, and if they've completed it
+    let playerAlreadyHasQuest = false;
+    let playerAlreadyCompletedQuest = false;
+
+    player.Quests.forEach((playerQuest) => {
+      if (playerQuest.Details.ID === newLocation.QuestAvailableHere.ID) {
+        playerAlreadyHasQuest = true;
+
+        if (playerQuest.IsCompleted) {
+          playerAlreadyCompletedQuest = true;
+        }
+      }
+    });
+
+    // See if the player already has the quest
+    if (playerAlreadyHasQuest) {
+      // If the player has not completed the quest yet
+      if (!playerAlreadyCompletedQuest) {
+        // See if the player has all the items needed to complete the quest
+        let playerHasAllItemsToCompleteQuest = true;
+
+        newLocation.QuestAvailableHere.QuestCompletionItems.forEach((qci) => {
+          let foundItemInPlayersInventory = false;
+
+          // Check each item in the player's inventory, to see if they have it, and enough of it
+          player.Inventory.forEach((ii) => {
+            // The player has this item in their inventory
+            if (ii.Details.ID === qci.Details.ID) {
+              foundItemInPlayersInventory = true;
+
+              if (ii.Quantity < qci.Quantity) {
+                // The player does not have enough of this item to complete the quest
+                playerHasAllItemsToCompleteQuest = false;
+
+                // There is no reason to continue checking for the other quest completion items
+                return;
+              }
+
+              // We found the item, so don't check the rest of the player's inventory
+              return;
+            }
+          });
+
+          // If we didn't find the required item, set our variable and stop looking for other items
+          if (!foundItemInPlayersInventory) {
+            // The player does not have this item in their inventory
+            playerHasAllItemsToCompleteQuest = false;
+
+            // There is no reason to continue checking for the other quest completion items
+            return;
+          }
+        });
+
+        // The player has all items required to complete the quest
+        if (playerHasAllItemsToCompleteQuest) {
+          // Display message
+          addLine("You complete the '" + newLocation.QuestAvailableHere.Name + "' quest.");
+
+          // Remove quest items from inventory
+          newLocation.QuestAvailableHere.QuestCompletionItems.forEach(qci => {
+            player.Inventory.forEach(ii => {
+              if (ii.Details.ID === qci.Details.ID) {
+                // Subtract the quantity from the player's inventory that was needed to complete the quest
+                ii.Quantity -= qci.Quantity;
+                return;
+              }
+            });
+          });
+
+          // Give quest rewards
+          addLine("You receive: ");
+          addLine(newLocation.QuestAvailableHere.RewardExperiencePoints.ToString() + " experience points.");
+          addLine(newLocation.QuestAvailableHere.RewardGold.ToString() + " gold.");
+          addLine(newLocation.QuestAvailableHere.RewardItem.Name + " .");
+          addLine("");
+
+          player.ExperiencePoints += newLocation.QuestAvailableHere.RewardExperiencePoints;
+          player.Gold += newLocation.QuestAvailableHere.RewardGold;
+
+        }
+
+
+      }
   }
 }

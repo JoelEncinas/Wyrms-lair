@@ -2,14 +2,14 @@ import { LivingCreature } from "./LivingCreature.js";
 
 export class Player extends LivingCreature {
   constructor(
-    currentHitpoints,
-    maximumHitpoints,
+    currentHitPoints,
+    maximumHitPoints,
     gold,
     experience,
     level,
     currentLocation
   ) {
-    super(maximumHitpoints, currentHitpoints);
+    super(maximumHitPoints, currentHitPoints);
     this._Gold = gold;
     this._Experience = experience;
     this._Level = level;
