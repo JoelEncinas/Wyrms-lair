@@ -208,40 +208,8 @@ function moveTo(newLocation) {
     if (playerAlreadyHasQuest) {
       // If the player has not completed the quest yet
       if (!playerAlreadyCompletedQuest) {
-        // See if the player has all the items needed to complete the quest
-        let playerHasAllItemsToCompleteQuest = true;
-
-        newLocation.QuestAvailableHere.QuestCompletionItems.forEach((qci) => {
-          let foundItemInPlayersInventory = false;
-
-          // Check each item in the player's inventory, to see if they have it, and enough of it
-          player.Inventory.forEach((ii) => {
-            // The player has this item in their inventory
-            if (ii.Details.ID === qci.Details.ID) {
-              foundItemInPlayersInventory = true;
-
-              if (ii.Quantity < qci.Quantity) {
-                // The player does not have enough of this item to complete the quest
-                playerHasAllItemsToCompleteQuest = false;
-
-                // There is no reason to continue checking for the other quest completion items
-                return;
-              }
-
-              // We found the item, so don't check the rest of the player's inventory
-              return;
-            }
-          });
-
-          // If we didn't find the required item, set our variable and stop looking for other items
-          if (!foundItemInPlayersInventory) {
-            // The player does not have this item in their inventory
-            playerHasAllItemsToCompleteQuest = false;
-
-            // There is no reason to continue checking for the other quest completion items
-            return;
-          }
-        });
+        let playerHasAllItemsToCompleteQuest =
+          player.HasAllQuestCompletionItems(newLocation.QuestAvailableHere);
 
         // The player has all items required to complete the quest
         if (playerHasAllItemsToCompleteQuest) {
@@ -253,15 +221,7 @@ function moveTo(newLocation) {
           );
 
           // Remove quest items from inventory
-          newLocation.QuestAvailableHere.QuestCompletionItems.forEach((qci) => {
-            player.Inventory.forEach((ii) => {
-              if (ii.Details.ID === qci.Details.ID) {
-                // Subtract the quantity from the player's inventory that was needed to complete the quest
-                ii.Quantity -= qci.Quantity;
-                return;
-              }
-            });
-          });
+          player.RemoveQuestCompletionItems(newLocation.QuestAvailableHere);
 
           // Give quest rewards
           addLine("You receive: ");
@@ -280,39 +240,10 @@ function moveTo(newLocation) {
           player.Gold += newLocation.QuestAvailableHere.RewardGold;
 
           // Add the reward item to the player's inventory
-          let addedItemToPlayerInventory = false;
-
-          // Iterate through the player's inventory to find the reward item
-          for (let ii of player.Inventory) {
-            if (
-              ii.Details.ID === newLocation.QuestAvailableHere.RewardItem.ID
-            ) {
-              // They have the item in their inventory, so increase the quantity by one
-              ii.Quantity++;
-
-              addedItemToPlayerInventory = true;
-
-              break;
-            }
-          }
-
-          // They didn't have the item, so add it to their inventory, with a quantity of 1
-          if (!addedItemToPlayerInventory) {
-            player.Inventory.push(
-              new InventoryItem(newLocation.QuestAvailableHere.RewardItem, 1)
-            );
-          }
+          player.AddItemToInventory(newLocation.QuestAvailableHere.RewardItem);
 
           // Mark the quest as completed
-          // Find the quest in the player's quest list
-          for (let pq of player.Quests) {
-            if (pq.Details.ID === newLocation.QuestAvailableHere.ID) {
-              // Mark it as completed
-              pq.IsCompleted = true;
-
-              break;
-            }
-          }
+          player.MarkQuestCompleted(newLocation.QuestAvailableHere);
         }
       }
     } else {

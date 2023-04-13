@@ -81,15 +81,74 @@ export class Player extends LivingCreature {
   }
 
   hasThisQuest(quest) {
-    return this._Quests.some(
+    return this.Quests.some(
       (playerQuest) => playerQuest.Details.ID === quest.ID
     );
   }
 
   hasCompletedThisQuest(quest) {
-    const completedQuest = this._Quests.find(
+    const completedQuest = this.Quests.find(
       (playerQuest) => playerQuest.Details.ID === quest.ID
     );
     return completedQuest ? completedQuest.IsCompleted : false;
+  }
+
+  HasAllQuestCompletionItems(quest) {
+    for (const qci of quest.QuestCompletionItems) {
+      let foundItemInPlayersInventory = false;
+      for (const ii of this.Inventory) {
+        if (ii.Details.ID === qci.Details.ID) {
+          foundItemInPlayersInventory = true;
+          if (ii.Quantity < qci.Quantity) {
+            return false;
+          }
+        }
+      }
+      if (!foundItemInPlayersInventory) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  RemoveQuestCompletionItems(quest) {
+    quest.QuestCompletionItems.forEach((qci) => {
+      const matchingInventoryItems = this.Inventory.filter(
+        (ii) => ii.Details.ID === qci.Details.ID
+      );
+      if (matchingInventoryItems.length > 0) {
+        const totalQuantityToRemove = qci.Quantity;
+        for (const ii of matchingInventoryItems) {
+          const quantityToRemove = Math.min(ii.Quantity, totalQuantityToRemove);
+          ii.Quantity -= quantityToRemove;
+          totalQuantityToRemove -= quantityToRemove;
+          if (totalQuantityToRemove === 0) {
+            break;
+          }
+        }
+      }
+    });
+  }
+
+  AddItemToInventory(item) {
+    for (let ii of this.Inventory) {
+      if (ii.Details.ID === item.ID) {
+        ii.Quantity++;
+
+        return;
+      }
+    }
+
+    this.Inventory.push(new InventoryItem(item, 1));
+  }
+
+  MarkQuestCompleted(quest) {
+    for (let pq of this.Quests) {
+      if (pq.Details.ID === quest.ID) {
+        pq.IsCompleted = true;
+
+        return;
+      }
+    }
   }
 }
