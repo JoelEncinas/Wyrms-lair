@@ -93,11 +93,11 @@ function populateItems() {
 function populateMonsters() {
   const rat = new Monster(MONSTER_IDS.RAT, "Rat", 5, 3, 10, 3, 3);
   rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.RAT_TAIL), 75, false));
-  rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.PIECE_OF_FUR), 75, true));
+  rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.PIECE_OF_FUR), 65, true));
 
   const snake = new Monster(MONSTER_IDS.SNAKE, "Snake", 5, 3, 10, 3, 3);
   snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKE_FANG), 75, false));
-  snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKESKIN), 75, true));
+  snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKESKIN), 65, true));
 
   const giantSpider = new Monster(
     MONSTER_IDS.GIANT_SPIDER,

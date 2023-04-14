@@ -66,7 +66,7 @@ const potionOptions = document.getElementById("potion-options");
 let currentMonster;
 let player = new Player(
   10,
-  10,
+  10000,
   20,
   0,
   1,
@@ -146,7 +146,7 @@ weaponBtn.addEventListener("click", function (e) {
   if (currentMonster.CurrentHitPoints <= 0) {
     addLine("You defeated the " + currentMonster.Name + " .");
 
-    player.Experience += currentMonster.RewardExperiencePoints;
+    player.addExperiencePoints(currentMonster.RewardExperiencePoints);
     addLine(
       "You gain <span class='text-warning'>" +
         currentMonster.RewardExperiencePoints +
@@ -545,8 +545,9 @@ function moveTo(newLocation) {
           );
           addLine(newLocation.QuestAvailableHere.RewardGold + " gold.");
 
-          player.ExperiencePoints +=
-            newLocation.QuestAvailableHere.RewardExperiencePoints;
+          player.addExperiencePoints(
+            newLocation.QuestAvailableHere.RewardExperiencePoints
+          );
           player.Gold += newLocation.QuestAvailableHere.RewardGold;
 
           for (
@@ -612,4 +613,6 @@ function moveTo(newLocation) {
   updateWeaponListInUI();
 
   updatePotionListInUI();
+
+  updatePlayerStats(player, hpText, goldText, experienceText, levelText);
 }
