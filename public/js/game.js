@@ -75,11 +75,11 @@ let player = new Player(
 );
 
 player.AddItemToInventory(itemByID(ITEM_IDS.RUSTY_SWORD));
+player.AddItemToInventory(itemByID(ITEM_IDS.KNIFE));
+player.CurrentWeapon = ITEM_IDS.RUSTY_SWORD;
 
 locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
-
-console.log(player.Inventory);
 
 updateButtonClass(northBtn, player.CurrentLocation.LocationToNorth);
 updateButtonClass(eastBtn, player.CurrentLocation.LocationToEast);
@@ -96,6 +96,8 @@ hideElement(weaponBtn);
 hideElement(weaponOptions);
 hideElement(potionBtn);
 hideElement(potionOptions);
+
+console.log(player);
 
 // current location global
 let currentLocation = locationByID(LOCATION_IDS.HOME);
@@ -119,6 +121,10 @@ westBtn.addEventListener("click", function (e) {
 
 // action buttons
 weaponBtn.addEventListener("click", function (e) {
+  player.CurrentWeapon = parseInt(
+    weaponOptions.options[weaponOptions.selectedIndex].value
+  );
+
   let currentWeapon = itemByID(
     parseInt(weaponOptions.options[weaponOptions.selectedIndex].value)
   );
@@ -383,6 +389,7 @@ function updateInventoryTable(inventory) {
   }
 }
 
+// TODO - keep the index of the user weapon
 function updateWeaponListInUI() {
   var weapons = [];
   var inventory = player.Inventory;
@@ -410,7 +417,15 @@ function updateWeaponListInUI() {
       weaponOptions.add(option);
     }
 
-    weaponOptions.selectedIndex = 0;
+    let selectedIndex = 0;
+
+    for (var k = 0; k < weaponOptions.options.length; k++) {
+      if (parseInt(weaponOptions.options[k].value) === player.CurrentWeapon) {
+        selectedIndex = k;
+        break;
+      }
+    }
+    weaponOptions.selectedIndex = selectedIndex;
   }
 }
 
