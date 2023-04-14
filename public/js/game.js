@@ -71,12 +71,11 @@ let player = new Player(
   0,
   1,
   locationByID(LOCATION_IDS.HOME),
-  itemByID(ITEM_IDS.RUSTY_SWORD)
+  ITEM_IDS.RUSTY_SWORD,
+  ITEM_IDS.HEALING_POTION
 );
 
 player.AddItemToInventory(itemByID(ITEM_IDS.RUSTY_SWORD));
-player.AddItemToInventory(itemByID(ITEM_IDS.KNIFE));
-player.CurrentWeapon = ITEM_IDS.RUSTY_SWORD;
 
 locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
@@ -234,6 +233,10 @@ weaponBtn.addEventListener("click", function (e) {
 });
 
 potionBtn.addEventListener("click", function (e) {
+  player.CurrentPotion = parseInt(
+    potionOptions.options[potionOptions.selectedIndex].value
+  );
+
   let currentPotion = itemByID(
     parseInt(potionOptions.options[potionOptions.selectedIndex].value)
   );
@@ -389,7 +392,6 @@ function updateInventoryTable(inventory) {
   }
 }
 
-// TODO - keep the index of the user weapon
 function updateWeaponListInUI() {
   var weapons = [];
   var inventory = player.Inventory;
@@ -456,7 +458,15 @@ function updatePotionListInUI() {
       potionOptions.add(option);
     }
 
-    potionOptions.selectedIndex = 0;
+    let selectedIndex = 0;
+
+    for (var k = 0; k < potionOptions.options.length; k++) {
+      if (parseInt(potionOptions.options[k].value) === player.CurrentPotion) {
+        selectedIndex = k;
+        break;
+      }
+    }
+    potionOptions.selectedIndex = selectedIndex;
   }
 }
 

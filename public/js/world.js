@@ -24,6 +24,7 @@ export const ITEM_IDS = {
   SPIDER_SILK: 9,
   ADVENTURER_PASS: 10,
   KNIFE: 11,
+  GREATER_HEALING_POTION: 12,
 };
 
 export const MONSTER_IDS = {
@@ -79,6 +80,14 @@ function populateItems() {
     new Item(ITEM_IDS.ADVENTURER_PASS, "Adventurer pass", "Adventurer passes")
   );
   items.push(new Weapon(ITEM_IDS.KNIFE, "Knife", "Knives", 1, 3));
+  items.push(
+    new HealingPotion(
+      ITEM_IDS.GREATER_HEALING_POTION,
+      "Greater Healing potion",
+      "Greater Healing potions",
+      25
+    )
+  );
 }
 
 function populateMonsters() {
@@ -125,7 +134,6 @@ function populateQuests() {
   );
 
   clearAlchemistGarden.addRewardItems(itemByID(ITEM_IDS.HEALING_POTION));
-  clearAlchemistGarden.addRewardItems(itemByID(ITEM_IDS.CLUB));
 
   const clearFarmersField = new Quest(
     QUEST_IDS.CLEAR_FARMERS_FIELD,

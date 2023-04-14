@@ -10,7 +10,8 @@ export class Player extends LivingCreature {
     experience,
     level,
     currentLocation,
-    currentWeapon
+    currentWeapon,
+    currentPotion
   ) {
     super(maximumHitPoints, currentHitPoints);
     this._Gold = gold;
@@ -20,6 +21,7 @@ export class Player extends LivingCreature {
     this._Quests = [];
     this._CurrentLocation = currentLocation;
     this._CurrentWeapon = currentWeapon;
+    this._CurrentPotion = currentPotion;
   }
 
   get Gold() {
@@ -68,6 +70,14 @@ export class Player extends LivingCreature {
 
   set CurrentWeapon(value) {
     this._CurrentWeapon = value;
+  }
+
+  get CurrentPotion() {
+    return this._CurrentPotion;
+  }
+
+  set CurrentPotion(value) {
+    this._CurrentPotion = value;
   }
 
   hasRequiredItemToEnter(location) {
