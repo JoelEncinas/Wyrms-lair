@@ -3,7 +3,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/game.css" />
     <title>Game</title>
@@ -23,22 +23,14 @@
           <p>Lv <span id="level"></span></p>
         </div>
         <div id="location" class="col-md-6">
-          <p id="location-name">Alchemist's Garden</p>
-          <p id="location-description">Many plants are growing here</p>
+          <p id="location-name"></p>
+          <p id="location-description"></p>
         </div>
       </div>
 
       <div id="inventory-log" class="row my-2">
         <div id="inventory" class="col-md-6">
           <table id="inventory-table" class="table table-hover">
-            <tr>
-              <th>Name</th>
-              <th>Quantity</th>
-            </tr>
-            <tr>
-              <td>Rusty Sword</td>
-              <td>1</td>
-            </tr>
           </table>
         </div>
         <div id="log" class="col-md-6">
@@ -55,27 +47,37 @@
         </div>
         <div id="character-actions" class="col-md-6">
           <div id="character-movement">
-            <button id="north">
+            <button id="north" class="btn btn-outline-dark">
               North
             </button>
-            <button id="east">
+            <button id="east" class="btn btn-outline-dark">
               East
             </button>
-            <button id="south">
+            <button id="south" class="btn btn-outline-dark">
               South
             </button>
-            <button id="west">
+            <button id="west" class="btn btn-outline-dark">
               West
             </button>
           </div>
           <div id="character-actions">
-            <select id="weapon-options">
-            </select>
-            <button id="weapon-btn">Use</button>
+            <div class="form-group">
+              <select id="weapon-options" class="form-select">
+              </select>
+              <button
+                id="weapon-btn"
+                class="btn btn-outline-danger"
+              >Use</button>
+            </div>
 
-            <select id="potion-options">
-            </select>
-            <button id="potion-btn">Use</button>
+            <div class="form-group">
+              <select id="potion-options" class="form-select">
+              </select>
+              <button
+                id="potion-btn"
+                class="btn btn-outline-success"
+              >Use</button>
+            </div>
           </div>
         </div>
       </div>

@@ -344,7 +344,7 @@ function updateQuestsTable() {
     const checkBox = document.createElement("input");
     checkBox.className = "form-check-input";
     checkBox.type = "checkbox";
-    checkBox.id = `flexSwitchCheck${quest.IsCompleted ? "Checked" : "Default"}`;
+    checkBox.id = `flexCheck${quest.IsCompleted ? "Checked" : "Default"}`;
     checkBox.checked = quest.IsCompleted;
     checkBox.disabled = true;
     checkBoxCell.appendChild(checkBox);
