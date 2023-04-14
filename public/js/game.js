@@ -131,13 +131,13 @@ weaponBtn.addEventListener("click", function (e) {
       currentMonster.Name +
       " for " +
       damageToMonster +
-      " points."
+      " points of damage."
   );
 
   if (currentMonster.CurrentHitPoints <= 0) {
     addLine("You defeated the " + currentMonster.Name + " .");
 
-    player.ExperiencePoints += currentMonster.RewardExperiencePoints;
+    player.Experience += currentMonster.RewardExperiencePoints;
     addLine(
       "You gain <span class='text-warning'>" +
         currentMonster.RewardExperiencePoints +
@@ -153,7 +153,8 @@ weaponBtn.addEventListener("click", function (e) {
 
     const lootedItems = [];
     // FIXME - bug with properties, need to access _DropPercentage instead
-    // of DropPercentage or it's undefined, same for Details ??
+    // of DropPercentage or it's undefined, same for Details
+    // could be because of getter and setter but they seem OK??
     currentMonster.LootTable.forEach(function (itemLooted) {
       let randomNumber = Math.floor(Math.random() * 100) + 1;
 
@@ -195,6 +196,27 @@ weaponBtn.addEventListener("click", function (e) {
     updateInventoryTable(player.Inventory);
     updateWeaponListInUI();
     updatePotionListInUI();
+  } else {
+    let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
+
+    addLine(
+      "The " +
+        currentMonster.Name +
+        " did " +
+        damageToPlayer +
+        " points of damage"
+    );
+
+    player.CurrentHitPoints -= damageToPlayer;
+
+    hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
+
+    if (player.CurrentHitPoints <= 0) {
+      addLine("The " + currentMonster.Name + " killed you...");
+
+      // permanent death?
+      moveTo(World.LocationByID(World.LOCATION_ID_HOME));
+    }
   }
 });
 
