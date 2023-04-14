@@ -113,23 +113,19 @@ westBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToWest);
 });
 
-// action btns
+// action buttons
 weaponBtn.addEventListener("click", function (e) {
-  // Get the currently selected weapon from the cboWeapons ComboBox
   let currentWeapon = itemByID(
     parseInt(weaponOptions.options[weaponOptions.selectedIndex].value)
   );
 
-  // Determine the amount of damage to do to the monster
   let damageToMonster = randomNumberGenerator(
     currentWeapon.MinimumDamage,
     currentWeapon.MaximumDamage
   );
 
-  // Apply the damage to the monster's CurrentHitPoints
   currentMonster.CurrentHitPoints -= damageToMonster;
 
-  // Display message
   addLine(
     "You hit the " +
       currentMonster.Name +
@@ -137,6 +133,69 @@ weaponBtn.addEventListener("click", function (e) {
       damageToMonster +
       " points."
   );
+
+  if (currentMonster.CurrentHitPoints <= 0) {
+    addLine("You defeated the " + currentMonster.Name + " .");
+
+    player.ExperiencePoints += currentMonster.RewardExperiencePoints;
+    addLine(
+      "You gain <span class='text-warning'>" +
+        currentMonster.RewardExperiencePoints +
+        "xp</span>."
+    );
+
+    player.Gold += currentMonster.RewardGold;
+    addLine(
+      "You loot <span class='text-warning'>" +
+        currentMonster.RewardGold +
+        " gold</span>."
+    );
+
+    const lootedItems = [];
+    // FIXME - bug with properties, need to access _DropPercentage instead
+    // of DropPercentage or it's undefined, same for Details ??
+    currentMonster.LootTable.forEach(function (itemLooted) {
+      let randomNumber = Math.floor(Math.random() * 100) + 1;
+
+      if (randomNumber <= itemLooted._DropPercentage) {
+        lootedItems.push(new InventoryItem(itemLooted._Details, 1));
+      }
+    });
+
+    if (lootedItems.length === 0) {
+      currentMonster.LootTable.forEach(function (itemLooted) {
+        if (itemLooted.IsDefaultItem) {
+          lootedItems.push(new InventoryItem(itemLooted._Details, 1));
+        }
+      });
+    }
+
+    lootedItems.forEach(function (itemLooted) {
+      player.AddItemToInventory(itemLooted.Details);
+
+      if (itemLooted.Quantity === 1) {
+        addLine(
+          "You loot " + itemLooted.Quantity + " " + itemLooted.Details.Name
+        );
+      } else {
+        addLine(
+          "You loot " +
+            itemLooted.Quantity +
+            " " +
+            itemLooted.Details.NamePlural
+        );
+      }
+    });
+
+    hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
+    goldText.innerText = player.Gold;
+    experienceText.innerText = player.Experience;
+    levelText.innerText = player.Level;
+
+    updateInventoryTable(player.Inventory);
+    updateWeaponListInUI();
+    updatePotionListInUI();
+  }
 });
 
 potionBtn.addEventListener("click", function (e) {
@@ -202,7 +261,7 @@ function updatePlayerStats(
 
 function addLine(text) {
   const newLine = document.createElement("p");
-  newLine.textContent = text;
+  newLine.innerHTML = text;
   logDisplay.appendChild(newLine);
   logDisplay.scrollTop = logDisplay.scrollHeight;
 }

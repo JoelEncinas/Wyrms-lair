@@ -1,4 +1,5 @@
 import { LivingCreature } from "./LivingCreature.js";
+import { InventoryItem } from "./InventoryItem.js";
 
 export class Player extends LivingCreature {
   constructor(
