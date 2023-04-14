@@ -1,5 +1,6 @@
 import { LivingCreature } from "./LivingCreature.js";
 import { InventoryItem } from "./InventoryItem.js";
+import { itemByID } from "../world.js";
 
 export class Player extends LivingCreature {
   constructor(
@@ -43,10 +44,6 @@ export class Player extends LivingCreature {
 
   get Inventory() {
     return this._Inventory;
-  }
-
-  set Inventory(value) {
-    this._Inventory = value;
   }
 
   get Quests() {
@@ -138,7 +135,6 @@ export class Player extends LivingCreature {
   }
 
   AddItemToInventory(item) {
-    console.log(item);
     for (let ii of this.Inventory) {
       if (ii.Details.ID === item.ID) {
         ii.Quantity++;
@@ -147,7 +143,7 @@ export class Player extends LivingCreature {
       }
     }
 
-    this.Inventory.push(new InventoryItem(item, 1));
+    this._Inventory.push(new InventoryItem(itemByID(item.ID), 1));
   }
 
   MarkQuestCompleted(quest) {

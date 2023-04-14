@@ -73,10 +73,13 @@ let player = new Player(
   locationByID(LOCATION_IDS.HOME),
   itemByID(ITEM_IDS.RUSTY_SWORD)
 );
-player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.RUSTY_SWORD), 1));
+
+player.AddItemToInventory(itemByID(ITEM_IDS.RUSTY_SWORD));
 
 locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
+
+console.log(player.Inventory);
 
 updateButtonClass(northBtn, player.CurrentLocation.LocationToNorth);
 updateButtonClass(eastBtn, player.CurrentLocation.LocationToEast);
@@ -193,8 +196,8 @@ weaponBtn.addEventListener("click", function (e) {
     updateWeaponListInUI();
     updatePotionListInUI();
 
-    // TODO - spawn another monster
     spawnMonster(currentLocation);
+    console.log(player.Inventory);
   } else {
     let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
 
@@ -516,18 +519,27 @@ function moveTo(newLocation) {
               " experience points."
           );
           addLine(newLocation.QuestAvailableHere.RewardGold + " gold.");
-          addLine(
-            "You receive a " +
-              newLocation.QuestAvailableHere._RewardItem._Name +
-              "."
-          );
-          addLine("");
 
           player.ExperiencePoints +=
             newLocation.QuestAvailableHere.RewardExperiencePoints;
           player.Gold += newLocation.QuestAvailableHere.RewardGold;
 
-          player.AddItemToInventory(newLocation.QuestAvailableHere.RewardItem);
+          for (
+            let i = 0;
+            i < newLocation.QuestAvailableHere.RewardItems.length;
+            i++
+          ) {
+            addLine(
+              "You receive a " +
+                newLocation.QuestAvailableHere.RewardItems[i]._Name +
+                "."
+            );
+            player.AddItemToInventory(
+              newLocation.QuestAvailableHere.RewardItems[i]
+            );
+          }
+
+          addLine("");
 
           player.MarkQuestCompleted(newLocation.QuestAvailableHere);
         }
