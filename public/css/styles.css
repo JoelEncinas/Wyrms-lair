@@ -1,3 +1,8 @@
+/* UTILS */
+.form-check-input:checked[type="checkbox"] {
+  background-image: none;
+}
+
 /* NAVBAR */
 
 #navbar-login-btn,

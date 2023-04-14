@@ -64,14 +64,7 @@ const potionOptions = document.getElementById("potion-options");
 
 // FIRST LOAD
 let currentMonster;
-let player = new Player(
-  10,
-  10,
-  20,
-  0,
-  1,
-  locationByID(LOCATION_IDS.HOME)
-);
+let player = new Player(10, 10, 20, 0, 1, locationByID(LOCATION_IDS.HOME));
 player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.RUSTY_SWORD), 1));
 
 locationName.innerText = player.CurrentLocation.Name;
@@ -210,10 +203,12 @@ weaponBtn.addEventListener("click", function (e) {
     hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 
     if (player.CurrentHitPoints <= 0) {
+      hpText.innerText = `0 / ${player.MaximumHitPoints}`;
       addLine("The " + currentMonster.Name + " killed you...");
 
       // TODO - permanent death?
-      moveTo(World.LocationByID(World.LOCATION_ID_HOME));
+      moveTo(locationByID(LOCATION_IDS.HOME));
+      updateButtonClass();
     }
 
     hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
@@ -256,10 +251,12 @@ potionBtn.addEventListener("click", function (e) {
   hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 
   if (player.CurrentHitPoints <= 0) {
+    hpText.innerText = `0 / ${player.MaximumHitPoints}`;
     addLine("The " + currentMonster.Name + " killed you...");
 
     // TODO - permanent death?
-    moveTo(World.LocationByID(World.LOCATION_ID_HOME));
+    moveTo(locationByID(LOCATION_IDS.HOME));
+    updateButtonClass();
   }
 
   hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
@@ -490,7 +487,11 @@ function moveTo(newLocation) {
               " experience points."
           );
           addLine(newLocation.QuestAvailableHere.RewardGold + " gold.");
-          addLine("You receive a " + newLocation.QuestAvailableHere._RewardItem._Name + " .");
+          addLine(
+            "You receive a " +
+              newLocation.QuestAvailableHere._RewardItem._Name +
+              "."
+          );
           addLine("");
 
           player.ExperiencePoints +=
