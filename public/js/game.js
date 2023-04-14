@@ -73,6 +73,7 @@ let player = new Player(
   locationByID(LOCATION_IDS.ALCHEMIST_HUT)
 );
 player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.RUSTY_SWORD), 1));
+player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.HEALING_POTION), 2));
 
 locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
@@ -217,11 +218,57 @@ weaponBtn.addEventListener("click", function (e) {
       // permanent death?
       moveTo(World.LocationByID(World.LOCATION_ID_HOME));
     }
+
+    hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
   }
 });
 
 potionBtn.addEventListener("click", function (e) {
-  // TODO
+  let currentPotion = itemByID(
+    parseInt(potionOptions.options[potionOptions.selectedIndex].value)
+  );
+
+  player.CurrentHitPoints +=
+    player.CurrentHitPoints + currentPotion.AmountToHeal;
+
+  if (player.CurrentHitPoints > player.MaximumHitPoints) {
+    player.CurrentHitPoints = player.MaximumHitPoints;
+  }
+
+  player.Inventory.forEach(function (ii) {
+    if (ii.Details.ID === currentPotion.ID) {
+      ii.Quantity--;
+      return;
+    }
+  });
+
+  addLine("You drink a " + currentPotion.Name);
+
+  let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
+
+  addLine(
+    "The " +
+      currentMonster.Name +
+      " did " +
+      damageToPlayer +
+      " points of damage"
+  );
+
+  player.CurrentHitPoints -= damageToPlayer;
+
+  hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
+
+  if (player.CurrentHitPoints <= 0) {
+    addLine("The " + currentMonster.Name + " killed you...");
+
+    // permanent death?
+    moveTo(World.LocationByID(World.LOCATION_ID_HOME));
+  }
+
+  hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
+
+  updateInventoryTable(player.Inventory);
+  updatePotionListInUI();
 });
 
 function updateButtonClass(button, location) {
@@ -454,13 +501,11 @@ function moveTo(newLocation) {
           // Give quest rewards
           addLine("You receive: ");
           addLine(
-            newLocation.QuestAvailableHere.RewardExperiencePoints.ToString() +
+            newLocation.QuestAvailableHere.RewardExperiencePoints +
               " experience points."
           );
-          addLine(
-            newLocation.QuestAvailableHere.RewardGold.ToString() + " gold."
-          );
-          addLine(newLocation.QuestAvailableHere.RewardItem.Name + " .");
+          addLine(newLocation.QuestAvailableHere.RewardGold + " gold.");
+          addLine("You receive a " + newLocation.QuestAvailableHere._RewardItem._Name + " .");
           addLine("");
 
           player.ExperiencePoints +=
@@ -468,7 +513,7 @@ function moveTo(newLocation) {
           player.Gold += newLocation.QuestAvailableHere.RewardGold;
 
           // Add the reward item to the player's inventory
-          player.AddItemToInventory(newLocation.QuestAvailableHere.RewardItem);
+          player.AddItemToInventory(newLocation.QuestAvailableHere._RewardItem);
 
           // Mark the quest as completed
           player.MarkQuestCompleted(newLocation.QuestAvailableHere);

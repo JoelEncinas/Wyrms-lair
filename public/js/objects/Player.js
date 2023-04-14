@@ -87,7 +87,7 @@ export class Player extends LivingCreature {
     );
   }
 
-  hasCompletedThisQuest(quest) {
+  hasCompletedThisQuest(quest) { 
     const completedQuest = this.Quests.find(
       (playerQuest) => playerQuest.Details.ID === quest.ID
     );
@@ -95,9 +95,9 @@ export class Player extends LivingCreature {
   }
 
   HasAllQuestCompletionItems(quest) {
-    for (const qci of quest.QuestCompletionItems) {
+    for (let qci of quest.QuestCompletionItems) {
       let foundItemInPlayersInventory = false;
-      for (const ii of this.Inventory) {
+      for (let ii of this.Inventory) {
         if (ii.Details.ID === qci.Details.ID) {
           foundItemInPlayersInventory = true;
           if (ii.Quantity < qci.Quantity) {
@@ -114,13 +114,13 @@ export class Player extends LivingCreature {
 
   RemoveQuestCompletionItems(quest) {
     quest.QuestCompletionItems.forEach((qci) => {
-      const matchingInventoryItems = this.Inventory.filter(
+      let matchingInventoryItems = this.Inventory.filter(
         (ii) => ii.Details.ID === qci.Details.ID
       );
       if (matchingInventoryItems.length > 0) {
-        const totalQuantityToRemove = qci.Quantity;
-        for (const ii of matchingInventoryItems) {
-          const quantityToRemove = Math.min(ii.Quantity, totalQuantityToRemove);
+        let totalQuantityToRemove = qci.Quantity;
+        for (let ii of matchingInventoryItems) {
+          let quantityToRemove = Math.min(ii.Quantity, totalQuantityToRemove);
           ii.Quantity -= quantityToRemove;
           totalQuantityToRemove -= quantityToRemove;
           if (totalQuantityToRemove === 0) {
