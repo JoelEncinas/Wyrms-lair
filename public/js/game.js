@@ -70,10 +70,9 @@ let player = new Player(
   20,
   0,
   1,
-  locationByID(LOCATION_IDS.ALCHEMIST_HUT)
+  locationByID(LOCATION_IDS.HOME)
 );
 player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.RUSTY_SWORD), 1));
-player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.HEALING_POTION), 2));
 
 locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
@@ -153,9 +152,7 @@ weaponBtn.addEventListener("click", function (e) {
     );
 
     const lootedItems = [];
-    // FIXME - bug with properties, need to access _DropPercentage instead
-    // of DropPercentage or it's undefined, same for Details
-    // could be because of getter and setter but they seem OK??
+
     currentMonster.LootTable.forEach(function (itemLooted) {
       let randomNumber = Math.floor(Math.random() * 100) + 1;
 
@@ -215,7 +212,7 @@ weaponBtn.addEventListener("click", function (e) {
     if (player.CurrentHitPoints <= 0) {
       addLine("The " + currentMonster.Name + " killed you...");
 
-      // permanent death?
+      // TODO - permanent death?
       moveTo(World.LocationByID(World.LOCATION_ID_HOME));
     }
 
@@ -261,7 +258,7 @@ potionBtn.addEventListener("click", function (e) {
   if (player.CurrentHitPoints <= 0) {
     addLine("The " + currentMonster.Name + " killed you...");
 
-    // permanent death?
+    // TODO - permanent death?
     moveTo(World.LocationByID(World.LOCATION_ID_HOME));
   }
 
@@ -451,27 +448,21 @@ function moveTo(newLocation) {
     return;
   }
 
-  // Update the player's current location
   player.CurrentLocation = newLocation;
 
-  // update location UI
   locationName.innerText = player.CurrentLocation.Name;
   locationDescription.innerText = player.CurrentLocation.Description;
 
-  // Show/hide available movement buttons
   updateButtonClass(northBtn, newLocation.LocationToNorth);
   updateButtonClass(eastBtn, newLocation.LocationToEast);
   updateButtonClass(southBtn, newLocation.LocationToSouth);
   updateButtonClass(westBtn, newLocation.LocationToWest);
 
-  // Completely heal the player
   player.CurrentHitPoints = player.MaximumHitPoints;
 
   updatePlayerStats(player, hpText, goldText, experienceText, levelText);
 
-  // Does the location have a quest?
   if (newLocation.QuestAvailableHere !== undefined) {
-    // See if the player already has the quest, and if they've completed it
     let playerAlreadyHasQuest = player.hasThisQuest(
       newLocation.QuestAvailableHere
     );
@@ -479,26 +470,20 @@ function moveTo(newLocation) {
       newLocation.QuestAvailableHere
     );
 
-    // See if the player already has the quest
     if (playerAlreadyHasQuest) {
-      // If the player has not completed the quest yet
       if (!playerAlreadyCompletedQuest) {
         let playerHasAllItemsToCompleteQuest =
           player.HasAllQuestCompletionItems(newLocation.QuestAvailableHere);
 
-        // The player has all items required to complete the quest
         if (playerHasAllItemsToCompleteQuest) {
-          // Display message
           addLine(
             "You complete the '" +
               newLocation.QuestAvailableHere.Name +
               "' quest."
           );
 
-          // Remove quest items from inventory
           player.RemoveQuestCompletionItems(newLocation.QuestAvailableHere);
 
-          // Give quest rewards
           addLine("You receive: ");
           addLine(
             newLocation.QuestAvailableHere.RewardExperiencePoints +
@@ -512,24 +497,18 @@ function moveTo(newLocation) {
             newLocation.QuestAvailableHere.RewardExperiencePoints;
           player.Gold += newLocation.QuestAvailableHere.RewardGold;
 
-          // Add the reward item to the player's inventory
           player.AddItemToInventory(newLocation.QuestAvailableHere._RewardItem);
 
-          // Mark the quest as completed
           player.MarkQuestCompleted(newLocation.QuestAvailableHere);
         }
       }
     } else {
-      // The player does not already have the quest
-
-      // Display the messages
       addLine(
         "You receive the " + newLocation.QuestAvailableHere.Name + " quest."
       );
       addLine(newLocation.QuestAvailableHere.Description);
       addLine("To complete it, return with:");
 
-      // Iterate through the quest completion items
       for (let qci of newLocation.QuestAvailableHere.QuestCompletionItems) {
         if (qci.Quantity === 1) {
           addLine("- " + qci.Quantity.toString() + " " + qci.Details.Name);
@@ -540,15 +519,12 @@ function moveTo(newLocation) {
         }
       }
 
-      // Add the quest to the player's quest list
       player.Quests.push(new PlayerQuest(newLocation.QuestAvailableHere));
     }
   }
-  // Does the location have a monster?
   if (newLocation.MonsterLivingHere !== undefined) {
     addLine("You see a " + newLocation.MonsterLivingHere.Name);
 
-    // Make a new monster, using the values from the standard monster in the World.Monster list
     let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
 
     currentMonster = new Monster(
@@ -561,7 +537,6 @@ function moveTo(newLocation) {
       standardMonster.MaximumHitPoints
     );
 
-    // Iterate through the loot items
     currentMonster.LootTable.push(
       ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
     );
@@ -586,6 +561,4 @@ function moveTo(newLocation) {
   updateWeaponListInUI();
 
   updatePotionListInUI();
-
-  console.log(player);
 }
