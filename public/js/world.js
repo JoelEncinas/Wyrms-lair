@@ -23,6 +23,7 @@ export const ITEM_IDS = {
   SPIDER_FANG: 8,
   SPIDER_SILK: 9,
   ADVENTURER_PASS: 10,
+  SMALL_KNIFE: 11,
 };
 
 export const MONSTER_IDS = {
@@ -76,6 +77,11 @@ function populateItems() {
   items.push(new Item(ITEM_IDS.SPIDER_SILK, "Spider silk", "Spider silks"));
   items.push(
     new Item(ITEM_IDS.ADVENTURER_PASS, "Adventurer pass", "Adventurer passes")
+  );
+  items.push(
+    new Weapon(ITEM_IDS.SMALL_KNIFE, "Small knife", "Small knives"),
+    1,
+    4
   );
 }
 
@@ -239,6 +245,7 @@ function populateLocations() {
   locations.push(spiderField);
 }
 
+// TODO differentiate classes - create arrays and search functions for each class
 export function itemByID(id) {
   return items.find((item) => item.ID === id) || null;
 }

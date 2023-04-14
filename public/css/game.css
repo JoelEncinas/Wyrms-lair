@@ -1,8 +1,8 @@
 /* UTILS */
-
 #log-display p {
   min-height: 24px;
   padding: 2px 0;
+  font-size: 14px;
 }
 
 table {
@@ -26,8 +26,6 @@ th {
 #quests-actions {
   height: 100px;
 }
-
-/* LOG */
 
 #log-display {
   height: 200px;

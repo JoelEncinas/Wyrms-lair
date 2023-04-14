@@ -64,7 +64,15 @@ const potionOptions = document.getElementById("potion-options");
 
 // FIRST LOAD
 let currentMonster;
-let player = new Player(10, 10, 20, 0, 1, locationByID(LOCATION_IDS.HOME));
+let player = new Player(
+  10,
+  10,
+  20,
+  0,
+  1,
+  locationByID(LOCATION_IDS.HOME),
+  itemByID(ITEM_IDS.RUSTY_SWORD)
+);
 player.Inventory.push(new InventoryItem(itemByID(ITEM_IDS.RUSTY_SWORD), 1));
 
 locationName.innerText = player.CurrentLocation.Name;
@@ -75,10 +83,7 @@ updateButtonClass(eastBtn, player.CurrentLocation.LocationToEast);
 updateButtonClass(southBtn, player.CurrentLocation.LocationToSouth);
 updateButtonClass(westBtn, player.CurrentLocation.LocationToWest);
 
-hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
-goldText.innerText = player.Gold;
-experienceText.innerText = player.Experience;
-levelText.innerText = player.Level;
+updatePlayerStats(player, hpText, goldText, experienceText, levelText);
 
 updateQuestsTable();
 updateInventoryTable(player.Inventory);
@@ -88,6 +93,9 @@ hideElement(weaponBtn);
 hideElement(weaponOptions);
 hideElement(potionBtn);
 hideElement(potionOptions);
+
+// current location global
+let currentLocation = locationByID(LOCATION_IDS.HOME);
 
 // location btns
 northBtn.addEventListener("click", function (e) {
@@ -179,14 +187,14 @@ weaponBtn.addEventListener("click", function (e) {
       }
     });
 
-    hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
-    goldText.innerText = player.Gold;
-    experienceText.innerText = player.Experience;
-    levelText.innerText = player.Level;
+    updatePlayerStats(player, hpText, goldText, experienceText, levelText);
 
     updateInventoryTable(player.Inventory);
     updateWeaponListInUI();
     updatePotionListInUI();
+
+    // TODO - spawn another monster
+    spawnMonster(currentLocation);
   } else {
     let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
 
@@ -208,10 +216,11 @@ weaponBtn.addEventListener("click", function (e) {
 
       // TODO - permanent death?
       moveTo(locationByID(LOCATION_IDS.HOME));
-      updateButtonClass();
+      updateButtonClass(northBtn, currentLocation.LocationToNorth);
+      updateButtonClass(eastBtn, currentLocation.LocationToEast);
+      updateButtonClass(southBtn, currentLocation.LocationToSouth);
+      updateButtonClass(westBtn, currentLocation.LocationToWest);
     }
-
-    hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
   }
 });
 
@@ -256,10 +265,11 @@ potionBtn.addEventListener("click", function (e) {
 
     // TODO - permanent death?
     moveTo(locationByID(LOCATION_IDS.HOME));
-    updateButtonClass();
+    updateButtonClass(northBtn, currentLocation.LocationToNorth);
+    updateButtonClass(eastBtn, currentLocation.LocationToEast);
+    updateButtonClass(southBtn, currentLocation.LocationToSouth);
+    updateButtonClass(westBtn, currentLocation.LocationToWest);
   }
-
-  hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 
   updateInventoryTable(player.Inventory);
   updatePotionListInUI();
@@ -432,9 +442,27 @@ function updatePotionListInUI() {
   }
 }
 
-function moveTo(newLocation) {
-  console.log(player);
+function spawnMonster(newLocation) {
+  addLine("You see a " + newLocation.MonsterLivingHere.Name + ".");
 
+  let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
+
+  currentMonster = new Monster(
+    standardMonster.ID,
+    standardMonster.Name,
+    standardMonster.MaximumDamage,
+    standardMonster.RewardExperiencePoints,
+    standardMonster.RewardGold,
+    standardMonster.CurrentHitPoints,
+    standardMonster.MaximumHitPoints
+  );
+
+  currentMonster.LootTable.push(
+    ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
+  );
+}
+
+function moveTo(newLocation) {
   if (!player.hasRequiredItemToEnter(newLocation)) {
     addLine(
       "You must have a " +
@@ -446,6 +474,7 @@ function moveTo(newLocation) {
   }
 
   player.CurrentLocation = newLocation;
+  currentLocation = newLocation;
 
   locationName.innerText = player.CurrentLocation.Name;
   locationDescription.innerText = player.CurrentLocation.Description;
@@ -498,7 +527,7 @@ function moveTo(newLocation) {
             newLocation.QuestAvailableHere.RewardExperiencePoints;
           player.Gold += newLocation.QuestAvailableHere.RewardGold;
 
-          player.AddItemToInventory(newLocation.QuestAvailableHere._RewardItem);
+          player.AddItemToInventory(newLocation.QuestAvailableHere.RewardItem);
 
           player.MarkQuestCompleted(newLocation.QuestAvailableHere);
         }
@@ -524,23 +553,7 @@ function moveTo(newLocation) {
     }
   }
   if (newLocation.MonsterLivingHere !== undefined) {
-    addLine("You see a " + newLocation.MonsterLivingHere.Name);
-
-    let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
-
-    currentMonster = new Monster(
-      standardMonster.ID,
-      standardMonster.Name,
-      standardMonster.MaximumDamage,
-      standardMonster.RewardExperiencePoints,
-      standardMonster.RewardGold,
-      standardMonster.CurrentHitPoints,
-      standardMonster.MaximumHitPoints
-    );
-
-    currentMonster.LootTable.push(
-      ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
-    );
+    spawnMonster(newLocation);
 
     showElement(weaponBtn);
     showElement(weaponOptions);

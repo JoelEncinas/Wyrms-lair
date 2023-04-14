@@ -8,7 +8,8 @@ export class Player extends LivingCreature {
     gold,
     experience,
     level,
-    currentLocation
+    currentLocation,
+    currentWeapon
   ) {
     super(maximumHitPoints, currentHitPoints);
     this._Gold = gold;
@@ -17,6 +18,7 @@ export class Player extends LivingCreature {
     this._Inventory = [];
     this._Quests = [];
     this._CurrentLocation = currentLocation;
+    this._CurrentWeapon = currentWeapon;
   }
 
   get Gold() {
@@ -36,11 +38,7 @@ export class Player extends LivingCreature {
   }
 
   get Level() {
-    return this._Level;
-  }
-
-  set Level(value) {
-    this._Level = value;
+    return parseInt(this._Experience / 40 + 1);
   }
 
   get Inventory() {
@@ -67,6 +65,14 @@ export class Player extends LivingCreature {
     this._CurrentLocation = value;
   }
 
+  get CurrentWeapon() {
+    return this._CurrentWeapon;
+  }
+
+  set CurrentWeapon(value) {
+    this._CurrentWeapon = value;
+  }
+
   hasRequiredItemToEnter(location) {
     if (location.ItemToEnter === undefined) {
       return true;
@@ -87,7 +93,7 @@ export class Player extends LivingCreature {
     );
   }
 
-  hasCompletedThisQuest(quest) { 
+  hasCompletedThisQuest(quest) {
     const completedQuest = this.Quests.find(
       (playerQuest) => playerQuest.Details.ID === quest.ID
     );
@@ -132,6 +138,7 @@ export class Player extends LivingCreature {
   }
 
   AddItemToInventory(item) {
+    console.log(item);
     for (let ii of this.Inventory) {
       if (ii.Details.ID === item.ID) {
         ii.Quantity++;

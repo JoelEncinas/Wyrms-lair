@@ -57,7 +57,7 @@ export class Quest {
   }
 
   get RewardItem() {
-    return this._ewardItem;
+    return this._RewardItem;
   }
 
   set RewardItem(value) {
