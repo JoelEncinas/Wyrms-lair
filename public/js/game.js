@@ -2,30 +2,16 @@
 // Objects
 import { HealingPotion } from "./objects/HealingPotion.js";
 import { InventoryItem } from "./objects/InventoryItem.js";
-import { Item } from "./objects/Item.js";
-import { LivingCreature } from "./objects/LivingCreature.js";
-import { Location } from "./objects/Location.js";
-import { LootItem } from "./objects/LootItem.js";
 import { Monster } from "./objects/Monster.js";
 import { Player } from "./objects/Player.js";
 import { PlayerQuest } from "./objects/PlayerQuest.js";
-import { Quest } from "./objects/Quest.js";
-import { QuestCompletionItem } from "./objects/QuestCompletionItem.js";
 import { Weapon } from "./objects/Weapon.js";
 
 // World
 import {
-  items,
-  monsters,
-  quests,
-  locations,
   itemByID,
   monsterByID,
-  questByID,
   locationByID,
-  ITEM_IDS,
-  MONSTER_IDS,
-  QUEST_IDS,
   LOCATION_IDS,
 } from "./world.js";
 
