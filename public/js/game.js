@@ -31,7 +31,7 @@ import {
 
 // Utils
 import { randomNumberGenerator } from "./utils/randomNumberGenerator.js";
-import { addLine } from "./utils/displayUI.js";
+import { addLine, updateButtonClass } from "./utils/displayUI.js";
 
 // UI
 // character stats
@@ -83,10 +83,7 @@ player.AddItemToInventory(itemByID(ITEM_IDS.RUSTY_SWORD));
 locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
 
-updateButtonClass(northBtn, player.CurrentLocation.LocationToNorth);
-updateButtonClass(eastBtn, player.CurrentLocation.LocationToEast);
-updateButtonClass(southBtn, player.CurrentLocation.LocationToSouth);
-updateButtonClass(westBtn, player.CurrentLocation.LocationToWest);
+updateMovementButtons(player.CurrentLocation);
 
 updatePlayerStats(player, hpText, goldText, experienceText, levelText);
 
@@ -233,10 +230,7 @@ weaponBtn.addEventListener("click", function (e) {
 
       // TODO - permanent death?
       moveTo(locationByID(LOCATION_IDS.HOME));
-      updateButtonClass(northBtn, currentLocation.LocationToNorth);
-      updateButtonClass(eastBtn, currentLocation.LocationToEast);
-      updateButtonClass(southBtn, currentLocation.LocationToSouth);
-      updateButtonClass(westBtn, currentLocation.LocationToWest);
+      updateMovementButtons(currentLocation);
     }
   }
 });
@@ -287,37 +281,12 @@ potionBtn.addEventListener("click", function (e) {
 
     // TODO - permanent death?
     moveTo(locationByID(LOCATION_IDS.HOME));
-    updateButtonClass(northBtn, currentLocation.LocationToNorth);
-    updateButtonClass(eastBtn, currentLocation.LocationToEast);
-    updateButtonClass(southBtn, currentLocation.LocationToSouth);
-    updateButtonClass(westBtn, currentLocation.LocationToWest);
+    updateMovementButtons(currentLocation);
   }
 
   updateInventoryTable(player.Inventory);
   updatePotionListInUI();
 });
-
-function updateButtonClass(button, location) {
-  if (location !== undefined) {
-    if (button.classList.length > 0) {
-      [...button.classList].forEach((className) => {
-        if (className === "d-none") {
-          button.classList.remove("d-none");
-        }
-      });
-    }
-    button.classList.add("d-block");
-  } else {
-    button.classList.add("d-none");
-    if (button.classList.length > 0) {
-      [...button.classList].forEach((className) => {
-        if (className === "d-block") {
-          button.classList.remove("d-block");
-        }
-      });
-    }
-  }
-}
 
 function showElement(element) {
   if (element.classList.length > 0) {
@@ -354,6 +323,22 @@ function updatePlayerStats(
   levelText.innerText = player.Level;
 }
 
+function updateInventoryTable(inventory) {
+  const inventoryTable = inventoryContainer.querySelector("table");
+  inventoryTable.innerHTML = "";
+
+  const headerRow = document.createElement("tr");
+  headerRow.innerHTML =
+    '<th scope="col">Name</th><th scope="col">Quantity</th>';
+  inventoryTable.appendChild(headerRow);
+
+  for (const item of inventory) {
+    const itemRow = document.createElement("tr");
+    itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td>`;
+    inventoryTable.appendChild(itemRow);
+  }
+}
+
 function updateQuestsTable() {
   const questsTable = questsContainer.querySelector("table");
   questsTable.innerHTML = "";
@@ -376,22 +361,6 @@ function updateQuestsTable() {
     questRow.innerHTML = `<td>${quest.Details.Name}</td>`;
     questRow.appendChild(checkBoxCell);
     questsTable.appendChild(questRow);
-  }
-}
-
-function updateInventoryTable(inventory) {
-  const inventoryTable = inventoryContainer.querySelector("table");
-  inventoryTable.innerHTML = "";
-
-  const headerRow = document.createElement("tr");
-  headerRow.innerHTML =
-    '<th scope="col">Name</th><th scope="col">Quantity</th>';
-  inventoryTable.appendChild(headerRow);
-
-  for (const item of inventory) {
-    const itemRow = document.createElement("tr");
-    itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td>`;
-    inventoryTable.appendChild(itemRow);
   }
 }
 
@@ -511,10 +480,7 @@ function moveTo(newLocation) {
   locationName.innerText = player.CurrentLocation.Name;
   locationDescription.innerText = player.CurrentLocation.Description;
 
-  updateButtonClass(northBtn, newLocation.LocationToNorth);
-  updateButtonClass(eastBtn, newLocation.LocationToEast);
-  updateButtonClass(southBtn, newLocation.LocationToSouth);
-  updateButtonClass(westBtn, newLocation.LocationToWest);
+  updateMovementButtons(newLocation);
 
   player.CurrentHitPoints = player.MaximumHitPoints;
 
@@ -632,4 +598,11 @@ function moveTo(newLocation) {
   updatePotionListInUI();
 
   updatePlayerStats(player, hpText, goldText, experienceText, levelText);
+}
+
+function updateMovementButtons(location) {
+  updateButtonClass(northBtn, location.LocationToNorth);
+  updateButtonClass(eastBtn, location.LocationToEast);
+  updateButtonClass(southBtn, location.LocationToSouth);
+  updateButtonClass(westBtn, location.LocationToWest);
 }
