@@ -78,7 +78,7 @@ updatePlayerStats(player, hpText, goldText, experienceText, levelText);
 updateQuestsTable();
 updateInventoryTable(player.Inventory);
 
-updateWeaponListInUI();
+updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
 hideElement(vendorBtn);
 hideElement(weaponBtn);
 hideElement(weaponOptions);
@@ -127,16 +127,15 @@ function updateTradeTable(isVendor, element, headers, inventory) {
   let tradeType = isVendor ? "Buy" : "Sell";
 
   for (const item of inventory) {
-    console.log(item);
     if (item.Price !== -1) {
       const itemRow = document.createElement("tr");
-      itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ID}">${tradeType} 1</button></td>`;
+      itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ItemID}">${tradeType} 1</button></td>`;
       table.appendChild(itemRow);
 
       const button = itemRow.querySelector("button");
 
       button.addEventListener("click", () => {
-        const itemId = item.ID;
+        const itemId = item.ItemID;
         const quantity = 1;
         if (isVendor) {
           // TODO - Handle vendor buy logic
@@ -255,10 +254,9 @@ weaponBtn.addEventListener("click", function (e) {
     });
 
     updatePlayerStats(player, hpText, goldText, experienceText, levelText);
-
     updateInventoryTable(player.Inventory);
-    updateWeaponListInUI();
-    updatePotionListInUI();
+    updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
+    updateItemListInUI(HealingPotion, potionOptions, potionBtn, player.CurrentPotion);
 
     spawnMonster(player.CurrentLocation);
   } else {
@@ -310,7 +308,7 @@ potionBtn.addEventListener("click", function (e) {
   }
 
   player.Inventory.forEach(function (ii) {
-    if (ii.Details.ID === currentPotion.ID) {
+    if (ii.ItemID === currentPotion.ID) {
       ii.Quantity--;
       return;
     }
@@ -355,7 +353,7 @@ potionBtn.addEventListener("click", function (e) {
   }
 
   updateInventoryTable(player.Inventory);
-  updatePotionListInUI();
+  updateItemListInUI(HealingPotion, potionOptions, potionBtn, player.CurrentPotion);
 });
 
 function updatePlayerStats(
@@ -412,81 +410,42 @@ function updateQuestsTable() {
   }
 }
 
-function updateWeaponListInUI() {
-  var weapons = [];
+function updateItemListInUI(itemType, itemOptions, itemBtn, currentItem) {
+  var items = [];
   var inventory = player.Inventory;
 
   for (var i = 0; i < inventory.length; i++) {
     var inventoryItem = inventory[i];
-    if (inventoryItem.Details instanceof Weapon) {
+    if (inventoryItem.Details instanceof itemType) {
       if (inventoryItem.Quantity > 0) {
-        weapons.push(inventoryItem.Details);
+        items.push(inventoryItem.Details);
       }
     }
   }
 
-  if (weapons.length === 0) {
-    hideElement(weaponOptions);
-    hideElement(weaponBtn);
+  if (items.length === 0) {
+    hideElement(itemOptions);
+    hideElement(itemBtn);
   } else {
-    weaponOptions.innerHTML = "";
+    itemOptions.innerHTML = "";
 
-    for (var j = 0; j < weapons.length; j++) {
-      var weapon = weapons[j];
+    for (var j = 0; j < items.length; j++) {
+      var item = items[j];
       var option = document.createElement("option");
-      option.value = weapon.ID;
-      option.text = weapon.Name;
-      weaponOptions.add(option);
+      option.value = item.ID;
+      option.text = item.Name;
+      itemOptions.add(option);
     }
 
     let selectedIndex = 0;
 
-    for (var k = 0; k < weaponOptions.options.length; k++) {
-      if (parseInt(weaponOptions.options[k].value) === player.CurrentWeapon) {
+    for (var k = 0; k < itemOptions.options.length; k++) {
+      if (parseInt(itemOptions.options[k].value) === currentItem) {
         selectedIndex = k;
         break;
       }
     }
-    weaponOptions.selectedIndex = selectedIndex;
-  }
-}
-
-function updatePotionListInUI() {
-  var potions = [];
-  var inventory = player.Inventory;
-
-  for (var i = 0; i < inventory.length; i++) {
-    var inventoryItem = inventory[i];
-    if (inventoryItem.Details instanceof HealingPotion) {
-      if (inventoryItem.Quantity > 0) {
-        potions.push(inventoryItem.Details);
-      }
-    }
-  }
-
-  if (potions.length === 0) {
-    hideElement(potionOptions);
-    hideElement(potionBtn);
-  } else {
-    potionOptions.innerHTML = "";
-
-    for (var j = 0; j < potions.length; j++) {
-      var potion = potions[j];
-      var option = document.createElement("option");
-      option.value = potion.ID;
-      option.text = potion.Name;
-      potionOptions.add(option);
-    }
-
-    let selectedIndex = 0;
-
-    for (var k = 0; k < potionOptions.options.length; k++) {
-      if (parseInt(potionOptions.options[k].value) === player.CurrentPotion) {
-        selectedIndex = k;
-        break;
-      }
-    }
-    potionOptions.selectedIndex = selectedIndex;
+    itemOptions.selectedIndex = selectedIndex;
   }
 }
 
@@ -654,13 +613,9 @@ function moveTo(newLocation) {
   }
 
   updateInventoryTable(player.Inventory);
-
   updateQuestsTable();
-
-  updateWeaponListInUI();
-
-  updatePotionListInUI();
-
+  updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
+  updateItemListInUI(HealingPotion, potionOptions, potionBtn, player.CurrentPotion);
   updatePlayerStats(player, hpText, goldText, experienceText, levelText);
 }
 
