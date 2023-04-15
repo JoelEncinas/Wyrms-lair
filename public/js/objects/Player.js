@@ -41,27 +41,22 @@ export class Player extends LivingCreature {
   }
 
   addExperiencePoints(experienceToAdd) {
-    let newExperience = parseInt((this._Experience + experienceToAdd) / 50 + 1)
-    if(newExperience > this._Level){
-      console.log('lv up!')
+    let newLevel = parseInt((this._Experience + experienceToAdd) / 10 + 1);
+
+    if (newLevel > this._Level) {
+      this._Level = newLevel;
+      this._MaximumHitPoints = newLevel * 10;
+      this._CurrentHitPoints = this._MaximumHitPoints;
+      this._Experience += experienceToAdd;
+      return true;
     }
-    
+
     this._Experience += experienceToAdd;
-    this._Level = parseInt(this._Experience / 50 + 1);
-    this._MaximumHitPoints = this._Level * 10;
+    return false;
   }
 
-  // TODO - message of levelup when leveling up
-  checkLevelUp() {
-    const currentLevel = this._Level;
-    const newLevel = parseInt(this._Experience / 50 + 1);
-    if (newLevel > currentLevel) {
-      this._Level = newLevel;
-      this._MaximumHitPoints = this._Level * 10;
-      return true;
-    } else {
-      return false;
-    }
+  get Level() {
+    return parseInt(this._Experience / 10 + 1);
   }
 
   get Inventory() {
