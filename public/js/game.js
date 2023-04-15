@@ -111,33 +111,43 @@ weaponBtn.addEventListener("click", function (e) {
 
   addLine(
     logDisplay,
-    "You hit the " +
+    "<span class='text-muted'>You hit the</span> " +
       currentMonster.Name +
-      " for " +
+      " <span class='text-muted'>for</span> " +
       damageToMonster +
-      " points of damage."
+      " <span class='text-muted'>points of damage.</span>"
   );
 
   if (currentMonster.CurrentHitPoints <= 0) {
-    addLine(logDisplay, "You defeated the " + currentMonster.Name + " .");
+    addLine(
+      logDisplay,
+      "<span class='text-muted'>You defeated the</span> " +
+        currentMonster.Name +
+        " <span class='text-muted'>.</span>"
+    );
 
     player.addExperiencePoints(currentMonster.RewardExperiencePoints)
-      ? addLine(logDisplay, "You are now level " + player.Level + "!")
+      ? addLine(
+          logDisplay,
+          "<span class='text-warning'>Congratulations! You are now level <strong>" +
+            player.Level +
+            "</strong>!</span>"
+        )
       : null;
 
     addLine(
       logDisplay,
-      "You gain <span class='text-warning'>" +
+      "<span class='text-warning'>You gain <strong>" +
         currentMonster.RewardExperiencePoints +
-        "xp</span>."
+        "</srong>xp</span>."
     );
 
     player.Gold += currentMonster.RewardGold;
     addLine(
       logDisplay,
-      "You loot <span class='text-warning'>" +
+      "<span class='text-warning'>You Loot <strong>" +
         currentMonster.RewardGold +
-        " gold</span>."
+        "</strong> gold</span>."
     );
 
     const lootedItems = [];
@@ -164,20 +174,20 @@ weaponBtn.addEventListener("click", function (e) {
       if (itemLooted.Quantity === 1) {
         addLine(
           logDisplay,
-          "You loot " +
-            itemLooted.Quantity +
-            " " +
+          "<span class='text-success'>Loot:</span> [" +
             itemLooted.Details.Name +
-            "."
+            "] <span class='text-success'>x" +
+            itemLooted.Quantity +
+            "</span>"
         );
       } else {
         addLine(
           logDisplay,
-          "You loot " +
-            itemLooted.Quantity +
-            " " +
+          "<span class='text-success'>Loot:</span> [" +
             itemLooted.Details.NamePlural +
-            "."
+            "] <span class='text-success'>x" +
+            itemLooted.Quantity +
+            "</span>"
         );
       }
     });
@@ -194,11 +204,11 @@ weaponBtn.addEventListener("click", function (e) {
 
     addLine(
       logDisplay,
-      "The " +
+      "<span class='text-muted'>The</span> " +
         currentMonster.Name +
-        " did " +
+        " <span class='text-muted'>did</span> " +
         damageToPlayer +
-        " points of damage."
+        " <span class='text-muted'>points of damage.</span>"
     );
 
     player.CurrentHitPoints -= damageToPlayer;
@@ -207,7 +217,12 @@ weaponBtn.addEventListener("click", function (e) {
 
     if (player.CurrentHitPoints <= 0) {
       hpText.innerText = `0 / ${player.MaximumHitPoints}`;
-      addLine(logDisplay, "The " + currentMonster.Name + " killed you...");
+      addLine(
+        logDisplay,
+        "<span class='text-muted'>The</span> " +
+          currentMonster.Name +
+          " <span class='text-muted'>killed you...</span>"
+      );
 
       // TODO - permanent death?
       moveTo(locationByID(LOCATION_IDS.HOME));
@@ -239,17 +254,24 @@ potionBtn.addEventListener("click", function (e) {
     }
   });
 
-  addLine(logDisplay, "You drink a " + currentPotion.Name + ".");
+  addLine(
+    logDisplay,
+    "<span class='text-muted'>You drink a</span> " +
+      currentPotion.Name +
+      " <span class='text-muted'>. You restore </span> " +
+      currentPotion.AmountToHeal +
+      " <span class='text-muted'>hit points.</span>"
+  );
 
   let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
 
   addLine(
     logDisplay,
-    "The " +
+    "<span class='text-muted'>The</span> " +
       currentMonster.Name +
-      " did " +
+      " <span class='text-muted'>did</span> " +
       damageToPlayer +
-      " points of damage."
+      " <span class='text-muted'>points of damage.</span>"
   );
 
   player.CurrentHitPoints -= damageToPlayer;
@@ -258,7 +280,12 @@ potionBtn.addEventListener("click", function (e) {
 
   if (player.CurrentHitPoints <= 0) {
     hpText.innerText = `0 / ${player.MaximumHitPoints}`;
-    addLine(logDisplay, "The " + currentMonster.Name + " killed you...");
+    addLine(
+      logDisplay,
+      "<span class='text-muted'>The</span> " +
+        currentMonster.Name +
+        " <span class='text-muted'>killed you...</span>"
+    );
 
     // TODO - permanent death?
     moveTo(locationByID(LOCATION_IDS.HOME));
@@ -403,7 +430,12 @@ function updatePotionListInUI() {
 
 function spawnMonster(newLocation) {
   addLine(logDisplay, "");
-  addLine(logDisplay, "You see a " + newLocation.MonsterLivingHere.Name + ".");
+  addLine(
+    logDisplay,
+    "<span class='text-muted'>You see a</span> " +
+      newLocation.MonsterLivingHere.Name +
+      "<span class='text-muted'>.</span>"
+  );
 
   let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
 
@@ -426,9 +458,9 @@ function moveTo(newLocation) {
   if (!player.hasRequiredItemToEnter(newLocation)) {
     addLine(
       logDisplay,
-      "You must have a " +
+      "<span class='text-muted'>You must have a</span> " +
         newLocation.ItemToEnter.Name +
-        " to enter this location."
+        " <span class='text-muted'>to enter this location.</span>"
     );
 
     return;
@@ -462,28 +494,31 @@ function moveTo(newLocation) {
         if (playerHasAllItemsToCompleteQuest) {
           addLine(
             logDisplay,
-            "You complete the '" +
+            "<span class='text-warning'>You complete</span> <strong>" +
               newLocation.QuestAvailableHere.Name +
-              "' quest."
+              "</strong> <span class='text-warning'>quest.</span>"
           );
 
           player.removeQuestCompletionItems(newLocation.QuestAvailableHere);
 
-          addLine(logDisplay, "You receive: ");
+          addLine(logDisplay, "<span class='text-warning'>You receive: ");
           addLine(
             logDisplay,
             newLocation.QuestAvailableHere.RewardExperiencePoints +
-              " experience points."
-          );
-          addLine(
-            logDisplay,
-            newLocation.QuestAvailableHere.RewardGold + " gold."
+              " experience points and " +
+              newLocation.QuestAvailableHere.RewardGold +
+              " gold.</span>"
           );
 
           player.addExperiencePoints(
             newLocation.QuestAvailableHere.RewardExperiencePoints
           )
-            ? addLine(logDisplay, "You are now level " + player.Level + "!")
+            ? addLine(
+                logDisplay,
+                "<span class='text-warning'>You are now level " +
+                  player.Level +
+                  "!</span>"
+              )
             : null;
           player.Gold += newLocation.QuestAvailableHere.RewardGold;
 
@@ -494,9 +529,9 @@ function moveTo(newLocation) {
           ) {
             addLine(
               logDisplay,
-              "You receive a " +
+              "<span class='text-success'>You receive a </span>" +
                 newLocation.QuestAvailableHere.RewardItems[i]._Name +
-                "."
+                "<span class='text-success'>.</span>"
             );
             player.addItemToInventory(
               newLocation.QuestAvailableHere.RewardItems[i]
@@ -511,11 +546,11 @@ function moveTo(newLocation) {
     } else {
       addLine(
         logDisplay,
-        "You receive the " +
+        "<span class='text-warning'>You receive</span> <strong>" +
           newLocation.QuestAvailableHere.Name +
-          " quest. " +
+          "</strong><span class='text-warning'>. " +
           newLocation.QuestAvailableHere.Description +
-          " To complete it, return with:"
+          " To complete it, return with:</span>"
       );
 
       for (let qci of newLocation.QuestAvailableHere.QuestCompletionItems) {
