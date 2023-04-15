@@ -108,20 +108,15 @@ vendorBtn.addEventListener("click", function (e) {
   vendorTitle.innerText = vendor.Name;
   vendorLocation.innerText = player.CurrentLocation.Name;
 
-  updateTradeTable(
-    vendorVendorInventory,
-    '<th scope="col">Name</th><th scope="col">Quantity</th>',
-    vendor.Inventory
-  );
+  const headers =
+    '<th scope="col">Name</th><th scope="col">Quantity</th><th scope="col">Price</th>';
 
-  updateTradeTable(
-    vendorPlayerInventory,
-    '<th scope="col">Name</th><th scope="col">Quantity</th>',
-    player.Inventory
-  );
+  updateTradeTable(true, vendorVendorInventory, headers, vendor.Inventory);
+
+  updateTradeTable(false, vendorPlayerInventory, headers, player.Inventory);
 });
 
-function updateTradeTable(element, headers, inventory) {
+function updateTradeTable(isVendor, element, headers, inventory) {
   const table = element.querySelector("table");
   table.innerHTML = "";
 
@@ -129,9 +124,11 @@ function updateTradeTable(element, headers, inventory) {
   headerRow.innerHTML = headers;
   table.appendChild(headerRow);
 
+  let tradeType = isVendor ? "Buy" : "Sell";
+
   for (const item of inventory) {
     const itemRow = document.createElement("tr");
-    itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td>`;
+    itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ID}">${tradeType} 1</button></td>`;
     table.appendChild(itemRow);
   }
 }
