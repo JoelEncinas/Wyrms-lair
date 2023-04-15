@@ -55,6 +55,12 @@ const potionOptions = document.getElementById("potion-options");
 const vendorBtn = document.getElementById("vendor-btn");
 const vendorTitle = document.getElementById("vendor-modal-title");
 const vendorLocation = document.getElementById("vendor-modal-location");
+const vendorVendorInventory = document.getElementById(
+  "vendor-vendor-inventory"
+);
+const vendorPlayerInventory = document.getElementById(
+  "vendor-player-inventory"
+);
 
 // FIRST LOAD
 let currentMonster;
@@ -96,21 +102,26 @@ westBtn.addEventListener("click", function (e) {
 });
 
 vendorBtn.addEventListener("click", function (e) {
-  vendorTitle.innerText = player.CurrentLocation.VendorWorkingHere.Name;
-  /*
-  const inventoryTable = inventoryContainer.querySelector("table");
-  inventoryTable.innerHTML = "";
+  vendorTitle.innerText = "Trade";
+  vendorLocation.innerText = player.CurrentLocation.Name;
+
+  
+  console.log(player.CurrentLocation.VendorWorkingHere);
+  console.log(player.CurrentLocation.VendorWorkingHere.Inventory);
+
+  const vendorTable = vendorVendorInventory.querySelector("table");
+  vendorVendorInventory.innerHTML = "";
 
   const headerRow = document.createElement("tr");
   headerRow.innerHTML =
     '<th scope="col">Name</th><th scope="col">Quantity</th>';
-  inventoryTable.appendChild(headerRow);
+  vendorTable.appendChild(headerRow);
 
-  for (const item of inventory) {
+  for (const item of player.CurrentLocation.VendorWorkingHere.Inventory) {
     const itemRow = document.createElement("tr");
     itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td>`;
-    inventoryTable.appendChild(itemRow);
-  }*/
+    vendorTable.appendChild(itemRow);
+  }
 });
 
 // action btn events

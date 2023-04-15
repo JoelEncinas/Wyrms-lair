@@ -117,7 +117,7 @@ export class Player extends LivingCreature {
       return true;
     }
 
-    for (let ii of this.Inventory) {
+    for (let ii of this._Inventory) {
       if (ii.Details.ID === location.ItemToEnter.ID) {
         return true;
       }

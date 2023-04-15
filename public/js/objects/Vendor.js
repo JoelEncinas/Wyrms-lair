@@ -7,31 +7,34 @@ export class Vendor {
     this._Inventory = [];
   }
 
+  get Name() {
+    return this._Name;
+  }
+
+  set Name(value) {
+    this._Name = value;
+  }
+
   get Inventory() {
     return this._Inventory;
   }
 
-  addItemToInventory(item, quantity = 1) {
-    for (let ii of this.Inventory) {
-      if (ii.Details.ID === item.ID) {
-        ii.Quantity++;
-
-        return;
-      }
+  addItemToInventory(itemToAdd, quantity = 1) {
+    let item = this._Inventory.find((ii) => ii.Details.ID === itemToAdd.ID);
+    if (!item) {
+      this._Inventory.push(new InventoryItem(itemToAdd, quantity));
+    } else {
+      item.Quantity += quantity;
     }
 
-    this._Inventory.push(new InventoryItem(itemByID(item.ID), 1));
+    // TODO - update UI
   }
 
   removeItemFromInventory(itemToRemove, quantity = 1) {
-    let itemIndex = this.Inventory.findIndex(
-      (ii) => ii.Details.ID === itemToRemove.ID
-    );
-
-    if (itemIndex === -1) {
-      return false;
+    let item = this._Inventory.find((ii) => ii.Details.ID === itemToRemove.ID);
+    if (!item) {
+      // The item is not in the player's inventory, so ignore it.
     } else {
-      let item = this.Inventory[itemIndex];
       item.Quantity -= quantity;
 
       if (item.Quantity < 0) {
@@ -39,10 +42,10 @@ export class Vendor {
       }
 
       if (item.Quantity === 0) {
-        this.Inventory.splice(itemIndex, 1);
+        this._Inventory.splice(this._Inventory.indexOf(item), 1);
       }
 
-      return true;
+      // TODO - update UI
     }
   }
 }
