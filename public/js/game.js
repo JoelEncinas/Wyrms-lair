@@ -108,34 +108,33 @@ vendorBtn.addEventListener("click", function (e) {
   vendorTitle.innerText = vendor.Name;
   vendorLocation.innerText = player.CurrentLocation.Name;
 
-  const vendorTable = vendorVendorInventory.querySelector("table");
-  vendorTable.innerHTML = "";
+  updateTradeTable(
+    vendorVendorInventory,
+    '<th scope="col">Name</th><th scope="col">Quantity</th>',
+    vendor.Inventory
+  );
 
-  const headerRow1 = document.createElement("tr");
-  headerRow1.innerHTML =
-    '<th scope="col">Name</th><th scope="col">Quantity</th>';
-  vendorTable.appendChild(headerRow1);
-
-  for (const item of player.CurrentLocation.VendorWorkingHere.Inventory) {
-    const itemRow = document.createElement("tr");
-    itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td>`;
-    vendorTable.appendChild(itemRow);
-  }
-
-  const playerTable = vendorPlayerInventory.querySelector("table");
-  playerTable.innerHTML = "";
-
-  const headerRow2 = document.createElement("tr");
-  headerRow2.innerHTML =
-    '<th scope="col">Name</th><th scope="col">Quantity</th>';
-  playerTable.appendChild(headerRow2);
-
-  for (const item of player.Inventory) {
-    const itemRow = document.createElement("tr");
-    itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td>`;
-    playerTable.appendChild(itemRow);
-  }
+  updateTradeTable(
+    vendorPlayerInventory,
+    '<th scope="col">Name</th><th scope="col">Quantity</th>',
+    player.Inventory
+  );
 });
+
+function updateTradeTable(element, headers, inventory) {
+  const table = element.querySelector("table");
+  table.innerHTML = "";
+
+  const headerRow = document.createElement("tr");
+  headerRow.innerHTML = headers;
+  table.appendChild(headerRow);
+
+  for (const item of inventory) {
+    const itemRow = document.createElement("tr");
+    itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td>`;
+    table.appendChild(itemRow);
+  }
+}
 
 // action btn events
 weaponBtn.addEventListener("click", function (e) {
