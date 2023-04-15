@@ -51,7 +51,7 @@ export class Player extends LivingCreature {
       return true;
     }
 
-    this._Experience += experienceToAdd;
+    this._Experience += experienceToAdd; 
     return false;
   }
 

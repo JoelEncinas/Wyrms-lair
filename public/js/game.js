@@ -1,5 +1,5 @@
 // Wyrm's Lair
-
+// Objects
 import { HealingPotion } from "./objects/HealingPotion.js";
 import { InventoryItem } from "./objects/InventoryItem.js";
 import { Item } from "./objects/Item.js";
@@ -13,6 +13,7 @@ import { Quest } from "./objects/Quest.js";
 import { QuestCompletionItem } from "./objects/QuestCompletionItem.js";
 import { Weapon } from "./objects/Weapon.js";
 
+// World
 import {
   items,
   monsters,
@@ -28,7 +29,9 @@ import {
   LOCATION_IDS,
 } from "./world.js";
 
-import { randomNumberGenerator } from "./utils/RandomNumberGenerator.js";
+// Utils
+import { randomNumberGenerator } from "./utils/randomNumberGenerator.js";
+import { addLine } from "./utils/displayUI.js";
 
 // UI
 // character stats
@@ -96,12 +99,10 @@ hideElement(weaponOptions);
 hideElement(potionBtn);
 hideElement(potionOptions);
 
-console.log(player);
-
-// current location global
+// current location
 let currentLocation = locationByID(LOCATION_IDS.HOME);
 
-// location btns
+// location btn events
 northBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToNorth);
 });
@@ -118,9 +119,8 @@ westBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToWest);
 });
 
-// action buttons
+// action btn events
 weaponBtn.addEventListener("click", function (e) {
-  console.log(player);
   player.CurrentWeapon = parseInt(
     weaponOptions.options[weaponOptions.selectedIndex].value
   );
@@ -137,6 +137,7 @@ weaponBtn.addEventListener("click", function (e) {
   currentMonster.CurrentHitPoints -= damageToMonster;
 
   addLine(
+    logDisplay,
     "You hit the " +
       currentMonster.Name +
       " for " +
@@ -145,13 +146,14 @@ weaponBtn.addEventListener("click", function (e) {
   );
 
   if (currentMonster.CurrentHitPoints <= 0) {
-    addLine("You defeated the " + currentMonster.Name + " .");
+    addLine(logDisplay, "You defeated the " + currentMonster.Name + " .");
 
     player.addExperiencePoints(currentMonster.RewardExperiencePoints)
-      ? addLine("You are now level " + player.Level + "!")
+      ? addLine(logDisplay, "You are now level " + player.Level + "!")
       : null;
 
     addLine(
+      logDisplay,
       "You gain <span class='text-warning'>" +
         currentMonster.RewardExperiencePoints +
         "xp</span>."
@@ -159,6 +161,7 @@ weaponBtn.addEventListener("click", function (e) {
 
     player.Gold += currentMonster.RewardGold;
     addLine(
+      logDisplay,
       "You loot <span class='text-warning'>" +
         currentMonster.RewardGold +
         " gold</span>."
@@ -187,10 +190,12 @@ weaponBtn.addEventListener("click", function (e) {
 
       if (itemLooted.Quantity === 1) {
         addLine(
+          logDisplay,
           "You loot " + itemLooted.Quantity + " " + itemLooted.Details.Name
         );
       } else {
         addLine(
+          logDisplay,
           "You loot " +
             itemLooted.Quantity +
             " " +
@@ -206,11 +211,11 @@ weaponBtn.addEventListener("click", function (e) {
     updatePotionListInUI();
 
     spawnMonster(currentLocation);
-    console.log(player);
   } else {
     let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
 
     addLine(
+      logDisplay,
       "The " +
         currentMonster.Name +
         " did " +
@@ -224,7 +229,7 @@ weaponBtn.addEventListener("click", function (e) {
 
     if (player.CurrentHitPoints <= 0) {
       hpText.innerText = `0 / ${player.MaximumHitPoints}`;
-      addLine("The " + currentMonster.Name + " killed you...");
+      addLine(logDisplay, "The " + currentMonster.Name + " killed you...");
 
       // TODO - permanent death?
       moveTo(locationByID(LOCATION_IDS.HOME));
@@ -259,11 +264,12 @@ potionBtn.addEventListener("click", function (e) {
     }
   });
 
-  addLine("You drink a " + currentPotion.Name);
+  addLine(logDisplay, "You drink a " + currentPotion.Name);
 
   let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
 
   addLine(
+    logDisplay,
     "The " +
       currentMonster.Name +
       " did " +
@@ -277,7 +283,7 @@ potionBtn.addEventListener("click", function (e) {
 
   if (player.CurrentHitPoints <= 0) {
     hpText.innerText = `0 / ${player.MaximumHitPoints}`;
-    addLine("The " + currentMonster.Name + " killed you...");
+    addLine(logDisplay, "The " + currentMonster.Name + " killed you...");
 
     // TODO - permanent death?
     moveTo(locationByID(LOCATION_IDS.HOME));
@@ -346,13 +352,6 @@ function updatePlayerStats(
   goldText.innerText = player.Gold;
   experienceText.innerText = player.Experience;
   levelText.innerText = player.Level;
-}
-
-function addLine(text) {
-  const newLine = document.createElement("p");
-  newLine.innerHTML = text;
-  logDisplay.appendChild(newLine);
-  logDisplay.scrollTop = logDisplay.scrollHeight;
 }
 
 function updateQuestsTable() {
@@ -475,7 +474,7 @@ function updatePotionListInUI() {
 }
 
 function spawnMonster(newLocation) {
-  addLine("You see a " + newLocation.MonsterLivingHere.Name + ".");
+  addLine(logDisplay, "You see a " + newLocation.MonsterLivingHere.Name + ".");
 
   let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
 
@@ -497,6 +496,7 @@ function spawnMonster(newLocation) {
 function moveTo(newLocation) {
   if (!player.hasRequiredItemToEnter(newLocation)) {
     addLine(
+      logDisplay,
       "You must have a " +
         newLocation.ItemToEnter.Name +
         " to enter this location."
@@ -535,6 +535,7 @@ function moveTo(newLocation) {
 
         if (playerHasAllItemsToCompleteQuest) {
           addLine(
+            logDisplay,
             "You complete the '" +
               newLocation.QuestAvailableHere.Name +
               "' quest."
@@ -542,17 +543,21 @@ function moveTo(newLocation) {
 
           player.RemoveQuestCompletionItems(newLocation.QuestAvailableHere);
 
-          addLine("You receive: ");
+          addLine(logDisplay, "You receive: ");
           addLine(
+            logDisplay,
             newLocation.QuestAvailableHere.RewardExperiencePoints +
               " experience points."
           );
-          addLine(newLocation.QuestAvailableHere.RewardGold + " gold.");
+          addLine(
+            logDisplay,
+            newLocation.QuestAvailableHere.RewardGold + " gold."
+          );
 
           player.addExperiencePoints(
             newLocation.QuestAvailableHere.RewardExperiencePoints
           )
-            ? addLine("You are now level " + player.Level + "!")
+            ? addLine(logDisplay, "You are now level " + player.Level + "!")
             : null;
           player.Gold += newLocation.QuestAvailableHere.RewardGold;
 
@@ -562,6 +567,7 @@ function moveTo(newLocation) {
             i++
           ) {
             addLine(
+              logDisplay,
               "You receive a " +
                 newLocation.QuestAvailableHere.RewardItems[i]._Name +
                 "."
@@ -571,23 +577,28 @@ function moveTo(newLocation) {
             );
           }
 
-          addLine("");
+          addLine(logDisplay, "");
 
           player.MarkQuestCompleted(newLocation.QuestAvailableHere);
         }
       }
     } else {
       addLine(
+        logDisplay,
         "You receive the " + newLocation.QuestAvailableHere.Name + " quest."
       );
-      addLine(newLocation.QuestAvailableHere.Description);
-      addLine("To complete it, return with:");
+      addLine(logDisplay, newLocation.QuestAvailableHere.Description);
+      addLine(logDisplay, "To complete it, return with:");
 
       for (let qci of newLocation.QuestAvailableHere.QuestCompletionItems) {
         if (qci.Quantity === 1) {
-          addLine("- " + qci.Quantity.toString() + " " + qci.Details.Name);
+          addLine(
+            logDisplay,
+            "- " + qci.Quantity.toString() + " " + qci.Details.Name
+          );
         } else {
           addLine(
+            logDisplay,
             "- " + qci.Quantity.toString() + " " + qci.Details.NamePlural
           );
         }
