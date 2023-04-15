@@ -8,12 +8,7 @@ import { PlayerQuest } from "./objects/PlayerQuest.js";
 import { Weapon } from "./objects/Weapon.js";
 
 // World
-import {
-  itemByID,
-  monsterByID,
-  locationByID,
-  LOCATION_IDS,
-} from "./world.js";
+import { itemByID, monsterByID, locationByID, LOCATION_IDS } from "./world.js";
 
 // Utils
 import { randomNumberGenerator } from "./utils/randomNumberGenerator.js";
@@ -169,7 +164,11 @@ weaponBtn.addEventListener("click", function (e) {
       if (itemLooted.Quantity === 1) {
         addLine(
           logDisplay,
-          "You loot " + itemLooted.Quantity + " " + itemLooted.Details.Name
+          "You loot " +
+            itemLooted.Quantity +
+            " " +
+            itemLooted.Details.Name +
+            "."
         );
       } else {
         addLine(
@@ -177,7 +176,8 @@ weaponBtn.addEventListener("click", function (e) {
           "You loot " +
             itemLooted.Quantity +
             " " +
-            itemLooted.Details.NamePlural
+            itemLooted.Details.NamePlural +
+            "."
         );
       }
     });
@@ -198,7 +198,7 @@ weaponBtn.addEventListener("click", function (e) {
         currentMonster.Name +
         " did " +
         damageToPlayer +
-        " points of damage"
+        " points of damage."
     );
 
     player.CurrentHitPoints -= damageToPlayer;
@@ -239,7 +239,7 @@ potionBtn.addEventListener("click", function (e) {
     }
   });
 
-  addLine(logDisplay, "You drink a " + currentPotion.Name);
+  addLine(logDisplay, "You drink a " + currentPotion.Name + ".");
 
   let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
 
@@ -249,7 +249,7 @@ potionBtn.addEventListener("click", function (e) {
       currentMonster.Name +
       " did " +
       damageToPlayer +
-      " points of damage"
+      " points of damage."
   );
 
   player.CurrentHitPoints -= damageToPlayer;
@@ -402,6 +402,7 @@ function updatePotionListInUI() {
 }
 
 function spawnMonster(newLocation) {
+  addLine(logDisplay, "");
   addLine(logDisplay, "You see a " + newLocation.MonsterLivingHere.Name + ".");
 
   let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
@@ -510,10 +511,12 @@ function moveTo(newLocation) {
     } else {
       addLine(
         logDisplay,
-        "You receive the " + newLocation.QuestAvailableHere.Name + " quest."
+        "You receive the " +
+          newLocation.QuestAvailableHere.Name +
+          " quest. " +
+          newLocation.QuestAvailableHere.Description +
+          " To complete it, return with:"
       );
-      addLine(logDisplay, newLocation.QuestAvailableHere.Description);
-      addLine(logDisplay, "To complete it, return with:");
 
       for (let qci of newLocation.QuestAvailableHere.QuestCompletionItems) {
         if (qci.Quantity === 1) {

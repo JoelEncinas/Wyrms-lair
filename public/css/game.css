@@ -39,3 +39,14 @@ th {
 #log-display p {
   margin: 0;
 }
+
+#character-movement {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#north, #west, #south, #east {
+  width: 80px;
+}

@@ -50,6 +50,8 @@ export const LOCATION_IDS = {
   SPIDER_FIELD: 9,
 };
 
+const UNSELLABLE_ITEM_PRICE = -1;
+
 function populateWorld() {
   populateItems();
   populateMonsters();
@@ -59,7 +61,7 @@ function populateWorld() {
 
 function populateItems() {
   items.push(
-    new Weapon(ITEM_IDS.RUSTY_SWORD, "Rusty sword", "Rusty swords", 0, 5, 10)
+    new Weapon(ITEM_IDS.RUSTY_SWORD, "Rusty sword", "Rusty swords", 20, 0, 5)
   );
   items.push(new Item(ITEM_IDS.RAT_TAIL, "Rat tail", "Rat tails", 1));
   items.push(
@@ -67,14 +69,14 @@ function populateItems() {
   );
   items.push(new Item(ITEM_IDS.SNAKE_FANG, "Snake fang", "Snake fangs", 1));
   items.push(new Item(ITEM_IDS.SNAKESKIN, "Snakeskin", "Snakeskins", 1));
-  items.push(new Weapon(ITEM_IDS.CLUB, "Club", "Clubs", 3, 10, 100));
+  items.push(new Weapon(ITEM_IDS.CLUB, "Club", "Clubs", 100, 3, 10));
   items.push(
     new HealingPotion(
       ITEM_IDS.HEALING_POTION,
       "Healing potion",
       "Healing potions",
-      5,
-      10
+      10,
+      5
     )
   );
   items.push(new Item(ITEM_IDS.SPIDER_FANG, "Spider fang", "Spider fangs", 1));
@@ -84,17 +86,17 @@ function populateItems() {
       ITEM_IDS.ADVENTURER_PASS,
       "Adventurer pass",
       "Adventurer passes",
-      -1
+      UNSELLABLE_ITEM_PRICE
     )
   );
-  items.push(new Weapon(ITEM_IDS.KNIFE, "Knife", "Knives", 1, 3, 10));
+  items.push(new Weapon(ITEM_IDS.KNIFE, "Knife", "Knives", 20, 1, 3));
   items.push(
     new HealingPotion(
       ITEM_IDS.GREATER_HEALING_POTION,
       "Greater Healing potion",
       "Greater Healing potions",
-      25,
-      50
+      50,
+      25
     )
   );
 }
