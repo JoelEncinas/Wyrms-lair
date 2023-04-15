@@ -5,6 +5,7 @@ import { LootItem } from "./objects/LootItem.js";
 import { Monster } from "./objects/Monster.js";
 import { Quest } from "./objects/Quest.js";
 import { QuestCompletionItem } from "./objects/QuestCompletionItem.js";
+import { Vendor } from "./objects/Vendor.js";
 import { Weapon } from "./objects/Weapon.js";
 
 export const items = [];
@@ -176,6 +177,11 @@ function populateLocations() {
     "Town square",
     "You see a fountain."
   );
+
+  const bobTheRatCatcher = new Vendor("Bob the Rat-Catcher");
+  bobTheRatCatcher.addItemToInventory(itemByID(ITEM_IDS.PIECE_OF_FUR), 5);
+  bobTheRatCatcher.addItemToInventory(itemByID(ITEM_IDS.RAT_TAIL), 3);
+  townSquare.VendorWorkingHere = bobTheRatCatcher;
 
   const alchemistHut = new Location(
     LOCATION_IDS.ALCHEMIST_HUT,

@@ -102,4 +102,12 @@ export class Location {
   set LocationToWest(value) {
     this._LocationToWest = value;
   }
+
+  get VendorWorkingHere() {
+    return this._VendorWorkingHere;
+  }
+
+  set VendorWorkingHere(value) {
+    this._VendorWorkingHere = value;
+  }
 }
