@@ -127,9 +127,11 @@ function updateTradeTable(isVendor, element, headers, inventory) {
   let tradeType = isVendor ? "Buy" : "Sell";
 
   for (const item of inventory) {
-    const itemRow = document.createElement("tr");
-    itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ID}">${tradeType} 1</button></td>`;
-    table.appendChild(itemRow);
+    if (item.Price !== -1) {
+      const itemRow = document.createElement("tr");
+      itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ID}">${tradeType} 1</button></td>`;
+      table.appendChild(itemRow);
+    }
   }
 }
 
