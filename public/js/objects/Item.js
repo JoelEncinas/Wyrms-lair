@@ -1,8 +1,9 @@
 export class Item {
-  constructor(id, name, namePlural) {
+  constructor(id, name, namePlural, price) {
     this._ID = id;
     this._Name = name;
     this._NamePlural = namePlural;
+    this._Price = price
   }
 
   get ID() {
@@ -27,5 +28,13 @@ export class Item {
 
   set NamePlural(value) {
     this._NamePlural = value;
+  }
+
+  get Price() {
+    return this._Price;
+  }
+
+  set Price(value) {
+    this._Price = value;
   }
 }

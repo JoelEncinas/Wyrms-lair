@@ -1,8 +1,8 @@
 import { Item } from "./Item.js";
 
 export class HealingPotion extends Item {
-  constructor(id, name, namePlural, amountToHeal) {
-    super(id, name, namePlural);
+  constructor(id, name, namePlural, price, amountToHeal) {
+    super(id, name, namePlural, price);
     this._AmountToHeal = amountToHeal;
   }
 
