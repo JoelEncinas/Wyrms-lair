@@ -26,3 +26,25 @@ export function updateButtonClass(button, location) {
     }
   }
 }
+
+export function showElement(element) {
+  if (element.classList.length > 0) {
+    [...element.classList].forEach((className) => {
+      if (className === "d-none") {
+        element.classList.remove("d-none");
+      }
+    });
+  }
+  element.classList.add("d-block");
+}
+
+export function hideElement(element) {
+  if (element.classList.length > 0) {
+    [...element.classList].forEach((className) => {
+      if (className === "d-block") {
+        element.classList.remove("d-block");
+      }
+    });
+  }
+  element.classList.add("d-none");
+}

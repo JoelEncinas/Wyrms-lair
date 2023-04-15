@@ -31,7 +31,12 @@ import {
 
 // Utils
 import { randomNumberGenerator } from "./utils/randomNumberGenerator.js";
-import { addLine, updateButtonClass } from "./utils/displayUI.js";
+import {
+  addLine,
+  updateButtonClass,
+  showElement,
+  hideElement,
+} from "./utils/displayUI.js";
 
 // UI
 // character stats
@@ -78,7 +83,7 @@ let player = new Player(
   ITEM_IDS.HEALING_POTION
 );
 
-player.AddItemToInventory(itemByID(ITEM_IDS.RUSTY_SWORD));
+player.addItemToInventory(itemByID(ITEM_IDS.RUSTY_SWORD));
 
 locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
@@ -96,7 +101,7 @@ hideElement(weaponOptions);
 hideElement(potionBtn);
 hideElement(potionOptions);
 
-// current location
+// global - current location
 let currentLocation = locationByID(LOCATION_IDS.HOME);
 
 // location btn events
@@ -183,7 +188,7 @@ weaponBtn.addEventListener("click", function (e) {
     }
 
     lootedItems.forEach(function (itemLooted) {
-      player.AddItemToInventory(itemLooted.Details);
+      player.addItemToInventory(itemLooted.Details);
 
       if (itemLooted.Quantity === 1) {
         addLine(
@@ -287,28 +292,6 @@ potionBtn.addEventListener("click", function (e) {
   updateInventoryTable(player.Inventory);
   updatePotionListInUI();
 });
-
-function showElement(element) {
-  if (element.classList.length > 0) {
-    [...element.classList].forEach((className) => {
-      if (className === "d-none") {
-        element.classList.remove("d-none");
-      }
-    });
-  }
-  element.classList.add("d-block");
-}
-
-function hideElement(element) {
-  if (element.classList.length > 0) {
-    [...element.classList].forEach((className) => {
-      if (className === "d-block") {
-        element.classList.remove("d-block");
-      }
-    });
-  }
-  element.classList.add("d-none");
-}
 
 function updatePlayerStats(
   player,
@@ -497,7 +480,7 @@ function moveTo(newLocation) {
     if (playerAlreadyHasQuest) {
       if (!playerAlreadyCompletedQuest) {
         let playerHasAllItemsToCompleteQuest =
-          player.HasAllQuestCompletionItems(newLocation.QuestAvailableHere);
+          player.hasAllQuestCompletionItems(newLocation.QuestAvailableHere);
 
         if (playerHasAllItemsToCompleteQuest) {
           addLine(
@@ -507,7 +490,7 @@ function moveTo(newLocation) {
               "' quest."
           );
 
-          player.RemoveQuestCompletionItems(newLocation.QuestAvailableHere);
+          player.removeQuestCompletionItems(newLocation.QuestAvailableHere);
 
           addLine(logDisplay, "You receive: ");
           addLine(
@@ -538,14 +521,14 @@ function moveTo(newLocation) {
                 newLocation.QuestAvailableHere.RewardItems[i]._Name +
                 "."
             );
-            player.AddItemToInventory(
+            player.addItemToInventory(
               newLocation.QuestAvailableHere.RewardItems[i]
             );
           }
 
           addLine(logDisplay, "");
 
-          player.MarkQuestCompleted(newLocation.QuestAvailableHere);
+          player.markQuestCompleted(newLocation.QuestAvailableHere);
         }
       }
     } else {

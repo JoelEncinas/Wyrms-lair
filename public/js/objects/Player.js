@@ -122,7 +122,7 @@ export class Player extends LivingCreature {
     return completedQuest ? completedQuest.IsCompleted : false;
   }
 
-  HasAllQuestCompletionItems(quest) {
+  hasAllQuestCompletionItems(quest) {
     for (let qci of quest.QuestCompletionItems) {
       let foundItemInPlayersInventory = false;
       for (let ii of this.Inventory) {
@@ -140,7 +140,7 @@ export class Player extends LivingCreature {
     return true;
   }
 
-  RemoveQuestCompletionItems(quest) {
+  removeQuestCompletionItems(quest) {
     quest.QuestCompletionItems.forEach((qci) => {
       let matchingInventoryItems = this.Inventory.filter(
         (ii) => ii.Details.ID === qci.Details.ID
@@ -159,7 +159,7 @@ export class Player extends LivingCreature {
     });
   }
 
-  AddItemToInventory(item) {
+  addItemToInventory(item) {
     for (let ii of this.Inventory) {
       if (ii.Details.ID === item.ID) {
         ii.Quantity++;
@@ -171,7 +171,7 @@ export class Player extends LivingCreature {
     this._Inventory.push(new InventoryItem(itemByID(item.ID), 1));
   }
 
-  MarkQuestCompleted(quest) {
+  markQuestCompleted(quest) {
     for (let pq of this.Quests) {
       if (pq.Details.ID === quest.ID) {
         pq.IsCompleted = true;
@@ -180,4 +180,6 @@ export class Player extends LivingCreature {
       }
     }
   }
+
+  // TODO - create default
 }
