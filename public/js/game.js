@@ -53,7 +53,8 @@ const potionOptions = document.getElementById("potion-options");
 
 // vendor modal
 const vendorBtn = document.getElementById("vendor-btn");
-const vendorTitle = document.getElementById("vendor-modal-title");
+const vendorModalTitle = document.getElementById("vendor-modal-title");
+const vendorTitle = document.getElementById("vendor-title");
 const vendorLocation = document.getElementById("vendor-modal-location");
 const vendorVendorInventory = document.getElementById(
   "vendor-vendor-inventory"
@@ -102,25 +103,37 @@ westBtn.addEventListener("click", function (e) {
 });
 
 vendorBtn.addEventListener("click", function (e) {
-  vendorTitle.innerText = "Trade";
+  let vendor = player.CurrentLocation.VendorWorkingHere;
+
+  vendorTitle.innerText = vendor.Name;
   vendorLocation.innerText = player.CurrentLocation.Name;
 
-  
-  console.log(player.CurrentLocation.VendorWorkingHere);
-  console.log(player.CurrentLocation.VendorWorkingHere.Inventory);
-
   const vendorTable = vendorVendorInventory.querySelector("table");
-  vendorVendorInventory.innerHTML = "";
+  vendorTable.innerHTML = "";
 
-  const headerRow = document.createElement("tr");
-  headerRow.innerHTML =
+  const headerRow1 = document.createElement("tr");
+  headerRow1.innerHTML =
     '<th scope="col">Name</th><th scope="col">Quantity</th>';
-  vendorTable.appendChild(headerRow);
+  vendorTable.appendChild(headerRow1);
 
   for (const item of player.CurrentLocation.VendorWorkingHere.Inventory) {
     const itemRow = document.createElement("tr");
     itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td>`;
     vendorTable.appendChild(itemRow);
+  }
+
+  const playerTable = vendorPlayerInventory.querySelector("table");
+  playerTable.innerHTML = "";
+
+  const headerRow2 = document.createElement("tr");
+  headerRow2.innerHTML =
+    '<th scope="col">Name</th><th scope="col">Quantity</th>';
+  playerTable.appendChild(headerRow2);
+
+  for (const item of player.Inventory) {
+    const itemRow = document.createElement("tr");
+    itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td>`;
+    playerTable.appendChild(itemRow);
   }
 });
 
