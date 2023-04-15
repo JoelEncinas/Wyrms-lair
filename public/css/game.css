@@ -46,7 +46,17 @@ th {
   align-items: center;
 }
 
-
-#north, #west, #south, #east {
+#north,
+#west,
+#south,
+#east {
   width: 80px;
+}
+
+/* VENDOR MODAL */
+
+#vendor-vendor-inventory,
+#vendor-player-inventory {
+  max-height: 200px;
+  overflow-y: scroll;
 }
