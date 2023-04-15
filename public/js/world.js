@@ -266,5 +266,4 @@ export function locationByID(id) {
   return locations.find((location) => location.ID === id) || null;
 }
 
-// create world
 populateWorld();
