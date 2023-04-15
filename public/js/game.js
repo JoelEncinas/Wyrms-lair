@@ -51,13 +51,15 @@ const weaponOptions = document.getElementById("weapon-options");
 const potionBtn = document.getElementById("potion-btn");
 const potionOptions = document.getElementById("potion-options");
 
+// vendor modal
+const vendorBtn = document.getElementById("vendor-btn");
+const vendorTitle = document.getElementById("vendor-modal-title");
+const vendorLocation = document.getElementById("vendor-modal-location");
+
 // FIRST LOAD
 let currentMonster;
 let player = new Player();
 player = player.createDefaultPlayer();
-
-// global - current location
-let currentLocation = locationByID(LOCATION_IDS.HOME);
 
 locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
@@ -70,6 +72,7 @@ updateQuestsTable();
 updateInventoryTable(player.Inventory);
 
 updateWeaponListInUI();
+hideElement(vendorBtn);
 hideElement(weaponBtn);
 hideElement(weaponOptions);
 hideElement(potionBtn);
@@ -90,6 +93,24 @@ southBtn.addEventListener("click", function (e) {
 
 westBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToWest);
+});
+
+vendorBtn.addEventListener("click", function (e) {
+  vendorTitle.innerText = player.CurrentLocation.VendorWorkingHere.Name;
+  /*
+  const inventoryTable = inventoryContainer.querySelector("table");
+  inventoryTable.innerHTML = "";
+
+  const headerRow = document.createElement("tr");
+  headerRow.innerHTML =
+    '<th scope="col">Name</th><th scope="col">Quantity</th>';
+  inventoryTable.appendChild(headerRow);
+
+  for (const item of inventory) {
+    const itemRow = document.createElement("tr");
+    itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td>`;
+    inventoryTable.appendChild(itemRow);
+  }*/
 });
 
 // action btn events
@@ -198,7 +219,7 @@ weaponBtn.addEventListener("click", function (e) {
     updateWeaponListInUI();
     updatePotionListInUI();
 
-    spawnMonster(currentLocation);
+    spawnMonster(player.CurrentLocation);
   } else {
     let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
 
@@ -226,7 +247,7 @@ weaponBtn.addEventListener("click", function (e) {
 
       // TODO - permanent death?
       moveTo(locationByID(LOCATION_IDS.HOME));
-      updateMovementButtons(currentLocation);
+      updateMovementButtons(player.CurrentLocation);
     }
   }
 });
@@ -289,7 +310,7 @@ potionBtn.addEventListener("click", function (e) {
 
     // TODO - permanent death?
     moveTo(locationByID(LOCATION_IDS.HOME));
-    updateMovementButtons(currentLocation);
+    updateMovementButtons(player.CurrentLocation);
   }
 
   updateInventoryTable(player.Inventory);
@@ -467,7 +488,6 @@ function moveTo(newLocation) {
   }
 
   player.CurrentLocation = newLocation;
-  currentLocation = newLocation;
 
   locationName.innerText = player.CurrentLocation.Name;
   locationDescription.innerText = player.CurrentLocation.Description;
@@ -584,6 +604,12 @@ function moveTo(newLocation) {
     hideElement(weaponOptions);
     hideElement(potionBtn);
     hideElement(potionOptions);
+  }
+
+  if (newLocation.VendorWorkingHere !== undefined) {
+    showElement(vendorBtn);
+  } else {
+    hideElement(vendorBtn);
   }
 
   updateInventoryTable(player.Inventory);
