@@ -59,33 +59,42 @@ function populateWorld() {
 
 function populateItems() {
   items.push(
-    new Weapon(ITEM_IDS.RUSTY_SWORD, "Rusty sword", "Rusty swords", 0, 5)
+    new Weapon(ITEM_IDS.RUSTY_SWORD, "Rusty sword", "Rusty swords", 0, 5, 10)
   );
-  items.push(new Item(ITEM_IDS.RAT_TAIL, "Rat tail", "Rat tails"));
-  items.push(new Item(ITEM_IDS.PIECE_OF_FUR, "Piece of fur", "Pieces of fur"));
-  items.push(new Item(ITEM_IDS.SNAKE_FANG, "Snake fang", "Snake fangs"));
-  items.push(new Item(ITEM_IDS.SNAKESKIN, "Snakeskin", "Snakeskins"));
-  items.push(new Weapon(ITEM_IDS.CLUB, "Club", "Clubs", 3, 10));
+  items.push(new Item(ITEM_IDS.RAT_TAIL, "Rat tail", "Rat tails", 1));
+  items.push(
+    new Item(ITEM_IDS.PIECE_OF_FUR, "Piece of fur", "Pieces of fur", 1)
+  );
+  items.push(new Item(ITEM_IDS.SNAKE_FANG, "Snake fang", "Snake fangs", 1));
+  items.push(new Item(ITEM_IDS.SNAKESKIN, "Snakeskin", "Snakeskins", 1));
+  items.push(new Weapon(ITEM_IDS.CLUB, "Club", "Clubs", 3, 10, 100));
   items.push(
     new HealingPotion(
       ITEM_IDS.HEALING_POTION,
       "Healing potion",
       "Healing potions",
-      5
+      5,
+      10
     )
   );
-  items.push(new Item(ITEM_IDS.SPIDER_FANG, "Spider fang", "Spider fangs"));
-  items.push(new Item(ITEM_IDS.SPIDER_SILK, "Spider silk", "Spider silks"));
+  items.push(new Item(ITEM_IDS.SPIDER_FANG, "Spider fang", "Spider fangs", 1));
+  items.push(new Item(ITEM_IDS.SPIDER_SILK, "Spider silk", "Spider silks", 1));
   items.push(
-    new Item(ITEM_IDS.ADVENTURER_PASS, "Adventurer pass", "Adventurer passes")
+    new Item(
+      ITEM_IDS.ADVENTURER_PASS,
+      "Adventurer pass",
+      "Adventurer passes",
+      -1
+    )
   );
-  items.push(new Weapon(ITEM_IDS.KNIFE, "Knife", "Knives", 1, 3));
+  items.push(new Weapon(ITEM_IDS.KNIFE, "Knife", "Knives", 1, 3, 10));
   items.push(
     new HealingPotion(
       ITEM_IDS.GREATER_HEALING_POTION,
       "Greater Healing potion",
       "Greater Healing potions",
-      25
+      25,
+      50
     )
   );
 }

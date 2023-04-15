@@ -2,6 +2,9 @@
 #log-display p {
   min-height: 24px;
   padding: 2px 0;
+}
+
+p {
   font-size: 14px;
 }
 
@@ -16,7 +19,7 @@ th {
 /* GAME */
 
 #stats-location {
-  height: 200px;
+  height: 140px;
 }
 
 #inventory-log {
