@@ -1,6 +1,6 @@
 import { LivingCreature } from "./LivingCreature.js";
 import { InventoryItem } from "./InventoryItem.js";
-import { itemByID } from "../world.js";
+import { itemByID, locationByID, LOCATION_IDS, ITEM_IDS } from "../world.js";
 
 export class Player extends LivingCreature {
   constructor(
@@ -22,6 +22,23 @@ export class Player extends LivingCreature {
     this._CurrentLocation = currentLocation;
     this._CurrentWeapon = currentWeapon;
     this._CurrentPotion = currentPotion;
+  }
+
+  createDefaultPlayer() {
+    let player = new Player(
+      10,
+      10,
+      20,
+      0,
+      1,
+      locationByID(LOCATION_IDS.HOME),
+      ITEM_IDS.RUSTY_SWORD,
+      ITEM_IDS.HEALING_POTION
+    );
+
+    player.addItemToInventory(itemByID(ITEM_IDS.RUSTY_SWORD));
+    
+    return player;
   }
 
   get Gold() {
@@ -51,7 +68,7 @@ export class Player extends LivingCreature {
       return true;
     }
 
-    this._Experience += experienceToAdd; 
+    this._Experience += experienceToAdd;
     return false;
   }
 
@@ -180,6 +197,4 @@ export class Player extends LivingCreature {
       }
     }
   }
-
-  // TODO - create default
 }

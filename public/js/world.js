@@ -197,14 +197,14 @@ function populateLocations() {
   const guardPost = new Location(
     LOCATION_IDS.GUARD_POST,
     "Guard post",
-    "There is a large, tough-looking guard here.",
-    itemByID(ITEM_IDS.ADVENTURER_PASS)
+    "There is a large, tough-looking guard here."
   );
 
   const bridge = new Location(
     LOCATION_IDS.BRIDGE,
     "Bridge",
-    "A stone bridge crosses a wide river."
+    "A stone bridge crosses a wide river.",
+    itemByID(ITEM_IDS.ADVENTURER_PASS)
   );
 
   const spiderField = new Location(

@@ -72,18 +72,11 @@ const potionOptions = document.getElementById("potion-options");
 
 // FIRST LOAD
 let currentMonster;
-let player = new Player(
-  10,
-  10,
-  20,
-  0,
-  1,
-  locationByID(LOCATION_IDS.HOME),
-  ITEM_IDS.RUSTY_SWORD,
-  ITEM_IDS.HEALING_POTION
-);
+let player = new Player();
+player = player.createDefaultPlayer();
 
-player.addItemToInventory(itemByID(ITEM_IDS.RUSTY_SWORD));
+// global - current location
+let currentLocation = locationByID(LOCATION_IDS.HOME);
 
 locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
@@ -100,9 +93,6 @@ hideElement(weaponBtn);
 hideElement(weaponOptions);
 hideElement(potionBtn);
 hideElement(potionOptions);
-
-// global - current location
-let currentLocation = locationByID(LOCATION_IDS.HOME);
 
 // location btn events
 northBtn.addEventListener("click", function (e) {
