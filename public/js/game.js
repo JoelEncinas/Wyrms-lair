@@ -73,7 +73,7 @@ locationDescription.innerText = player.CurrentLocation.Description;
 
 updateMovementButtons(player.CurrentLocation);
 
-updatePlayerStats(player, hpText, goldText, experienceText, levelText);
+updatePlayerStats();
 
 updateQuestsTable();
 updateInventoryTable(player.Inventory);
@@ -156,13 +156,7 @@ function updateTradeTable(isVendor, element, headers, inventory) {
             headers,
             player.Inventory
           );
-          updatePlayerStats(
-            player,
-            hpText,
-            goldText,
-            experienceText,
-            levelText
-          );
+          updatePlayerStats();
           updateInventoryTable(player.Inventory);
         } else {
           player.removeItemFromInventory(item.Details, 1);
@@ -183,13 +177,7 @@ function updateTradeTable(isVendor, element, headers, inventory) {
             headers,
             player.CurrentLocation.VendorWorkingHere.Inventory
           );
-          updatePlayerStats(
-            player,
-            hpText,
-            goldText,
-            experienceText,
-            levelText
-          );
+          updatePlayerStats();
           updateInventoryTable(player.Inventory);
         }
       });
@@ -297,7 +285,7 @@ weaponBtn.addEventListener("click", function (e) {
       }
     });
 
-    updatePlayerStats(player, hpText, goldText, experienceText, levelText);
+    updatePlayerStats();
     updateInventoryTable(player.Inventory);
     updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
     updateItemListInUI(
@@ -410,13 +398,7 @@ potionBtn.addEventListener("click", function (e) {
   );
 });
 
-function updatePlayerStats(
-  player,
-  hpText,
-  goldText,
-  experienceText,
-  levelText
-) {
+function updatePlayerStats() {
   hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
   goldText.innerText = player.Gold;
   experienceText.innerText = player.Experience;
@@ -550,7 +532,7 @@ function moveTo(newLocation) {
 
   player.CurrentHitPoints = player.MaximumHitPoints;
 
-  updatePlayerStats(player, hpText, goldText, experienceText, levelText);
+  updatePlayerStats();
 
   if (newLocation.QuestAvailableHere !== undefined) {
     let playerAlreadyHasQuest = player.hasThisQuest(
@@ -675,7 +657,7 @@ function moveTo(newLocation) {
     potionBtn,
     player.CurrentPotion
   );
-  updatePlayerStats(player, hpText, goldText, experienceText, levelText);
+  updatePlayerStats();
 }
 
 function updateMovementButtons(location) {
