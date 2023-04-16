@@ -135,18 +135,26 @@ function updateTradeTable(isVendor, element, headers, inventory) {
       const button = itemRow.querySelector("button");
 
       button.addEventListener("click", () => {
-        const itemId = item.ItemID;
-        const quantity = 1;
         if (isVendor) {
           // TODO - Handle vendor buy logic
-          console.log(
-            `Vendor buy button clicked for item ID ${itemId} with quantity ${quantity}`
-          );
         } else {
           // TODO - Handle player sell logic
-          console.log(
-            `Player sell button clicked for item ID ${itemId} with quantity ${quantity}`
+          player.removeItemFromInventory(item.Details, 1);
+          player.Gold += item.Details.Price;
+          updateTradeTable(
+            false,
+            vendorPlayerInventory,
+            headers,
+            player.Inventory
           );
+          updatePlayerStats(
+            player,
+            hpText,
+            goldText,
+            experienceText,
+            levelText
+          );
+          updateInventoryTable(player.Inventory);
         }
       });
     }
@@ -256,7 +264,12 @@ weaponBtn.addEventListener("click", function (e) {
     updatePlayerStats(player, hpText, goldText, experienceText, levelText);
     updateInventoryTable(player.Inventory);
     updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
-    updateItemListInUI(HealingPotion, potionOptions, potionBtn, player.CurrentPotion);
+    updateItemListInUI(
+      HealingPotion,
+      potionOptions,
+      potionBtn,
+      player.CurrentPotion
+    );
 
     spawnMonster(player.CurrentLocation);
   } else {
@@ -353,7 +366,12 @@ potionBtn.addEventListener("click", function (e) {
   }
 
   updateInventoryTable(player.Inventory);
-  updateItemListInUI(HealingPotion, potionOptions, potionBtn, player.CurrentPotion);
+  updateItemListInUI(
+    HealingPotion,
+    potionOptions,
+    potionBtn,
+    player.CurrentPotion
+  );
 });
 
 function updatePlayerStats(
@@ -615,7 +633,12 @@ function moveTo(newLocation) {
   updateInventoryTable(player.Inventory);
   updateQuestsTable();
   updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
-  updateItemListInUI(HealingPotion, potionOptions, potionBtn, player.CurrentPotion);
+  updateItemListInUI(
+    HealingPotion,
+    potionOptions,
+    potionBtn,
+    player.CurrentPotion
+  );
   updatePlayerStats(player, hpText, goldText, experienceText, levelText);
 }
 

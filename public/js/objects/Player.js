@@ -188,6 +188,23 @@ export class Player extends LivingCreature {
     this._Inventory.push(new InventoryItem(itemByID(item.ID), 1));
   }
 
+  removeItemFromInventory(itemToRemove, quantity = 1) {
+    let item = this._Inventory.find((ii) => ii.Details.ID === itemToRemove.ID);
+    if (!item) {
+      // The item is not in the player's inventory, so ignore it.
+    } else {
+      item.Quantity -= quantity;
+
+      if (item.Quantity < 0) {
+        item.Quantity = 0;
+      }
+
+      if (item.Quantity === 0) {
+        this._Inventory.splice(this._Inventory.indexOf(item), 1);
+      }
+    }
+  }
+
   markQuestCompleted(quest) {
     for (let pq of this.Quests) {
       if (pq.Details.ID === quest.ID) {

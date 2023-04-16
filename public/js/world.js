@@ -62,7 +62,14 @@ function populateWorld() {
 
 function populateItems() {
   items.push(
-    new Weapon(ITEM_IDS.RUSTY_SWORD, "Rusty sword", "Rusty swords", 20, 0, 5)
+    new Weapon(
+      ITEM_IDS.RUSTY_SWORD,
+      "Rusty sword",
+      "Rusty swords",
+      UNSELLABLE_ITEM_PRICE,
+      0,
+      5
+    )
   );
   items.push(new Item(ITEM_IDS.RAT_TAIL, "Rat tail", "Rat tails", 1));
   items.push(

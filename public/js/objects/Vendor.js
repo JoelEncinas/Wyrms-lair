@@ -26,8 +26,6 @@ export class Vendor {
     } else {
       item.Quantity += quantity;
     }
-
-    // TODO - update UI
   }
 
   removeItemFromInventory(itemToRemove, quantity = 1) {
@@ -44,8 +42,6 @@ export class Vendor {
       if (item.Quantity === 0) {
         this._Inventory.splice(this._Inventory.indexOf(item), 1);
       }
-
-      // TODO - update UI
     }
   }
 }
