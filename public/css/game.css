@@ -26,6 +26,10 @@ th {
   height: 200px;
 }
 
+#inventory {
+  overflow-y: scroll;
+}
+
 #quests-actions {
   height: 100px;
 }
