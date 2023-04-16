@@ -27,6 +27,8 @@ export const ITEM_IDS = {
   ADVENTURER_PASS: 10,
   KNIFE: 11,
   GREATER_HEALING_POTION: 12,
+  SCROLL_FIREBALL_I: 13,
+  SCROLL_RENEW_I: 14,
 };
 
 export const MONSTER_IDS = {
@@ -53,6 +55,11 @@ export const LOCATION_IDS = {
 };
 
 const UNSELLABLE_ITEM_PRICE = -1;
+
+export const SPELL_TYPES = {
+  DAMAGE: 1,
+  HEALING: 2,
+};
 
 function populateWorld() {
   populateItems();
@@ -106,6 +113,28 @@ function populateItems() {
       "Greater Healing potions",
       50,
       25
+    )
+  );
+  items.push(
+    new Scroll(
+      ITEM_IDS.SCROLL_FIREBALL_I,
+      "Scroll: Fireball I",
+      "Scrolls: Fireball I",
+      40,
+      10,
+      12,
+      SPELL_TYPES.DAMAGE
+    )
+  );
+  items.push(
+    new Scroll(
+      ITEM_IDS.SCROLL_RENEW_I,
+      "Scroll: Renew I",
+      "Scrolls: Renew I",
+      20,
+      8,
+      14,
+      SPELL_TYPES.HEALING
     )
   );
 }
