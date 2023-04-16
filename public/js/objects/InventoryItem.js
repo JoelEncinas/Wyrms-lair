@@ -23,8 +23,4 @@ export class InventoryItem {
   get ItemID() {
     return this._Details.ID;
   }
-
-  get Price() {
-    return this._Details.Price;
-  }
 }

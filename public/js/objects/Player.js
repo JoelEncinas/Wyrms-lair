@@ -35,9 +35,8 @@ export class Player extends LivingCreature {
       ITEM_IDS.RUSTY_SWORD,
       ITEM_IDS.HEALING_POTION
     );
-
     player.addItemToInventory(itemByID(ITEM_IDS.RUSTY_SWORD));
-    
+
     return player;
   }
 

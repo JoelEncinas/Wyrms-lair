@@ -105,6 +105,7 @@ westBtn.addEventListener("click", function (e) {
 vendorBtn.addEventListener("click", function (e) {
   let vendor = player.CurrentLocation.VendorWorkingHere;
 
+  vendorModalTitle.innerText = "Trade";
   vendorTitle.innerText = vendor.Name;
   vendorLocation.innerText = player.CurrentLocation.Name;
 
@@ -127,25 +128,60 @@ function updateTradeTable(isVendor, element, headers, inventory) {
   let tradeType = isVendor ? "Buy" : "Sell";
 
   for (const item of inventory) {
-    if (item.Price !== -1) {
+    if (item.Details.Price !== -1) {
       const itemRow = document.createElement("tr");
-      itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ItemID}">${tradeType} 1</button></td>`;
+      itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Details.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ItemID}">${tradeType} 1</button></td>`;
       table.appendChild(itemRow);
 
       const button = itemRow.querySelector("button");
 
       button.addEventListener("click", () => {
         if (isVendor) {
-          // TODO - Handle vendor buy logic
-        } else {
-          // TODO - Handle player sell logic
-          player.removeItemFromInventory(item.Details, 1);
-          player.Gold += item.Details.Price;
+          player.addItemToInventory(item.Details);
+          player.CurrentLocation.VendorWorkingHere.removeItemFromInventory(
+            item.Details
+          );
+          player.Gold -= item.Details.Price;
+          console.log(player.Inventory);
+
+          updateTradeTable(
+            true,
+            vendorVendorInventory,
+            headers,
+            player.CurrentLocation.VendorWorkingHere.Inventory
+          );
           updateTradeTable(
             false,
             vendorPlayerInventory,
             headers,
             player.Inventory
+          );
+          updatePlayerStats(
+            player,
+            hpText,
+            goldText,
+            experienceText,
+            levelText
+          );
+          updateInventoryTable(player.Inventory);
+        } else {
+          player.removeItemFromInventory(item.Details, 1);
+          player.CurrentLocation.VendorWorkingHere.addItemToInventory(
+            item.Details
+          );
+          player.Gold += item.Details.Price;
+
+          updateTradeTable(
+            false,
+            vendorPlayerInventory,
+            headers,
+            player.Inventory
+          );
+          updateTradeTable(
+            true,
+            vendorVendorInventory,
+            headers,
+            player.CurrentLocation.VendorWorkingHere.Inventory
           );
           updatePlayerStats(
             player,
