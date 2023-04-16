@@ -5,6 +5,7 @@ import { Monster } from "./objects/Monster.js";
 import { Player } from "./objects/Player.js";
 import { PlayerQuest } from "./objects/PlayerQuest.js";
 import { Weapon } from "./objects/Weapon.js";
+import { Scroll } from "./objects/Scroll.js";
 
 // World
 import {
@@ -13,6 +14,7 @@ import {
   locationByID,
   ITEM_IDS,
   LOCATION_IDS,
+  SPELL_TYPES,
 } from "./world.js";
 
 // Utils
@@ -58,7 +60,6 @@ const potionOptions = document.getElementById("potion-options");
 const scrollBtn = document.getElementById("scroll-btn");
 const scrollOptions = document.getElementById("scroll-options");
 
-
 // vendor modal
 const vendorBtn = document.getElementById("vendor-btn");
 const vendorModalTitle = document.getElementById("vendor-modal-title");
@@ -85,11 +86,20 @@ updatePlayerStats();
 updateQuestsTable();
 updateInventoryTable(player.Inventory);
 updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
+updateItemListInUI(
+  HealingPotion,
+  potionOptions,
+  potionBtn,
+  player.CurrentPotion
+);
+updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
 hideElement(vendorBtn);
 hideElement(weaponBtn);
 hideElement(weaponOptions);
 hideElement(potionBtn);
 hideElement(potionOptions);
+hideElement(scrollBtn);
+hideElement(scrollOptions);
 
 // location btn events
 northBtn.addEventListener("click", function (e) {
@@ -300,6 +310,7 @@ weaponBtn.addEventListener("click", function (e) {
       potionBtn,
       player.CurrentPotion
     );
+    updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
 
     spawnMonster(player.CurrentLocation);
   } else {
@@ -398,6 +409,216 @@ potionBtn.addEventListener("click", function (e) {
     potionBtn,
     player.CurrentPotion
   );
+});
+
+scrollBtn.addEventListener("click", function (e) {
+  // TODO
+  player.CurrentScroll = parseInt(
+    scrollOptions.options[scrollOptions.selectedIndex].value
+  );
+
+  let currentScroll = itemByID(
+    parseInt(scrollOptions.options[scrollOptions.selectedIndex].value)
+  );
+
+  if (currentScroll.SpellType === SPELL_TYPES.DAMAGE) {
+    let damageToMonster = randomNumberGenerator(
+      currentWeapon.MinimumDamage,
+      currentWeapon.MaximumDamage
+    );
+
+    currentMonster.CurrentHitPoints -= damageToMonster;
+
+    addLine(
+      logDisplay,
+      "<span class='text-muted'>You hit the</span> " +
+        currentMonster.Name +
+        " <span class='text-muted'>for</span> " +
+        damageToMonster +
+        " <span class='text-muted'>points of damage.</span>"
+    );
+
+    if (currentMonster.CurrentHitPoints <= 0) {
+      addLine(
+        logDisplay,
+        "<span class='text-muted'>You defeated the</span> " +
+          currentMonster.Name +
+          " <span class='text-muted'>.</span>"
+      );
+
+      player.addExperiencePoints(currentMonster.RewardExperiencePoints)
+        ? addLine(
+            logDisplay,
+            "<span class='text-warning'>Congratulations! You are now level <strong>" +
+              player.Level +
+              "</strong>!</span>"
+          )
+        : null;
+
+      addLine(
+        logDisplay,
+        "<span class='text-warning'>You gain <strong>" +
+          currentMonster.RewardExperiencePoints +
+          "</srong>xp</span>."
+      );
+
+      player.Gold += currentMonster.RewardGold;
+      addLine(
+        logDisplay,
+        "<span class='text-warning'>You Loot <strong>" +
+          currentMonster.RewardGold +
+          "</strong> gold</span>."
+      );
+
+      const lootedItems = [];
+
+      currentMonster.LootTable.forEach(function (itemLooted) {
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+
+        if (randomNumber <= itemLooted._DropPercentage) {
+          lootedItems.push(new InventoryItem(itemLooted._Details, 1));
+        }
+      });
+
+      if (lootedItems.length === 0) {
+        currentMonster.LootTable.forEach(function (itemLooted) {
+          if (itemLooted.IsDefaultItem) {
+            lootedItems.push(new InventoryItem(itemLooted._Details, 1));
+          }
+        });
+      }
+
+      lootedItems.forEach(function (itemLooted) {
+        player.addItemToInventory(itemLooted.Details);
+
+        if (itemLooted.Quantity === 1) {
+          addLine(
+            logDisplay,
+            "<span class='text-success'>Loot:</span> [" +
+              itemLooted.Details.Name +
+              "] <span class='text-success'>x" +
+              itemLooted.Quantity +
+              "</span>"
+          );
+        } else {
+          addLine(
+            logDisplay,
+            "<span class='text-success'>Loot:</span> [" +
+              itemLooted.Details.NamePlural +
+              "] <span class='text-success'>x" +
+              itemLooted.Quantity +
+              "</span>"
+          );
+        }
+      });
+
+      updatePlayerStats();
+      updateInventoryTable(player.Inventory);
+      updateItemListInUI(
+        Weapon,
+        weaponOptions,
+        weaponBtn,
+        player.CurrentWeapon
+      );
+      updateItemListInUI(
+        HealingPotion,
+        potionOptions,
+        potionBtn,
+        player.CurrentPotion
+      );
+      updateItemListInUI(
+        Scroll,
+        scrollOptions,
+        scrollBtn,
+        player.CurrentScroll
+      );
+
+      spawnMonster(player.CurrentLocation);
+    } else {
+      let damageToPlayer = randomNumberGenerator(
+        0,
+        currentMonster.MaximumDamage
+      );
+
+      addLine(
+        logDisplay,
+        "<span class='text-muted'>The</span> " +
+          currentMonster.Name +
+          " <span class='text-muted'>did</span> " +
+          damageToPlayer +
+          " <span class='text-muted'>points of damage.</span>"
+      );
+
+      player.CurrentHitPoints -= damageToPlayer;
+      hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
+
+      if (player.CurrentHitPoints <= 0) {
+        hpText.innerText = `0 / ${player.MaximumHitPoints}`;
+        addLine(
+          logDisplay,
+          "<span class='text-muted'>The</span> " +
+            currentMonster.Name +
+            " <span class='text-muted'>killed you...</span>"
+        );
+
+        moveTo(locationByID(LOCATION_IDS.HOME));
+        updateMovementButtons(player.CurrentLocation);
+      }
+    }
+  }
+
+  player.CurrentHitPoints +=
+    player.CurrentHitPoints + currentPotion.AmountToHeal;
+
+  if (player.CurrentHitPoints > player.MaximumHitPoints) {
+    player.CurrentHitPoints = player.MaximumHitPoints;
+  }
+
+  player.Inventory.forEach(function (ii) {
+    if (ii.ItemID === currentPotion.ID) {
+      ii.Quantity--;
+      return;
+    }
+  });
+
+  addLine(
+    logDisplay,
+    "<span class='text-muted'>You drink a</span> " +
+      currentPotion.Name +
+      " <span class='text-muted'>. You restore </span> " +
+      currentPotion.AmountToHeal +
+      " <span class='text-muted'>hit points.</span>"
+  );
+
+  let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
+
+  addLine(
+    logDisplay,
+    "<span class='text-muted'>The</span> " +
+      currentMonster.Name +
+      " <span class='text-muted'>did</span> " +
+      damageToPlayer +
+      " <span class='text-muted'>points of damage.</span>"
+  );
+
+  player.CurrentHitPoints -= damageToPlayer;
+  hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
+
+  if (player.CurrentHitPoints <= 0) {
+    hpText.innerText = `0 / ${player.MaximumHitPoints}`;
+    addLine(
+      logDisplay,
+      "<span class='text-muted'>The</span> " +
+        currentMonster.Name +
+        " <span class='text-muted'>killed you...</span>"
+    );
+
+    moveTo(locationByID(LOCATION_IDS.HOME));
+    updateMovementButtons(player.CurrentLocation);
+  }
+
+  updateInventoryTable(player.Inventory);
+  updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
 });
 
 function updatePlayerStats() {
@@ -633,6 +854,8 @@ function moveTo(newLocation) {
     showElement(weaponOptions);
     showElement(potionBtn);
     showElement(potionOptions);
+    showElement(scrollBtn);
+    showElement(scrollOptions);
   } else {
     currentMonster = null;
 
@@ -640,6 +863,8 @@ function moveTo(newLocation) {
     hideElement(weaponOptions);
     hideElement(potionBtn);
     hideElement(potionOptions);
+    hideElement(scrollBtn);
+    hideElement(scrollOptions);
   }
 
   if (newLocation.VendorWorkingHere !== undefined) {
@@ -657,6 +882,7 @@ function moveTo(newLocation) {
     potionBtn,
     player.CurrentPotion
   );
+  updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
   updatePlayerStats();
 }
 

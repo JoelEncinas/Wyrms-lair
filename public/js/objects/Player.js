@@ -11,7 +11,8 @@ export class Player extends LivingCreature {
     level,
     currentLocation,
     currentWeapon,
-    currentPotion
+    currentPotion,
+    currentScroll
   ) {
     super(maximumHitPoints, currentHitPoints);
     this._Gold = gold;
@@ -22,6 +23,7 @@ export class Player extends LivingCreature {
     this._CurrentLocation = currentLocation;
     this._CurrentWeapon = currentWeapon;
     this._CurrentPotion = currentPotion;
+    this._CurrentScroll = currentScroll;
   }
 
   createDefaultPlayer() {
@@ -33,7 +35,8 @@ export class Player extends LivingCreature {
       1,
       locationByID(LOCATION_IDS.HOME),
       ITEM_IDS.RUSTY_SWORD,
-      ITEM_IDS.HEALING_POTION
+      ITEM_IDS.HEALING_POTION,
+      ITEM_IDS.SCROLL_FIREBALL_I
     );
     player.addItemToInventory(itemByID(ITEM_IDS.RUSTY_SWORD));
 
@@ -109,6 +112,14 @@ export class Player extends LivingCreature {
 
   set CurrentPotion(value) {
     this._CurrentPotion = value;
+  }
+
+  get CurrentScroll() {
+    return this._CurrentScroll;
+  }
+
+  set CurrentScroll(value) {
+    this._CurrentScroll = value;
   }
 
   hasRequiredItemToEnter(location) {
