@@ -7,6 +7,7 @@ import { Quest } from "./objects/Quest.js";
 import { QuestCompletionItem } from "./objects/QuestCompletionItem.js";
 import { Vendor } from "./objects/Vendor.js";
 import { Weapon } from "./objects/Weapon.js";
+import { Scroll } from "./objects/Scroll.js";
 
 export const items = [];
 export const monsters = [];

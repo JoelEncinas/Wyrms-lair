@@ -6,7 +6,9 @@ rpg in js
 
 - Expand world
     - More monsters, items, locations, quests, endgame 
-- Save the player’s to mongodb using mongoose
+- Save the players data to mongodb using mongoose
+    - Save and Load
+    - Delete account / Reset game
 - Use an exponential level system instead of linear
 - Add levels to monsters too
     - Only gain experience from monsters similar to your level
