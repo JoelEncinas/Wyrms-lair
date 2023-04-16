@@ -1,4 +1,3 @@
-// Wyrm's Lair
 // Objects
 import { HealingPotion } from "./objects/HealingPotion.js";
 import { InventoryItem } from "./objects/InventoryItem.js";
@@ -72,12 +71,9 @@ locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
 
 updateMovementButtons(player.CurrentLocation);
-
 updatePlayerStats();
-
 updateQuestsTable();
 updateInventoryTable(player.Inventory);
-
 updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
 hideElement(vendorBtn);
 hideElement(weaponBtn);
@@ -309,7 +305,6 @@ weaponBtn.addEventListener("click", function (e) {
     );
 
     player.CurrentHitPoints -= damageToPlayer;
-
     hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 
     if (player.CurrentHitPoints <= 0) {
@@ -321,7 +316,6 @@ weaponBtn.addEventListener("click", function (e) {
           " <span class='text-muted'>killed you...</span>"
       );
 
-      // TODO - permanent death?
       moveTo(locationByID(LOCATION_IDS.HOME));
       updateMovementButtons(player.CurrentLocation);
     }
@@ -372,7 +366,6 @@ potionBtn.addEventListener("click", function (e) {
   );
 
   player.CurrentHitPoints -= damageToPlayer;
-
   hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 
   if (player.CurrentHitPoints <= 0) {
@@ -384,7 +377,6 @@ potionBtn.addEventListener("click", function (e) {
         " <span class='text-muted'>killed you...</span>"
     );
 
-    // TODO - permanent death?
     moveTo(locationByID(LOCATION_IDS.HOME));
     updateMovementButtons(player.CurrentLocation);
   }
@@ -529,9 +521,7 @@ function moveTo(newLocation) {
   locationDescription.innerText = player.CurrentLocation.Description;
 
   updateMovementButtons(newLocation);
-
   player.CurrentHitPoints = player.MaximumHitPoints;
-
   updatePlayerStats();
 
   if (newLocation.QuestAvailableHere !== undefined) {
@@ -595,7 +585,6 @@ function moveTo(newLocation) {
           }
 
           addLine(logDisplay, "");
-
           player.markQuestCompleted(newLocation.QuestAvailableHere);
         }
       }
