@@ -158,7 +158,7 @@ export class Player extends LivingCreature {
 
   removeQuestCompletionItems(quest) {
     quest.QuestCompletionItems.forEach((qci) => {
-      let matchingInventoryItems = this.Inventory.filter(
+      let matchingInventoryItems = this._Inventory.filter(
         (ii) => ii.Details.ID === qci.Details.ID
       );
       if (matchingInventoryItems.length > 0) {
@@ -168,7 +168,7 @@ export class Player extends LivingCreature {
           ii.Quantity -= quantityToRemove;
           totalQuantityToRemove -= quantityToRemove;
           if (totalQuantityToRemove === 0) {
-            break;
+            this.removeItemFromInventory(ii.Details);
           }
         }
       }
