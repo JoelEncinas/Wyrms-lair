@@ -7,7 +7,13 @@ import { PlayerQuest } from "./objects/PlayerQuest.js";
 import { Weapon } from "./objects/Weapon.js";
 
 // World
-import { itemByID, monsterByID, locationByID, LOCATION_IDS } from "./world.js";
+import {
+  itemByID,
+  monsterByID,
+  locationByID,
+  ITEM_IDS,
+  LOCATION_IDS,
+} from "./world.js";
 
 // Utils
 import { randomNumberGenerator } from "./utils/randomNumberGenerator.js";
@@ -49,6 +55,9 @@ const weaponBtn = document.getElementById("weapon-btn");
 const weaponOptions = document.getElementById("weapon-options");
 const potionBtn = document.getElementById("potion-btn");
 const potionOptions = document.getElementById("potion-options");
+const scrollBtn = document.getElementById("scroll-btn");
+const scrollOptions = document.getElementById("scroll-options");
+
 
 // vendor modal
 const vendorBtn = document.getElementById("vendor-btn");
@@ -66,6 +75,7 @@ const vendorPlayerInventory = document.getElementById(
 let currentMonster;
 let player = new Player();
 player = player.createDefaultPlayer();
+player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_FIREBALL_I));
 
 locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
@@ -504,6 +514,7 @@ function spawnMonster(newLocation) {
 }
 
 function moveTo(newLocation) {
+  console.log(player.Inventory);
   if (!player.hasRequiredItemToEnter(newLocation)) {
     addLine(
       logDisplay,
