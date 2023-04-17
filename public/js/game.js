@@ -18,6 +18,7 @@ import {
 } from "./world.js";
 
 // Utils
+import { activateTable } from "./utils/activateTable.js";
 import { randomNumberGenerator } from "./utils/randomNumberGenerator.js";
 import {
   addLine,
@@ -667,6 +668,8 @@ function updateQuestsTable() {
     questRow.appendChild(checkBoxCell);
     questsTable.appendChild(questRow);
   }
+
+  activateTable("#quests-table");
 }
 
 function updateItemListInUI(itemType, itemOptions, itemBtn, currentItem) {
