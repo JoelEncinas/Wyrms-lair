@@ -8,12 +8,14 @@ export class Scroll extends Item {
     price,
     minimumDamage,
     maximumDamage,
-    spellType
+    spellType,
+    spellName
   ) {
     super(id, name, namePlural, price);
     this._MinimumDamage = minimumDamage;
     this._MaximumDamage = maximumDamage;
     this._SpellType = spellType;
+    this._SpellName = spellName;
   }
 
   get MinimumDamage() {
@@ -38,5 +40,13 @@ export class Scroll extends Item {
 
   set SpellType(value) {
     this._SpellType = value;
+  }
+
+  get SpellName() {
+    return this._SpellName;
+  }
+
+  set SpellName(value) {
+    this._SpellName = value;
   }
 }

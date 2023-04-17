@@ -24,7 +24,6 @@ import {
   updateElementClass,
   showElement,
   hideElement,
-  toggleElement,
 } from "./utils/displayUI.js";
 
 // UI
@@ -78,6 +77,9 @@ let currentMonster;
 let player = new Player();
 player = player.createDefaultPlayer();
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_FIREBALL_I));
+player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_FIREBALL_I));
+player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
+player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
 
 locationName.innerText = player.CurrentLocation.Name;
 locationDescription.innerText = player.CurrentLocation.Description;
@@ -424,19 +426,23 @@ scrollBtn.addEventListener("click", function (e) {
 
   if (currentScroll.SpellType === SPELL_TYPES.DAMAGE) {
     let damageToMonster = randomNumberGenerator(
-      currentWeapon.MinimumDamage,
-      currentWeapon.MaximumDamage
+      currentScroll.MinimumDamage,
+      currentScroll.MaximumDamage
     );
 
     currentMonster.CurrentHitPoints -= damageToMonster;
 
+    player.removeItemFromInventory(currentScroll);
+
     addLine(
       logDisplay,
-      "<span class='text-muted'>You hit the</span> " +
-        currentMonster.Name +
-        " <span class='text-muted'>for</span> " +
+      "<span class='text-muted'>You cast </span> " +
+        currentScroll.SpellName +
+        " <span class='text-muted'>. It deals </span>" +
         damageToMonster +
-        " <span class='text-muted'>points of damage.</span>"
+        " <span class='text-muted'> points of damage to the</span> " +
+        currentMonster.Name +
+        " <span class='text-muted'>.</span>"
     );
 
     if (currentMonster.CurrentHitPoints <= 0) {
@@ -566,56 +572,55 @@ scrollBtn.addEventListener("click", function (e) {
         updateMovementButtons(player.CurrentLocation);
       }
     }
-  }
+  } else if (currentScroll.SpellType === SPELL_TYPES.HEALING) {
+    let healingDone = randomNumberGenerator(
+      currentScroll.MinimumDamage,
+      currentScroll.MaximumDamage
+    );
 
-  player.CurrentHitPoints +=
-    player.CurrentHitPoints + currentPotion.AmountToHeal;
+    player.CurrentHitPoints += player.CurrentHitPoints + healingDone;
 
-  if (player.CurrentHitPoints > player.MaximumHitPoints) {
-    player.CurrentHitPoints = player.MaximumHitPoints;
-  }
-
-  player.Inventory.forEach(function (ii) {
-    if (ii.ItemID === currentPotion.ID) {
-      ii.Quantity--;
-      return;
+    if (player.CurrentHitPoints > player.MaximumHitPoints) {
+      player.CurrentHitPoints = player.MaximumHitPoints;
     }
-  });
 
-  addLine(
-    logDisplay,
-    "<span class='text-muted'>You drink a</span> " +
-      currentPotion.Name +
-      " <span class='text-muted'>. You restore </span> " +
-      currentPotion.AmountToHeal +
-      " <span class='text-muted'>hit points.</span>"
-  );
+    player.removeItemFromInventory(currentScroll);
 
-  let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
+    addLine(
+      logDisplay,
+      "<span class='text-muted'>You cast </span> " +
+        currentScroll.SpellName +
+        " <span class='text-muted'>. It heals you </span>" +
+        healingDone +
+        " <span class='text-muted'> hit points.</span> "
+    );
 
-  addLine(
-    logDisplay,
-    "<span class='text-muted'>The</span> " +
-      currentMonster.Name +
-      " <span class='text-muted'>did</span> " +
-      damageToPlayer +
-      " <span class='text-muted'>points of damage.</span>"
-  );
+    let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
 
-  player.CurrentHitPoints -= damageToPlayer;
-  hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
-
-  if (player.CurrentHitPoints <= 0) {
-    hpText.innerText = `0 / ${player.MaximumHitPoints}`;
     addLine(
       logDisplay,
       "<span class='text-muted'>The</span> " +
         currentMonster.Name +
-        " <span class='text-muted'>killed you...</span>"
+        " <span class='text-muted'>did</span> " +
+        damageToPlayer +
+        " <span class='text-muted'>points of damage.</span>"
     );
 
-    moveTo(locationByID(LOCATION_IDS.HOME));
-    updateMovementButtons(player.CurrentLocation);
+    player.CurrentHitPoints -= damageToPlayer;
+    hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
+
+    if (player.CurrentHitPoints <= 0) {
+      hpText.innerText = `0 / ${player.MaximumHitPoints}`;
+      addLine(
+        logDisplay,
+        "<span class='text-muted'>The</span> " +
+          currentMonster.Name +
+          " <span class='text-muted'>killed you...</span>"
+      );
+
+      moveTo(locationByID(LOCATION_IDS.HOME));
+      updateMovementButtons(player.CurrentLocation);
+    }
   }
 
   updateInventoryTable(player.Inventory);

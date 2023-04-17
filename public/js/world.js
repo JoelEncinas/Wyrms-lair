@@ -123,7 +123,8 @@ function populateItems() {
       40,
       10,
       12,
-      SPELL_TYPES.DAMAGE
+      SPELL_TYPES.DAMAGE,
+      "Fireball I"
     )
   );
   items.push(
@@ -134,7 +135,8 @@ function populateItems() {
       20,
       8,
       14,
-      SPELL_TYPES.HEALING
+      SPELL_TYPES.HEALING,
+      "Renew I"
     )
   );
 }
