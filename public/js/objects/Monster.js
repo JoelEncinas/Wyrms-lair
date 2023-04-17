@@ -8,7 +8,8 @@ export class Monster extends LivingCreature {
     maximumDamage,
     rewardGold,
     currentHitPoints,
-    maximumHitPoints
+    maximumHitPoints,
+    level
   ) {
     super(currentHitPoints, maximumHitPoints);
     this._ID = id;
@@ -17,6 +18,7 @@ export class Monster extends LivingCreature {
     this._MaximumDamage = maximumDamage;
     this._RewardGold = rewardGold;
     this._LootTable = [];
+    this._Level = 0;
   }
 
   get ID() {
@@ -65,5 +67,13 @@ export class Monster extends LivingCreature {
 
   set LootTable(value) {
     this._LootTable = value;
+  }
+
+  get Level() {
+    return this._Level;
+  }
+
+  set Level(value) {
+    this._Level = value;
   }
 }

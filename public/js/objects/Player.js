@@ -27,8 +27,8 @@ export class Player extends LivingCreature {
 
   createDefaultPlayer() {
     let player = new Player(
-      60,
-      60,
+      40,
+      40,
       0,
       0,
       locationByID(LOCATION_IDS.HOME),
@@ -39,6 +39,17 @@ export class Player extends LivingCreature {
     player.addItemToInventory(itemByID(ITEM_IDS.RUSTY_SWORD));
 
     return player;
+  }
+
+  get MaximumHitPoints() {
+    if (this._Level === 1) {
+      return 40;
+    }
+    return 40 + this._Level * 10;
+  }
+
+  set Gold(value) {
+    this._Gold = value;
   }
 
   get Gold() {
@@ -58,13 +69,14 @@ export class Player extends LivingCreature {
   }
 
   addExperiencePoints(experienceToAdd) {
-    if (this.Level < 20) {
-      let newLevel = Math.floor((this._Experience + experienceToAdd - 200) / 100) + 2;
+    if (this._Level < 20) {
+      let newLevel =
+        Math.floor(
+          (this._Experience + experienceToAdd - 200) / (50 * this._Level)
+        ) + 2;
 
       if (newLevel > this._Level) {
         this._Level = newLevel;
-        this._MaximumHitPoints = newLevel * 20;
-        this._CurrentHitPoints = this._MaximumHitPoints;
         this._Experience += experienceToAdd;
         return true;
       }
@@ -80,7 +92,7 @@ export class Player extends LivingCreature {
     if (this._Experience < 200) {
       return 1;
     }
-    return Math.floor((this._Experience - 200) / 100) + 2;
+    return Math.floor((this._Experience - 200) / (50 * this._Level)) + 2;
   }
 
   get Inventory() {

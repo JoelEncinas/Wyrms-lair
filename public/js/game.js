@@ -255,13 +255,15 @@ weaponBtn.addEventListener("click", function (e) {
         "</srong>xp</span>."
     );
 
-    player.Gold += currentMonster.RewardGold;
-    addLine(
-      logDisplay,
-      "<span class='text-warning'>You Loot <strong>" +
-        currentMonster.RewardGold +
-        "</strong> gold</span>."
-    );
+    if (currentMonster.RewardGold > 0) {
+      player.Gold += currentMonster.RewardGold;
+      addLine(
+        logDisplay,
+        "<span class='text-warning'>You Loot <strong>" +
+          currentMonster.RewardGold +
+          "</strong> gold</span>."
+      );
+    }
 
     const lootedItems = [];
 
@@ -476,13 +478,15 @@ scrollBtn.addEventListener("click", function (e) {
           "</srong>xp</span>."
       );
 
-      player.Gold += currentMonster.RewardGold;
-      addLine(
-        logDisplay,
-        "<span class='text-warning'>You Loot <strong>" +
-          currentMonster.RewardGold +
-          "</strong> gold</span>."
-      );
+      if (currentMonster.RewardGold > 0) {
+        player.Gold += currentMonster.RewardGold;
+        addLine(
+          logDisplay,
+          "<span class='text-warning'>You Loot <strong>" +
+            currentMonster.RewardGold +
+            "</strong> gold</span>."
+        );
+      }
 
       const lootedItems = [];
 
@@ -803,7 +807,9 @@ function moveTo(newLocation) {
               " gold.</span>"
           );
 
-          player.addExperiencePoints(player.experiencePointsForCompletingQuest())
+          player.addExperiencePoints(
+            player.experiencePointsForCompletingQuest()
+          )
             ? addLine(
                 logDisplay,
                 "<span class='text-warning'>You are now level " +
