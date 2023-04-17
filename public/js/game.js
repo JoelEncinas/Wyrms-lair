@@ -24,6 +24,7 @@ import {
   updateElementClass,
   showElement,
   hideElement,
+  toggleElement,
 } from "./utils/displayUI.js";
 
 // UI

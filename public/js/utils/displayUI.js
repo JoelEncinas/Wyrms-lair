@@ -40,3 +40,13 @@ export function hideElement(element) {
   }
   element.classList.add("d-none");
 }
+
+export function toggleElement(element) {
+  if (element.classList.contains("d-block")) {
+    element.classList.remove("d-block");
+    element.classList.add("d-none");
+  } else if (element.classList.contains("d-none")) {
+    element.classList.remove("d-none");
+    element.classList.add("d-block");
+  }
+}
