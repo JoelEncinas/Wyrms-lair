@@ -8,7 +8,6 @@ export class Player extends LivingCreature {
     maximumHitPoints,
     gold,
     experience,
-    level,
     currentLocation,
     currentWeapon,
     currentPotion,
@@ -17,8 +16,8 @@ export class Player extends LivingCreature {
     super(maximumHitPoints, currentHitPoints);
     this._Gold = gold;
     this._Experience = experience;
-    this._Level = level;
     this._Inventory = [];
+    this._Level = 1;
     this._Quests = [];
     this._CurrentLocation = currentLocation;
     this._CurrentWeapon = currentWeapon;
@@ -28,11 +27,10 @@ export class Player extends LivingCreature {
 
   createDefaultPlayer() {
     let player = new Player(
-      10,
-      10,
-      20,
+      60,
+      60,
       0,
-      1,
+      0,
       locationByID(LOCATION_IDS.HOME),
       ITEM_IDS.RUSTY_SWORD,
       ITEM_IDS.HEALING_POTION,
@@ -60,22 +58,29 @@ export class Player extends LivingCreature {
   }
 
   addExperiencePoints(experienceToAdd) {
-    let newLevel = parseInt((this._Experience + experienceToAdd) / 10 + 1);
+    if (this.Level < 20) {
+      let newLevel = Math.floor((this._Experience + experienceToAdd - 200) / 100) + 2;
 
-    if (newLevel > this._Level) {
-      this._Level = newLevel;
-      this._MaximumHitPoints = newLevel * 10;
-      this._CurrentHitPoints = this._MaximumHitPoints;
+      if (newLevel > this._Level) {
+        this._Level = newLevel;
+        this._MaximumHitPoints = newLevel * 20;
+        this._CurrentHitPoints = this._MaximumHitPoints;
+        this._Experience += experienceToAdd;
+        return true;
+      }
+
       this._Experience += experienceToAdd;
-      return true;
+      return false;
     }
 
-    this._Experience += experienceToAdd;
     return false;
   }
 
   get Level() {
-    return parseInt(this._Experience / 10 + 1);
+    if (this._Experience < 200) {
+      return 1;
+    }
+    return Math.floor((this._Experience - 200) / 100) + 2;
   }
 
   get Inventory() {
@@ -223,5 +228,19 @@ export class Player extends LivingCreature {
         return;
       }
     }
+  }
+
+  experiencePointsForDefeatingAMonster() {
+    if (this._Level === 1) {
+      return 50;
+    }
+    return this._Level * 5 + 50;
+  }
+
+  experiencePointsForCompletingQuest() {
+    if (this._Level === 1) {
+      50 * 5;
+    }
+    return (this._Level * 5 + 50) * 5;
   }
 }

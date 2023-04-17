@@ -81,8 +81,8 @@ function populateItems() {
       "Rusty sword",
       "Rusty swords",
       UNSELLABLE_ITEM_PRICE,
-      0,
-      5
+      5,
+      10
     )
   );
   items.push(new Item(ITEM_IDS.RAT_TAIL, "Rat tail", "Rat tails", 1));
@@ -91,7 +91,7 @@ function populateItems() {
   );
   items.push(new Item(ITEM_IDS.SNAKE_FANG, "Snake fang", "Snake fangs", 1));
   items.push(new Item(ITEM_IDS.SNAKESKIN, "Snakeskin", "Snakeskins", 1));
-  items.push(new Weapon(ITEM_IDS.CLUB, "Club", "Clubs", 100, 3, 10));
+  items.push(new Weapon(ITEM_IDS.CLUB, "Club", "Clubs", 100, 10, 15));
   items.push(
     new HealingPotion(
       ITEM_IDS.HEALING_POTION,
@@ -148,19 +148,19 @@ function populateItems() {
 }
 
 function populateMonsters() {
-  const rat = new Monster(MONSTER_IDS.RAT, "Rat", 5, 3, 10, 3, 3);
+  const rat = new Monster(MONSTER_IDS.RAT, "Rat", 2, 5, 10, 3, 3);
   rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.RAT_TAIL), 75, false));
   rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.PIECE_OF_FUR), 65, true));
 
-  const snake = new Monster(MONSTER_IDS.SNAKE, "Snake", 5, 3, 10, 3, 3);
+  const snake = new Monster(MONSTER_IDS.SNAKE, "Snake", 2, 5, 10, 3, 3);
   snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKE_FANG), 75, false));
   snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKESKIN), 65, true));
 
   const giantSpider = new Monster(
     MONSTER_IDS.GIANT_SPIDER,
     "Giant spider",
-    20,
     5,
+    20,
     40,
     10,
     10
@@ -182,7 +182,6 @@ function populateQuests() {
     QUEST_IDS.CLEAR_ALCHEMIST_GARDEN,
     "Clear the alchemist's garden",
     "Kill rats in the alchemist's garden and bring back 3 rat tails. You will receive a healing potion and 10 gold pieces.",
-    20,
     10
   );
 
@@ -196,7 +195,6 @@ function populateQuests() {
     QUEST_IDS.CLEAR_FARMERS_FIELD,
     "Clear the farmer's field",
     "Kill snakes in the farmer's field and bring back 3 snake fangs. You will receive an adventurer's pass and 20 gold pieces.",
-    20,
     20
   );
 

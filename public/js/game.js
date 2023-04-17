@@ -77,6 +77,7 @@ const vendorPlayerInventory = document.getElementById(
 let currentMonster;
 let player = new Player();
 player = player.createDefaultPlayer();
+console.log(player.Level);
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_FIREBALL_I));
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_FIREBALL_I));
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
@@ -238,7 +239,7 @@ weaponBtn.addEventListener("click", function (e) {
         " <span class='text-muted'>.</span>"
     );
 
-    player.addExperiencePoints(currentMonster.RewardExperiencePoints)
+    player.addExperiencePoints(player.experiencePointsForDefeatingAMonster())
       ? addLine(
           logDisplay,
           "<span class='text-warning'>Congratulations! You are now level <strong>" +
@@ -250,7 +251,7 @@ weaponBtn.addEventListener("click", function (e) {
     addLine(
       logDisplay,
       "<span class='text-warning'>You gain <strong>" +
-        currentMonster.RewardExperiencePoints +
+        player.experiencePointsForDefeatingAMonster() +
         "</srong>xp</span>."
     );
 
@@ -317,7 +318,10 @@ weaponBtn.addEventListener("click", function (e) {
 
     spawnMonster(player.CurrentLocation);
   } else {
-    let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
+    let damageToPlayer = randomNumberGenerator(
+      currentMonster.MinimumDamage,
+      currentMonster.MaximumDamage
+    );
 
     addLine(
       logDisplay,
@@ -378,7 +382,10 @@ potionBtn.addEventListener("click", function (e) {
       " <span class='text-muted'>hit points.</span>"
   );
 
-  let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
+  let damageToPlayer = randomNumberGenerator(
+    currentMonster.MinimumDamage,
+    currentMonster.MaximumDamage
+  );
 
   addLine(
     logDisplay,
@@ -453,7 +460,7 @@ scrollBtn.addEventListener("click", function (e) {
           " <span class='text-muted'>.</span>"
       );
 
-      player.addExperiencePoints(currentMonster.RewardExperiencePoints)
+      player.addExperiencePoints(player.experiencePointsForDefeatingAMonster())
         ? addLine(
             logDisplay,
             "<span class='text-warning'>Congratulations! You are now level <strong>" +
@@ -465,7 +472,7 @@ scrollBtn.addEventListener("click", function (e) {
       addLine(
         logDisplay,
         "<span class='text-warning'>You gain <strong>" +
-          currentMonster.RewardExperiencePoints +
+          player.experiencePointsForDefeatingAMonster() +
           "</srong>xp</span>."
       );
 
@@ -543,7 +550,7 @@ scrollBtn.addEventListener("click", function (e) {
       spawnMonster(player.CurrentLocation);
     } else {
       let damageToPlayer = randomNumberGenerator(
-        0,
+        currentMonster.MinimumDamage,
         currentMonster.MaximumDamage
       );
 
@@ -595,7 +602,10 @@ scrollBtn.addEventListener("click", function (e) {
         " <span class='text-muted'> hit points.</span> "
     );
 
-    let damageToPlayer = randomNumberGenerator(0, currentMonster.MaximumDamage);
+    let damageToPlayer = randomNumberGenerator(
+      currentMonster.MinimumDamage,
+      currentMonster.MaximumDamage
+    );
 
     addLine(
       logDisplay,
@@ -728,8 +738,8 @@ function spawnMonster(newLocation) {
   currentMonster = new Monster(
     standardMonster.ID,
     standardMonster.Name,
+    standardMonster.MinimumDamage,
     standardMonster.MaximumDamage,
-    standardMonster.RewardExperiencePoints,
     standardMonster.RewardGold,
     standardMonster.CurrentHitPoints,
     standardMonster.MaximumHitPoints
@@ -787,15 +797,13 @@ function moveTo(newLocation) {
           addLine(logDisplay, "<span class='text-warning'>You receive: ");
           addLine(
             logDisplay,
-            newLocation.QuestAvailableHere.RewardExperiencePoints +
+            player.experiencePointsForCompletingQuest() +
               " experience points and " +
               newLocation.QuestAvailableHere.RewardGold +
               " gold.</span>"
           );
 
-          player.addExperiencePoints(
-            newLocation.QuestAvailableHere.RewardExperiencePoints
-          )
+          player.addExperiencePoints(player.experiencePointsForCompletingQuest())
             ? addLine(
                 logDisplay,
                 "<span class='text-warning'>You are now level " +
@@ -900,8 +908,6 @@ function updateMovementButtons(location) {
 
 function updateLocationUI() {
   locationName.innerText =
-    player.CurrentLocation.Region.Name +
-    " - " +
-    player.CurrentLocation.Name;
+    player.CurrentLocation.Region.Name + " - " + player.CurrentLocation.Name;
   locationDescription.innerText = player.CurrentLocation.Description;
 }
