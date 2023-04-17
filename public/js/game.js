@@ -21,7 +21,7 @@ import {
 import { randomNumberGenerator } from "./utils/randomNumberGenerator.js";
 import {
   addLine,
-  updateButtonClass,
+  updateElementClass,
   showElement,
   hideElement,
 } from "./utils/displayUI.js";
@@ -887,8 +887,8 @@ function moveTo(newLocation) {
 }
 
 function updateMovementButtons(location) {
-  updateButtonClass(northBtn, location.LocationToNorth);
-  updateButtonClass(eastBtn, location.LocationToEast);
-  updateButtonClass(southBtn, location.LocationToSouth);
-  updateButtonClass(westBtn, location.LocationToWest);
+  updateElementClass(northBtn, location.LocationToNorth);
+  updateElementClass(eastBtn, location.LocationToEast);
+  updateElementClass(southBtn, location.LocationToSouth);
+  updateElementClass(westBtn, location.LocationToWest);
 }

@@ -5,17 +5,17 @@ export function addLine(textContainer, text) {
   textContainer.scrollTop = textContainer.scrollHeight;
 }
 
-export function updateButtonClass(button, location) {
+export function updateElementClass(element, location) {
   if (location !== undefined) {
-    if (button.classList.length > 0) {
-      [...button.classList].forEach((className) => {
+    if (element.classList.length > 0) {
+      [...element.classList].forEach((className) => {
         if (className === "disabled") {
-          button.classList.remove("disabled");
+          element.classList.remove("disabled");
         }
       });
     }
   } else {
-    button.classList.add("disabled");
+    element.classList.add("disabled");
   }
 }
 
