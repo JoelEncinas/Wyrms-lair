@@ -3,7 +3,6 @@ export class Region {
     this._ID = id;
     this._Name = name;
     this._Description = description;
-    this._Locations = [];
   }
 
   get ID() {
@@ -28,25 +27,5 @@ export class Region {
 
   set Description(value) {
     this._Description = value;
-  }
-
-  get Locations() {
-    return this._Locations;
-  }
-
-  addLocation(value) {
-    this._Locations.push(value);
-  }
-
-  getRegionByLocationID(locationID) {
-    let regionFound = this._Locations.some(
-      (location) => location.ID === locationID
-    );
-
-    if (regionFound) {
-      return this._Name;
-    }
-
-    return -1;
   }
 }

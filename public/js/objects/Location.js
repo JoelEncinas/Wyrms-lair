@@ -9,7 +9,8 @@ export class Location {
     locationToNorth,
     locationToEast,
     locationToSouth,
-    locationToWest
+    locationToWest, 
+    region
   ) {
     this._ID = id;
     this._Name = name;
@@ -21,6 +22,7 @@ export class Location {
     this._LocationToEast = locationToEast;
     this._LocationToSouth = locationToSouth;
     this._LocationToWest = locationToWest;
+    this._Region = region;
   }
 
   get ID() {
@@ -109,5 +111,13 @@ export class Location {
 
   set VendorWorkingHere(value) {
     this._VendorWorkingHere = value;
+  }
+
+  get Region() {
+    return this._Region;
+  }
+
+  set Region(value) {
+    this._Region = value;
   }
 }

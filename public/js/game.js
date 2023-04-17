@@ -12,6 +12,7 @@ import {
   itemByID,
   monsterByID,
   locationByID,
+  regionByID,
   ITEM_IDS,
   LOCATION_IDS,
   SPELL_TYPES,
@@ -81,8 +82,7 @@ player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_FIREBALL_I));
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
 
-locationName.innerText = player.CurrentLocation.Name;
-locationDescription.innerText = player.CurrentLocation.Description;
+updateLocationUI();
 
 updateMovementButtons(player.CurrentLocation);
 updatePlayerStats();
@@ -755,8 +755,7 @@ function moveTo(newLocation) {
 
   player.CurrentLocation = newLocation;
 
-  locationName.innerText = player.CurrentLocation.Name;
-  locationDescription.innerText = player.CurrentLocation.Description;
+  updateLocationUI();
 
   updateMovementButtons(newLocation);
   player.CurrentHitPoints = player.MaximumHitPoints;
@@ -897,4 +896,12 @@ function updateMovementButtons(location) {
   updateElementClass(eastBtn, location.LocationToEast);
   updateElementClass(southBtn, location.LocationToSouth);
   updateElementClass(westBtn, location.LocationToWest);
+}
+
+function updateLocationUI() {
+  locationName.innerText =
+    player.CurrentLocation.Region.Name +
+    " - " +
+    player.CurrentLocation.Name;
+  locationDescription.innerText = player.CurrentLocation.Description;
 }

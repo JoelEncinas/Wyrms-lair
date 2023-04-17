@@ -72,7 +72,6 @@ function populateWorld() {
   populateMonsters();
   populateQuests();
   populateLocations();
-  populaterRegions();
 }
 
 function populateItems() {
@@ -212,6 +211,14 @@ function populateQuests() {
 }
 
 function populateLocations() {
+  const annoraValley = new Region(
+    REGION_IDS.ANNORA_VALLEY,
+    "Annora Valley",
+    "Annora, a serene farmer's valley, with quaint thatched-roof cottages, fertile fields, grazing livestock, and a gentle flowing river."
+  );
+
+  regions.push(annoraValley);
+
   const home = new Location(
     LOCATION_IDS.HOME,
     "Home",
@@ -312,23 +319,15 @@ function populateLocations() {
   locations.push(bridge);
   locations.push(spiderField);
 
-  const annoraValley = new Region(
-    REGION_IDS.ANNORA_VALLEY,
-    "Annora Valley",
-    "Annora, a serene farmer's valley, with quaint thatched-roof cottages, fertile fields, grazing livestock, and a gentle flowing river."
-  );
-
-  annoraValley.addLocation(home);
-  annoraValley.addLocation(townSquare);
-  annoraValley.addLocation(guardPost);
-  annoraValley.addLocation(alchemistHut);
-  annoraValley.addLocation(alchemistsGarden);
-  annoraValley.addLocation(farmhouse);
-  annoraValley.addLocation(farmersField);
-  annoraValley.addLocation(bridge);
-  annoraValley.addLocation(spiderField);
-
-  regions.push(annoraValley);
+  home.Region = annoraValley;
+  townSquare.Region = annoraValley;
+  guardPost.Region = annoraValley;
+  alchemistHut.Region = annoraValley;
+  alchemistsGarden.Region = annoraValley;
+  farmhouse.Region = annoraValley;
+  farmersField.Region = annoraValley;
+  bridge.Region = annoraValley;
+  spiderField.Region = annoraValley;
 }
 
 export function itemByID(id) {
