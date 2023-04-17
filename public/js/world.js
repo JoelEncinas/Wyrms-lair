@@ -8,11 +8,13 @@ import { QuestCompletionItem } from "./objects/QuestCompletionItem.js";
 import { Vendor } from "./objects/Vendor.js";
 import { Weapon } from "./objects/Weapon.js";
 import { Scroll } from "./objects/Scroll.js";
+import { Region } from "./objects/Region.js";
 
 export const items = [];
 export const monsters = [];
 export const quests = [];
 export const locations = [];
+export const regions = [];
 
 export const ITEM_IDS = {
   RUSTY_SWORD: 1,
@@ -30,6 +32,8 @@ export const ITEM_IDS = {
   SCROLL_FIREBALL_I: 13,
   SCROLL_RENEW_I: 14,
 };
+
+const UNSELLABLE_ITEM_PRICE = -1;
 
 export const MONSTER_IDS = {
   RAT: 1,
@@ -54,7 +58,9 @@ export const LOCATION_IDS = {
   SPIDER_FIELD: 9,
 };
 
-const UNSELLABLE_ITEM_PRICE = -1;
+export const REGION_IDS = {
+  ANNORA_VALLEY: 1,
+};
 
 export const SPELL_TYPES = {
   DAMAGE: 1,
@@ -66,6 +72,7 @@ function populateWorld() {
   populateMonsters();
   populateQuests();
   populateLocations();
+  populaterRegions();
 }
 
 function populateItems() {
@@ -304,6 +311,24 @@ function populateLocations() {
   locations.push(farmersField);
   locations.push(bridge);
   locations.push(spiderField);
+
+  const annoraValley = new Region(
+    REGION_IDS.ANNORA_VALLEY,
+    "Annora Valley",
+    "Annora, a serene farmer's valley, with quaint thatched-roof cottages, fertile fields, grazing livestock, and a gentle flowing river."
+  );
+
+  annoraValley.addLocation(home);
+  annoraValley.addLocation(townSquare);
+  annoraValley.addLocation(guardPost);
+  annoraValley.addLocation(alchemistHut);
+  annoraValley.addLocation(alchemistsGarden);
+  annoraValley.addLocation(farmhouse);
+  annoraValley.addLocation(farmersField);
+  annoraValley.addLocation(bridge);
+  annoraValley.addLocation(spiderField);
+
+  regions.push(annoraValley);
 }
 
 export function itemByID(id) {
@@ -320,6 +345,10 @@ export function questByID(id) {
 
 export function locationByID(id) {
   return locations.find((location) => location.ID === id) || null;
+}
+
+export function regionByID(id) {
+  return regions.find((region) => region.ID === id) || null;
 }
 
 populateWorld();
