@@ -5,6 +5,7 @@ rpg in js
 # TODO - IDEAS
 
 - Expand world
+    - Add region to each location
     - More monsters, items, locations, quests, endgame 
 - Save the players data to mongodb using mongoose
     - Save and Load
