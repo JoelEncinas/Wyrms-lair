@@ -9,7 +9,8 @@ export class Monster extends LivingCreature {
     rewardGold,
     currentHitPoints,
     maximumHitPoints,
-    level
+    level, 
+    isPoisonous
   ) {
     super(currentHitPoints, maximumHitPoints);
     this._ID = id;
@@ -19,6 +20,7 @@ export class Monster extends LivingCreature {
     this._RewardGold = rewardGold;
     this._Level = level;
     this._LootTable = [];
+    this._IsPoisonous = isPoisonous;
   }
 
   get ID() {
@@ -75,5 +77,13 @@ export class Monster extends LivingCreature {
 
   set Level(value) {
     this._Level = value;
+  }
+
+  get IsPoisonous() {
+    return this._IsPoisonous;
+  }
+
+  set IsPoisonous(value) {
+    this._IsPoisonous = value;
   }
 }

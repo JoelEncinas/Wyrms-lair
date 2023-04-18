@@ -148,11 +148,21 @@ function populateItems() {
 }
 
 function populateMonsters() {
-  const rat = new Monster(MONSTER_IDS.RAT, "Rat", 4, 8, 0, 30, 30, 3);
+  const rat = new Monster(MONSTER_IDS.RAT, "Rat", 4, 8, 0, 30, 30, 3, false);
   rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.RAT_TAIL), 75, false));
   rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.PIECE_OF_FUR), 65, true));
 
-  const snake = new Monster(MONSTER_IDS.SNAKE, "Snake", 6, 8, 0, 45, 45, 3);
+  const snake = new Monster(
+    MONSTER_IDS.SNAKE,
+    "Snake",
+    6,
+    8,
+    0,
+    45,
+    45,
+    4,
+    true
+  );
   snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKE_FANG), 75, false));
   snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKESKIN), 65, true));
 
@@ -164,7 +174,8 @@ function populateMonsters() {
     0,
     100,
     100,
-    7
+    7,
+    true
   );
   giantSpider.LootTable.push(
     new LootItem(itemByID(ITEM_IDS.SPIDER_FANG), 75, true)
