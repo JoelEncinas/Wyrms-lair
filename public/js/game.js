@@ -19,7 +19,6 @@ import {
 } from "./world.js";
 
 // Utils
-import { randomNumberGenerator } from "./utils/randomNumberGenerator.js";
 import {
   addLine,
   updateElementClass,
@@ -112,6 +111,7 @@ westBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToWest);
 });
 
+// action btn events
 vendorBtn.addEventListener("click", function (e) {
   let vendor = player.CurrentLocation.VendorWorkingHere;
 
@@ -127,75 +127,6 @@ vendorBtn.addEventListener("click", function (e) {
   updateTradeTable(false, vendorPlayerInventory, headers, player.Inventory);
 });
 
-function updateTradeTable(isVendor, element, headers, inventory) {
-  const table = element.querySelector("table");
-  table.innerHTML = "";
-
-  const headerRow = document.createElement("tr");
-  headerRow.innerHTML = headers;
-  table.appendChild(headerRow);
-
-  let tradeType = isVendor ? "Buy" : "Sell";
-
-  for (const item of inventory) {
-    if (item.Details.Price !== -1) {
-      const itemRow = document.createElement("tr");
-      itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Details.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ItemID}">${tradeType} 1</button></td>`;
-      table.appendChild(itemRow);
-
-      const button = itemRow.querySelector("button");
-
-      button.addEventListener("click", () => {
-        if (isVendor) {
-          player.addItemToInventory(item.Details);
-          player.CurrentLocation.VendorWorkingHere.removeItemFromInventory(
-            item.Details
-          );
-          player.Gold -= item.Details.Price;
-          console.log(player.Inventory);
-
-          updateTradeTable(
-            true,
-            vendorVendorInventory,
-            headers,
-            player.CurrentLocation.VendorWorkingHere.Inventory
-          );
-          updateTradeTable(
-            false,
-            vendorPlayerInventory,
-            headers,
-            player.Inventory
-          );
-          updatePlayerStats();
-          updateInventoryTable(player.Inventory);
-        } else {
-          player.removeItemFromInventory(item.Details, 1);
-          player.CurrentLocation.VendorWorkingHere.addItemToInventory(
-            item.Details
-          );
-          player.Gold += item.Details.Price;
-
-          updateTradeTable(
-            false,
-            vendorPlayerInventory,
-            headers,
-            player.Inventory
-          );
-          updateTradeTable(
-            true,
-            vendorVendorInventory,
-            headers,
-            player.CurrentLocation.VendorWorkingHere.Inventory
-          );
-          updatePlayerStats();
-          updateInventoryTable(player.Inventory);
-        }
-      });
-    }
-  }
-}
-
-// action btn events
 weaponBtn.addEventListener("click", function (e) {
   player.CurrentWeapon = parseInt(
     weaponOptions.options[weaponOptions.selectedIndex].value
@@ -228,34 +159,8 @@ weaponBtn.addEventListener("click", function (e) {
         " <span class='text-muted'>.</span>"
     );
 
-    if (Math.abs(player.Level - currentMonster.Level) <= 3) {
-      addLine(
-        logDisplay,
-        "<span class='text-warning'>You gain <strong>" +
-          player.experiencePointsForDefeatingAMonster() +
-          "</srong>xp</span>."
-      );
-
-      player.addExperiencePoints(player.experiencePointsForDefeatingAMonster())
-        ? addLine(
-            logDisplay,
-            "<span class='text-warning'>Congratulations! You are now level <strong>" +
-              player.Level +
-              "</strong>!</span>"
-          )
-        : null;
-    }
-
-    if (currentMonster.RewardGold > 0) {
-      player.Gold += currentMonster.RewardGold;
-      addLine(
-        logDisplay,
-        "<span class='text-warning'>You Loot <strong>" +
-          currentMonster.RewardGold +
-          "</strong> gold</span>."
-      );
-    }
-
+    receiveExp(currentMonster);
+    receiveGold(currentMonster);
     lootItems(currentMonster);
     updateUIAfterFight();
     spawnMonster(player.CurrentLocation);
@@ -339,35 +244,8 @@ scrollBtn.addEventListener("click", function (e) {
           " <span class='text-muted'>.</span>"
       );
 
-      if (Math.abs(player.Level - currentMonster.Level) <= 3) {
-        addLine(
-          logDisplay,
-          "<span class='text-warning'>You gain <strong>" +
-            player.experiencePointsForDefeatingAMonster() +
-            "</srong>xp</span>."
-        );
-        player.addExperiencePoints(
-          player.experiencePointsForDefeatingAMonster()
-        )
-          ? addLine(
-              logDisplay,
-              "<span class='text-warning'>Congratulations! You are now level <strong>" +
-                player.Level +
-                "</strong>!</span>"
-            )
-          : null;
-      }
-
-      if (currentMonster.RewardGold > 0) {
-        player.Gold += currentMonster.RewardGold;
-        addLine(
-          logDisplay,
-          "<span class='text-warning'>You Loot <strong>" +
-            currentMonster.RewardGold +
-            "</strong> gold</span>."
-        );
-      }
-
+      receiveExp(currentMonster);
+      receiveGold(currentMonster);
       lootItems(currentMonster);
       updateUIAfterFight();
       spawnMonster(player.CurrentLocation);
@@ -405,11 +283,93 @@ scrollBtn.addEventListener("click", function (e) {
   updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
 });
 
+// Update UI
 function updatePlayerStats() {
   hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
   goldText.innerText = player.Gold;
   experienceText.innerText = player.Experience;
   levelText.innerText = player.Level;
+}
+
+function updateMovementButtons(location) {
+  updateElementClass(northBtn, location.LocationToNorth);
+  updateElementClass(eastBtn, location.LocationToEast);
+  updateElementClass(southBtn, location.LocationToSouth);
+  updateElementClass(westBtn, location.LocationToWest);
+}
+
+function updateLocationUI() {
+  locationName.innerText =
+    player.CurrentLocation.Region.Name + " - " + player.CurrentLocation.Name;
+  locationDescription.innerText = player.CurrentLocation.Description;
+}
+
+function updateTradeTable(isVendor, element, headers, inventory) {
+  const table = element.querySelector("table");
+  table.innerHTML = "";
+
+  const headerRow = document.createElement("tr");
+  headerRow.innerHTML = headers;
+  table.appendChild(headerRow);
+
+  let tradeType = isVendor ? "Buy" : "Sell";
+
+  for (const item of inventory) {
+    if (item.Details.Price !== -1) {
+      const itemRow = document.createElement("tr");
+      itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Details.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ItemID}">${tradeType} 1</button></td>`;
+      table.appendChild(itemRow);
+
+      const button = itemRow.querySelector("button");
+
+      button.addEventListener("click", () => {
+        if (isVendor) {
+          player.addItemToInventory(item.Details);
+          player.CurrentLocation.VendorWorkingHere.removeItemFromInventory(
+            item.Details
+          );
+          player.Gold -= item.Details.Price;
+          console.log(player.Inventory);
+
+          updateTradeTable(
+            true,
+            vendorVendorInventory,
+            headers,
+            player.CurrentLocation.VendorWorkingHere.Inventory
+          );
+          updateTradeTable(
+            false,
+            vendorPlayerInventory,
+            headers,
+            player.Inventory
+          );
+          updatePlayerStats();
+          updateInventoryTable(player.Inventory);
+        } else {
+          player.removeItemFromInventory(item.Details);
+          player.CurrentLocation.VendorWorkingHere.addItemToInventory(
+            item.Details
+          );
+          player.Gold += item.Details.Price;
+
+          updateTradeTable(
+            false,
+            vendorPlayerInventory,
+            headers,
+            player.Inventory
+          );
+          updateTradeTable(
+            true,
+            vendorVendorInventory,
+            headers,
+            player.CurrentLocation.VendorWorkingHere.Inventory
+          );
+          updatePlayerStats();
+          updateInventoryTable(player.Inventory);
+        }
+      });
+    }
+  }
 }
 
 function updateInventoryTable(inventory) {
@@ -492,34 +452,20 @@ function updateItemListInUI(itemType, itemOptions, itemBtn, currentItem) {
   }
 }
 
-function spawnMonster(newLocation) {
-  addLine(logDisplay, "");
-  addLine(
-    logDisplay,
-    "<span class='text-muted'>You see a</span> " +
-      newLocation.MonsterLivingHere.Name +
-      "<span class='text-muted'>.</span>"
+function updateUIAfterFight() {
+  updatePlayerStats();
+  updateInventoryTable(player.Inventory);
+  updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
+  updateItemListInUI(
+    HealingPotion,
+    potionOptions,
+    potionBtn,
+    player.CurrentPotion
   );
-
-  let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
-
-  currentMonster = new Monster(
-    standardMonster.ID,
-    standardMonster.Name,
-    standardMonster.MinimumDamage,
-    standardMonster.MaximumDamage,
-    standardMonster.RewardGold,
-    standardMonster.CurrentHitPoints,
-    standardMonster.MaximumHitPoints,
-    standardMonster.Level,
-    standardMonster.IsPoisonous
-  );
-
-  currentMonster.LootTable.push(
-    ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
-  );
+  updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
 }
 
+// Movement
 function moveTo(newLocation) {
   if (!player.hasRequiredItemToEnter(newLocation)) {
     addLine(
@@ -670,43 +616,36 @@ function moveTo(newLocation) {
   updatePlayerStats();
 }
 
-function updateMovementButtons(location) {
-  updateElementClass(northBtn, location.LocationToNorth);
-  updateElementClass(eastBtn, location.LocationToEast);
-  updateElementClass(southBtn, location.LocationToSouth);
-  updateElementClass(westBtn, location.LocationToWest);
-}
-
-function updateLocationUI() {
-  locationName.innerText =
-    player.CurrentLocation.Region.Name + " - " + player.CurrentLocation.Name;
-  locationDescription.innerText = player.CurrentLocation.Description;
-}
-
-function playerDeath() {
+// Spawn monster
+function spawnMonster(newLocation) {
+  addLine(logDisplay, "");
   addLine(
     logDisplay,
-    "<span class='text-muted'>The</span> " +
-      currentMonster.Name +
-      " <span class='text-muted'>killed you...</span>"
+    "<span class='text-muted'>You see a</span> " +
+      newLocation.MonsterLivingHere.Name +
+      "<span class='text-muted'>.</span>"
   );
 
-  moveTo(locationByID(LOCATION_IDS.HOME));
-  updateMovementButtons(player.CurrentLocation);
-}
+  let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
 
-function poisonPlayer() {
-  let poisonDamage = parseInt((5 / 100) * player.MaximumHitPoints);
-  addLine(
-    logDisplay,
-    "<span class='text-muted'>You got poisoned! You receive </span> " +
-      poisonDamage +
-      " <span class='text-muted'> points of damage.</span>"
+  currentMonster = new Monster(
+    standardMonster.ID,
+    standardMonster.Name,
+    standardMonster.MinimumDamage,
+    standardMonster.MaximumDamage,
+    standardMonster.RewardGold,
+    standardMonster.CurrentHitPoints,
+    standardMonster.MaximumHitPoints,
+    standardMonster.Level,
+    standardMonster.IsPoisonous
   );
 
-  return poisonDamage;
+  currentMonster.LootTable.push(
+    ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
+  );
 }
 
+// Combat
 function monsterAttack(currentMonster) {
   let damageToPlayer = currentMonster.getDamageToPlayer();
 
@@ -731,17 +670,48 @@ function monsterAttack(currentMonster) {
   }
 }
 
-function updateUIAfterFight() {
-  updatePlayerStats();
-  updateInventoryTable(player.Inventory);
-  updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
-  updateItemListInUI(
-    HealingPotion,
-    potionOptions,
-    potionBtn,
-    player.CurrentPotion
+function poisonPlayer() {
+  let poisonDamage = parseInt((5 / 100) * player.MaximumHitPoints);
+  addLine(
+    logDisplay,
+    "<span class='text-muted'>You got poisoned! You receive </span> " +
+      poisonDamage +
+      " <span class='text-muted'> points of damage.</span>"
   );
-  updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
+
+  return poisonDamage;
+}
+
+function receiveExp(currentMonster) {
+  if (Math.abs(player.Level - currentMonster.Level) <= 3) {
+    addLine(
+      logDisplay,
+      "<span class='text-warning'>You gain <strong>" +
+        player.experiencePointsForDefeatingAMonster() +
+        "</srong>xp</span>."
+    );
+
+    player.addExperiencePoints(player.experiencePointsForDefeatingAMonster())
+      ? addLine(
+          logDisplay,
+          "<span class='text-warning'>Congratulations! You are now level <strong>" +
+            player.Level +
+            "</strong>!</span>"
+        )
+      : null;
+  }
+}
+
+function receiveGold(currentMonster) {
+  if (currentMonster.RewardGold > 0) {
+    player.Gold += currentMonster.RewardGold;
+    addLine(
+      logDisplay,
+      "<span class='text-warning'>You Loot <strong>" +
+        currentMonster.RewardGold +
+        "</strong> gold</span>."
+    );
+  }
 }
 
 function lootItems(currentMonster) {
@@ -786,4 +756,16 @@ function lootItems(currentMonster) {
       );
     }
   });
+}
+
+function playerDeath() {
+  addLine(
+    logDisplay,
+    "<span class='text-muted'>The</span> " +
+      currentMonster.Name +
+      " <span class='text-muted'>killed you...</span>"
+  );
+
+  moveTo(locationByID(LOCATION_IDS.HOME));
+  updateMovementButtons(player.CurrentLocation);
 }
