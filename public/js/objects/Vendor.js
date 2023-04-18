@@ -1,5 +1,4 @@
 import { InventoryItem } from "./InventoryItem.js";
-import { itemByID, locationByID, LOCATION_IDS, ITEM_IDS } from "../world.js";
 
 export class Vendor {
   constructor(name) {

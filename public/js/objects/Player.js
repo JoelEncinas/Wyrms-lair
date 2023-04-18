@@ -201,16 +201,13 @@ export class Player extends LivingCreature {
     });
   }
 
-  addItemToInventory(item) {
-    for (let ii of this.Inventory) {
-      if (ii.Details.ID === item.ID) {
-        ii.Quantity++;
-
-        return;
-      }
+  addItemToInventory(itemToAdd, quantity = 1) {
+    let item = this._Inventory.find((ii) => ii.Details.ID === itemToAdd.ID);
+    if (!item) {
+      this._Inventory.push(new InventoryItem(itemToAdd, quantity));
+    } else {
+      item.Quantity += quantity;
     }
-
-    this._Inventory.push(new InventoryItem(itemByID(item.ID), 1));
   }
 
   removeItemFromInventory(itemToRemove, quantity = 1) {
