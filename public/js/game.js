@@ -338,31 +338,14 @@ weaponBtn.addEventListener("click", function (e) {
     );
 
     if (currentMonster.IsPoisonous) {
-      let poisonDamage = parseInt((5 / 100) * player.MaximumHitPoints);
-      addLine(
-        logDisplay,
-        "<span class='text-muted'>You got poisoned! You receive </span> " +
-          poisonDamage +
-          " <span class='text-muted'> points of damage.</span>"
-      );
-
-      damageToPlayer += poisonDamage;
+      damageToPlayer += poisonPlayer();
     }
 
     player.CurrentHitPoints -= damageToPlayer;
     hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 
     if (player.CurrentHitPoints <= 0) {
-      hpText.innerText = `0 / ${player.MaximumHitPoints}`;
-      addLine(
-        logDisplay,
-        "<span class='text-muted'>The</span> " +
-          currentMonster.Name +
-          " <span class='text-muted'>killed you...</span>"
-      );
-
-      moveTo(locationByID(LOCATION_IDS.HOME));
-      updateMovementButtons(player.CurrentLocation);
+      playerDeath();
     }
   }
 });
@@ -414,31 +397,16 @@ potionBtn.addEventListener("click", function (e) {
   );
 
   if (currentMonster.IsPoisonous) {
-    let poisonDamage = parseInt((5 / 100) * player.MaximumHitPoints);
-    addLine(
-      logDisplay,
-      "<span class='text-muted'>You got poisoned! You receive </span> " +
-        poisonDamage +
-        " <span class='text-muted'> points of damage.</span>"
-    );
-
-    damageToPlayer += poisonDamage;
+    if (currentMonster.IsPoisonous) {
+      damageToPlayer += poisonPlayer();
+    }
   }
 
   player.CurrentHitPoints -= damageToPlayer;
   hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 
   if (player.CurrentHitPoints <= 0) {
-    hpText.innerText = `0 / ${player.MaximumHitPoints}`;
-    addLine(
-      logDisplay,
-      "<span class='text-muted'>The</span> " +
-        currentMonster.Name +
-        " <span class='text-muted'>killed you...</span>"
-    );
-
-    moveTo(locationByID(LOCATION_IDS.HOME));
-    updateMovementButtons(player.CurrentLocation);
+    playerDeath();
   }
 
   updateInventoryTable(player.Inventory);
@@ -598,31 +566,16 @@ scrollBtn.addEventListener("click", function (e) {
       );
 
       if (currentMonster.IsPoisonous) {
-        let poisonDamage = parseInt((5 / 100) * player.MaximumHitPoints);
-        addLine(
-          logDisplay,
-          "<span class='text-muted'>You got poisoned! You receive </span> " +
-            poisonDamage +
-            " <span class='text-muted'> points of damage.</span>"
-        );
-
-        damageToPlayer += poisonDamage;
+        if (currentMonster.IsPoisonous) {
+          damageToPlayer += poisonPlayer();
+        }
       }
 
       player.CurrentHitPoints -= damageToPlayer;
       hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 
       if (player.CurrentHitPoints <= 0) {
-        hpText.innerText = `0 / ${player.MaximumHitPoints}`;
-        addLine(
-          logDisplay,
-          "<span class='text-muted'>The</span> " +
-            currentMonster.Name +
-            " <span class='text-muted'>killed you...</span>"
-        );
-
-        moveTo(locationByID(LOCATION_IDS.HOME));
-        updateMovementButtons(player.CurrentLocation);
+        playerDeath();
       }
     }
   } else if (currentScroll.SpellType === SPELL_TYPES.HEALING) {
@@ -664,31 +617,16 @@ scrollBtn.addEventListener("click", function (e) {
     );
 
     if (currentMonster.IsPoisonous) {
-      let poisonDamage = parseInt((5 / 100) * player.MaximumHitPoints);
-      addLine(
-        logDisplay,
-        "<span class='text-muted'>You got poisoned! You receive </span> " +
-          poisonDamage +
-          " <span class='text-muted'> points of damage.</span>"
-      );
-
-      damageToPlayer += poisonDamage;
+      if (currentMonster.IsPoisonous) {
+        damageToPlayer += poisonPlayer();
+      }
     }
 
     player.CurrentHitPoints -= damageToPlayer;
     hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 
     if (player.CurrentHitPoints <= 0) {
-      hpText.innerText = `0 / ${player.MaximumHitPoints}`;
-      addLine(
-        logDisplay,
-        "<span class='text-muted'>The</span> " +
-          currentMonster.Name +
-          " <span class='text-muted'>killed you...</span>"
-      );
-
-      moveTo(locationByID(LOCATION_IDS.HOME));
-      updateMovementButtons(player.CurrentLocation);
+      playerDeath();
     }
   }
 
@@ -972,4 +910,28 @@ function updateLocationUI() {
   locationName.innerText =
     player.CurrentLocation.Region.Name + " - " + player.CurrentLocation.Name;
   locationDescription.innerText = player.CurrentLocation.Description;
+}
+
+function playerDeath() {
+  addLine(
+    logDisplay,
+    "<span class='text-muted'>The</span> " +
+      currentMonster.Name +
+      " <span class='text-muted'>killed you...</span>"
+  );
+
+  moveTo(locationByID(LOCATION_IDS.HOME));
+  updateMovementButtons(player.CurrentLocation);
+}
+
+function poisonPlayer() {
+  let poisonDamage = parseInt((5 / 100) * player.MaximumHitPoints);
+  addLine(
+    logDisplay,
+    "<span class='text-muted'>You got poisoned! You receive </span> " +
+      poisonDamage +
+      " <span class='text-muted'> points of damage.</span>"
+  );
+
+  return poisonDamage;
 }
