@@ -9,9 +9,6 @@ rpg in js
 - Save the players data to mongodb using mongoose
     - Save and Load
     - Delete account / Reset game
-- Add levels to monsters too
-    - Only gain experience from monsters similar to your level
-- Add minimum level requirement for some end game zones
 - Add crit chance
 - Add armor (blocks flat damage / adds damage / heals per turn)
 - Add magic scrolls

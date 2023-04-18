@@ -247,4 +247,8 @@ export class Player extends LivingCreature {
   experiencePointsForCompletingQuest() {
     return 150;
   }
+
+  strengthModifier() {
+    return (this._Level - 1) + 1;
+  }
 }

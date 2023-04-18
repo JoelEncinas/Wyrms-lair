@@ -215,10 +215,11 @@ weaponBtn.addEventListener("click", function (e) {
     parseInt(weaponOptions.options[weaponOptions.selectedIndex].value)
   );
 
-  let damageToMonster = randomNumberGenerator(
-    currentWeapon.MinimumDamage,
-    currentWeapon.MaximumDamage
-  );
+  let damageToMonster =
+    randomNumberGenerator(
+      currentWeapon.MinimumDamage,
+      currentWeapon.MaximumDamage
+    ) + player.strengthModifier();
 
   currentMonster.CurrentHitPoints -= damageToMonster;
 
