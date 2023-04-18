@@ -25,6 +25,7 @@ import {
   showElement,
   hideElement,
 } from "./utils/displayUI.js";
+import { randomNumberGenerator } from "./utils/randomNumberGenerator.js";
 
 // UI
 // character stats
@@ -77,8 +78,6 @@ let currentMonster;
 let player = new Player();
 player = player.createDefaultPlayer();
 
-player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_FIREBALL_I));
-player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_FIREBALL_I));
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
 
@@ -178,14 +177,7 @@ potionBtn.addEventListener("click", function (e) {
     parseInt(potionOptions.options[potionOptions.selectedIndex].value)
   );
 
-  player.CurrentHitPoints +=
-    player.CurrentHitPoints + currentPotion.AmountToHeal;
-
-  if (player.CurrentHitPoints > player.MaximumHitPoints) {
-    player.CurrentHitPoints = player.MaximumHitPoints;
-  }
-
-  player.removeItemFromInventory(currentPotion);
+  restoreHealthWithConsumable(currentPotion.amountToHeal, currentPotion);
 
   addLine(
     logDisplay,
@@ -254,18 +246,10 @@ scrollBtn.addEventListener("click", function (e) {
     }
   } else if (currentScroll.SpellType === SPELL_TYPES.HEALING) {
     let healingDone = currentScroll.getMagicalDamage(
-      currentScroll.MinimumDamage,
-      currentScroll.MaximumDamage,
       player.intellectModifier()
     );
 
-    player.CurrentHitPoints += player.CurrentHitPoints + healingDone;
-
-    if (player.CurrentHitPoints > player.MaximumHitPoints) {
-      player.CurrentHitPoints = player.MaximumHitPoints;
-    }
-
-    player.removeItemFromInventory(currentScroll);
+    restoreHealthWithConsumable(healingDone, currentScroll);
 
     addLine(
       logDisplay,
@@ -643,6 +627,16 @@ function spawnMonster(newLocation) {
 }
 
 // Combat
+function restoreHealthWithConsumable(amountToHeal, item) {
+  player.CurrentHitPoints += amountToHeal;
+
+  if (player.CurrentHitPoints > player.MaximumHitPoints) {
+    player.CurrentHitPoints = player.MaximumHitPoints;
+  }
+
+  player.removeItemFromInventory(item);
+}
+
 function monsterAttack(currentMonster) {
   let damageToPlayer = currentMonster.getDamageToPlayer();
 

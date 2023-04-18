@@ -117,8 +117,8 @@ function populateItems() {
       ITEM_IDS.GREATER_HEALING_POTION,
       "Greater Healing potion",
       "Greater Healing potions",
-      50,
-      25
+      120,
+      100
     )
   );
   items.push(
