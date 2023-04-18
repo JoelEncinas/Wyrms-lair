@@ -1,4 +1,5 @@
 import { LivingCreature } from "./LivingCreature.js";
+import { randomNumberGenerator } from "../utils/randomNumberGenerator.js";
 
 export class Monster extends LivingCreature {
   constructor(
@@ -9,7 +10,7 @@ export class Monster extends LivingCreature {
     rewardGold,
     currentHitPoints,
     maximumHitPoints,
-    level, 
+    level,
     isPoisonous
   ) {
     super(currentHitPoints, maximumHitPoints);
@@ -85,5 +86,9 @@ export class Monster extends LivingCreature {
 
   set IsPoisonous(value) {
     this._IsPoisonous = value;
+  }
+
+  getDamageToPlayer() {
+    return randomNumberGenerator(this._MinimumDamage, this._MaximumDamage);
   }
 }

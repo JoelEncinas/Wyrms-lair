@@ -268,47 +268,7 @@ weaponBtn.addEventListener("click", function (e) {
       );
     }
 
-    const lootedItems = [];
-
-    currentMonster.LootTable.forEach(function (itemLooted) {
-      let randomNumber = Math.floor(Math.random() * 100) + 1;
-
-      if (randomNumber <= itemLooted._DropPercentage) {
-        lootedItems.push(new InventoryItem(itemLooted._Details, 1));
-      }
-    });
-
-    if (lootedItems.length === 0) {
-      currentMonster.LootTable.forEach(function (itemLooted) {
-        if (itemLooted.IsDefaultItem) {
-          lootedItems.push(new InventoryItem(itemLooted._Details, 1));
-        }
-      });
-    }
-
-    lootedItems.forEach(function (itemLooted) {
-      player.addItemToInventory(itemLooted.Details);
-
-      if (itemLooted.Quantity === 1) {
-        addLine(
-          logDisplay,
-          "<span class='text-success'>Loot:</span> [" +
-            itemLooted.Details.Name +
-            "] <span class='text-success'>x" +
-            itemLooted.Quantity +
-            "</span>"
-        );
-      } else {
-        addLine(
-          logDisplay,
-          "<span class='text-success'>Loot:</span> [" +
-            itemLooted.Details.NamePlural +
-            "] <span class='text-success'>x" +
-            itemLooted.Quantity +
-            "</span>"
-        );
-      }
-    });
+    lootItems(currentMonster);
 
     updatePlayerStats();
     updateInventoryTable(player.Inventory);
@@ -323,10 +283,7 @@ weaponBtn.addEventListener("click", function (e) {
 
     spawnMonster(player.CurrentLocation);
   } else {
-    let damageToPlayer = randomNumberGenerator(
-      currentMonster.MinimumDamage,
-      currentMonster.MaximumDamage
-    );
+    let damageToPlayer = currentMonster.getDamageToPlayer();
 
     addLine(
       logDisplay,
@@ -366,12 +323,7 @@ potionBtn.addEventListener("click", function (e) {
     player.CurrentHitPoints = player.MaximumHitPoints;
   }
 
-  player.Inventory.forEach(function (ii) {
-    if (ii.ItemID === currentPotion.ID) {
-      ii.Quantity--;
-      return;
-    }
-  });
+  player.removeItemFromInventory(currentPotion);
 
   addLine(
     logDisplay,
@@ -382,10 +334,7 @@ potionBtn.addEventListener("click", function (e) {
       " <span class='text-muted'>hit points.</span>"
   );
 
-  let damageToPlayer = randomNumberGenerator(
-    currentMonster.MinimumDamage,
-    currentMonster.MaximumDamage
-  );
+  let damageToPlayer = currentMonster.getDamageToPlayer();
 
   addLine(
     logDisplay,
@@ -486,47 +435,7 @@ scrollBtn.addEventListener("click", function (e) {
         );
       }
 
-      const lootedItems = [];
-
-      currentMonster.LootTable.forEach(function (itemLooted) {
-        let randomNumber = Math.floor(Math.random() * 100) + 1;
-
-        if (randomNumber <= itemLooted._DropPercentage) {
-          lootedItems.push(new InventoryItem(itemLooted._Details, 1));
-        }
-      });
-
-      if (lootedItems.length === 0) {
-        currentMonster.LootTable.forEach(function (itemLooted) {
-          if (itemLooted.IsDefaultItem) {
-            lootedItems.push(new InventoryItem(itemLooted._Details, 1));
-          }
-        });
-      }
-
-      lootedItems.forEach(function (itemLooted) {
-        player.addItemToInventory(itemLooted.Details);
-
-        if (itemLooted.Quantity === 1) {
-          addLine(
-            logDisplay,
-            "<span class='text-success'>Loot:</span> [" +
-              itemLooted.Details.Name +
-              "] <span class='text-success'>x" +
-              itemLooted.Quantity +
-              "</span>"
-          );
-        } else {
-          addLine(
-            logDisplay,
-            "<span class='text-success'>Loot:</span> [" +
-              itemLooted.Details.NamePlural +
-              "] <span class='text-success'>x" +
-              itemLooted.Quantity +
-              "</span>"
-          );
-        }
-      });
+      lootItems(currentMonster);
 
       updatePlayerStats();
       updateInventoryTable(player.Inventory);
@@ -602,10 +511,7 @@ scrollBtn.addEventListener("click", function (e) {
         " <span class='text-muted'> hit points.</span> "
     );
 
-    let damageToPlayer = randomNumberGenerator(
-      currentMonster.MinimumDamage,
-      currentMonster.MaximumDamage
-    );
+    let damageToPlayer = currentMonster.getDamageToPlayer();
 
     addLine(
       logDisplay,
@@ -934,4 +840,48 @@ function poisonPlayer() {
   );
 
   return poisonDamage;
+}
+
+function lootItems(currentMonster) {
+  const lootedItems = [];
+
+  currentMonster.LootTable.forEach(function (itemLooted) {
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+
+    if (randomNumber <= itemLooted._DropPercentage) {
+      lootedItems.push(new InventoryItem(itemLooted._Details, 1));
+    }
+  });
+
+  if (lootedItems.length === 0) {
+    currentMonster.LootTable.forEach(function (itemLooted) {
+      if (itemLooted.IsDefaultItem) {
+        lootedItems.push(new InventoryItem(itemLooted._Details, 1));
+      }
+    });
+  }
+
+  lootedItems.forEach(function (itemLooted) {
+    player.addItemToInventory(itemLooted.Details);
+
+    if (itemLooted.Quantity === 1) {
+      addLine(
+        logDisplay,
+        "<span class='text-success'>Loot:</span> [" +
+          itemLooted.Details.Name +
+          "] <span class='text-success'>x" +
+          itemLooted.Quantity +
+          "</span>"
+      );
+    } else {
+      addLine(
+        logDisplay,
+        "<span class='text-success'>Loot:</span> [" +
+          itemLooted.Details.NamePlural +
+          "] <span class='text-success'>x" +
+          itemLooted.Quantity +
+          "</span>"
+      );
+    }
+  });
 }
