@@ -307,12 +307,11 @@ function updateLocationUI() {
 function updateTradeTable(isVendor, element, headers, inventory) {
   const table = element.querySelector("table");
   table.innerHTML = "";
+  const tradeType = isVendor ? "Buy" : "Sell";
 
   const headerRow = document.createElement("tr");
   headerRow.innerHTML = headers;
   table.appendChild(headerRow);
-
-  let tradeType = isVendor ? "Buy" : "Sell";
 
   for (const item of inventory) {
     if (item.Details.Price !== -1) {
@@ -329,7 +328,6 @@ function updateTradeTable(isVendor, element, headers, inventory) {
             item.Details
           );
           player.Gold -= item.Details.Price;
-          console.log(player.Inventory);
 
           updateTradeTable(
             true,
@@ -343,8 +341,6 @@ function updateTradeTable(isVendor, element, headers, inventory) {
             headers,
             player.Inventory
           );
-          updatePlayerStats();
-          updateInventoryTable(player.Inventory);
         } else {
           player.removeItemFromInventory(item.Details);
           player.CurrentLocation.VendorWorkingHere.addItemToInventory(
@@ -364,9 +360,10 @@ function updateTradeTable(isVendor, element, headers, inventory) {
             headers,
             player.CurrentLocation.VendorWorkingHere.Inventory
           );
-          updatePlayerStats();
-          updateInventoryTable(player.Inventory);
         }
+
+        updateInventoryTable(player.Inventory);
+        updatePlayerStats();
       });
     }
   }
