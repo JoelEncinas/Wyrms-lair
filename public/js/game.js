@@ -239,21 +239,23 @@ weaponBtn.addEventListener("click", function (e) {
         " <span class='text-muted'>.</span>"
     );
 
-    player.addExperiencePoints(player.experiencePointsForDefeatingAMonster())
-      ? addLine(
-          logDisplay,
-          "<span class='text-warning'>Congratulations! You are now level <strong>" +
-            player.Level +
-            "</strong>!</span>"
-        )
-      : null;
+    if (Math.abs(player.Level - currentMonster.Level) <= 3) {
+      addLine(
+        logDisplay,
+        "<span class='text-warning'>You gain <strong>" +
+          player.experiencePointsForDefeatingAMonster() +
+          "</srong>xp</span>."
+      );
 
-    addLine(
-      logDisplay,
-      "<span class='text-warning'>You gain <strong>" +
-        player.experiencePointsForDefeatingAMonster() +
-        "</srong>xp</span>."
-    );
+      player.addExperiencePoints(player.experiencePointsForDefeatingAMonster())
+        ? addLine(
+            logDisplay,
+            "<span class='text-warning'>Congratulations! You are now level <strong>" +
+              player.Level +
+              "</strong>!</span>"
+          )
+        : null;
+    }
 
     if (currentMonster.RewardGold > 0) {
       player.Gold += currentMonster.RewardGold;
@@ -462,21 +464,24 @@ scrollBtn.addEventListener("click", function (e) {
           " <span class='text-muted'>.</span>"
       );
 
-      player.addExperiencePoints(player.experiencePointsForDefeatingAMonster())
-        ? addLine(
-            logDisplay,
-            "<span class='text-warning'>Congratulations! You are now level <strong>" +
-              player.Level +
-              "</strong>!</span>"
-          )
-        : null;
-
-      addLine(
-        logDisplay,
-        "<span class='text-warning'>You gain <strong>" +
-          player.experiencePointsForDefeatingAMonster() +
-          "</srong>xp</span>."
-      );
+      if (Math.abs(player.Level - currentMonster.Level) <= 3) {
+        addLine(
+          logDisplay,
+          "<span class='text-warning'>You gain <strong>" +
+            player.experiencePointsForDefeatingAMonster() +
+            "</srong>xp</span>."
+        );
+        player.addExperiencePoints(
+          player.experiencePointsForDefeatingAMonster()
+        )
+          ? addLine(
+              logDisplay,
+              "<span class='text-warning'>Congratulations! You are now level <strong>" +
+                player.Level +
+                "</strong>!</span>"
+            )
+          : null;
+      }
 
       if (currentMonster.RewardGold > 0) {
         player.Gold += currentMonster.RewardGold;
@@ -746,7 +751,8 @@ function spawnMonster(newLocation) {
     standardMonster.MaximumDamage,
     standardMonster.RewardGold,
     standardMonster.CurrentHitPoints,
-    standardMonster.MaximumHitPoints
+    standardMonster.MaximumHitPoints,
+    standardMonster.Level
   );
 
   currentMonster.LootTable.push(
@@ -755,7 +761,6 @@ function spawnMonster(newLocation) {
 }
 
 function moveTo(newLocation) {
-  console.log(player.Inventory);
   if (!player.hasRequiredItemToEnter(newLocation)) {
     addLine(
       logDisplay,
@@ -798,10 +803,10 @@ function moveTo(newLocation) {
 
           player.removeQuestCompletionItems(newLocation.QuestAvailableHere);
 
-          addLine(logDisplay, "<span class='text-warning'>You receive: ");
           addLine(
             logDisplay,
-            player.experiencePointsForCompletingQuest() +
+            "<span class='text-warning'>You receive: " +
+              player.experiencePointsForCompletingQuest() +
               " experience points and " +
               newLocation.QuestAvailableHere.RewardGold +
               " gold.</span>"

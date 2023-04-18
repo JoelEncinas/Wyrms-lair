@@ -17,8 +17,8 @@ export class Monster extends LivingCreature {
     this._MinimumDamage = minimumDamage;
     this._MaximumDamage = maximumDamage;
     this._RewardGold = rewardGold;
+    this._Level = level;
     this._LootTable = [];
-    this._Level = 0;
   }
 
   get ID() {

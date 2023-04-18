@@ -172,9 +172,7 @@ function populateMonsters() {
   giantSpider.LootTable.push(
     new LootItem(itemByID(ITEM_IDS.SPIDER_SILK), 25, false)
   );
-  giantSpider.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.CLUB), 15, false)
-  );
+  giantSpider.LootTable.push(new LootItem(itemByID(ITEM_IDS.CLUB), 15, false));
 
   monsters.push(rat);
   monsters.push(snake);

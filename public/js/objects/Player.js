@@ -69,11 +69,9 @@ export class Player extends LivingCreature {
   }
 
   addExperiencePoints(experienceToAdd) {
-    if (this._Level < 20) {
+    if (this._Level < 300) {
       let newLevel =
-        Math.floor(
-          (this._Experience + experienceToAdd - 200) / (50 * this._Level)
-        ) + 2;
+        Math.floor((this._Experience + experienceToAdd - 300) / 100) + 2;
 
       if (newLevel > this._Level) {
         this._Level = newLevel;
@@ -89,10 +87,10 @@ export class Player extends LivingCreature {
   }
 
   get Level() {
-    if (this._Experience < 200) {
+    if (this._Experience < 300) {
       return 1;
     }
-    return Math.floor((this._Experience - 200) / (50 * this._Level)) + 2;
+    return Math.floor((this._Experience - 300) / 100) + 2;
   }
 
   get Inventory() {
@@ -243,16 +241,10 @@ export class Player extends LivingCreature {
   }
 
   experiencePointsForDefeatingAMonster() {
-    if (this._Level === 1) {
-      return 50;
-    }
-    return this._Level * 5 + 50;
+    return 50;
   }
 
   experiencePointsForCompletingQuest() {
-    if (this._Level === 1) {
-      50 * 5;
-    }
-    return (this._Level * 5 + 50) * 5;
+    return 150;
   }
 }
