@@ -51,9 +51,10 @@ export class Scroll extends Item {
     this._SpellName = value;
   }
 
-  getMagicalDamage(minimumDamage, maximumDamage, intellectModifier) {
+  getMagicalDamage(intellectModifier) {
     return (
-      randomNumberGenerator(minimumDamage, maximumDamage) + intellectModifier
+      randomNumberGenerator(this._MinimumDamage, this._MaximumDamage) +
+      intellectModifier
     );
   }
 }

@@ -84,19 +84,9 @@ player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
 
 updateLocationUI();
-
 updateMovementButtons(player.CurrentLocation);
-updatePlayerStats();
 updateQuestsTable();
-updateInventoryTable(player.Inventory);
-updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
-updateItemListInUI(
-  HealingPotion,
-  potionOptions,
-  potionBtn,
-  player.CurrentPotion
-);
-updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
+updateUIAfterFight();
 hideElement(vendorBtn);
 hideElement(weaponBtn);
 hideElement(weaponOptions);
@@ -216,8 +206,6 @@ weaponBtn.addEventListener("click", function (e) {
   );
 
   let damageToMonster = currentWeapon.getPhysicalDamage(
-    currentWeapon.MinimumDamage,
-    currentWeapon.MaximumDamage,
     player.strengthModifier()
   );
 
@@ -269,41 +257,10 @@ weaponBtn.addEventListener("click", function (e) {
     }
 
     lootItems(currentMonster);
-
-    updatePlayerStats();
-    updateInventoryTable(player.Inventory);
-    updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
-    updateItemListInUI(
-      HealingPotion,
-      potionOptions,
-      potionBtn,
-      player.CurrentPotion
-    );
-    updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
-
+    updateUIAfterFight();
     spawnMonster(player.CurrentLocation);
   } else {
-    let damageToPlayer = currentMonster.getDamageToPlayer();
-
-    addLine(
-      logDisplay,
-      "<span class='text-muted'>The</span> " +
-        currentMonster.Name +
-        " <span class='text-muted'>did</span> " +
-        damageToPlayer +
-        " <span class='text-muted'>points of damage.</span>"
-    );
-
-    if (currentMonster.IsPoisonous) {
-      damageToPlayer += poisonPlayer();
-    }
-
-    player.CurrentHitPoints -= damageToPlayer;
-    hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
-
-    if (player.CurrentHitPoints <= 0) {
-      playerDeath();
-    }
+    monsterAttack(currentMonster);
   }
 });
 
@@ -334,29 +291,7 @@ potionBtn.addEventListener("click", function (e) {
       " <span class='text-muted'>hit points.</span>"
   );
 
-  let damageToPlayer = currentMonster.getDamageToPlayer();
-
-  addLine(
-    logDisplay,
-    "<span class='text-muted'>The</span> " +
-      currentMonster.Name +
-      " <span class='text-muted'>did</span> " +
-      damageToPlayer +
-      " <span class='text-muted'>points of damage.</span>"
-  );
-
-  if (currentMonster.IsPoisonous) {
-    if (currentMonster.IsPoisonous) {
-      damageToPlayer += poisonPlayer();
-    }
-  }
-
-  player.CurrentHitPoints -= damageToPlayer;
-  hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
-
-  if (player.CurrentHitPoints <= 0) {
-    playerDeath();
-  }
+  monsterAttack(currentMonster);
 
   updateInventoryTable(player.Inventory);
   updateItemListInUI(
@@ -378,8 +313,6 @@ scrollBtn.addEventListener("click", function (e) {
 
   if (currentScroll.SpellType === SPELL_TYPES.DAMAGE) {
     let damageToMonster = currentScroll.getMagicalDamage(
-      currentScroll.MinimumDamage,
-      currentScroll.MaximumDamage,
       player.intellectModifier()
     );
 
@@ -436,56 +369,10 @@ scrollBtn.addEventListener("click", function (e) {
       }
 
       lootItems(currentMonster);
-
-      updatePlayerStats();
-      updateInventoryTable(player.Inventory);
-      updateItemListInUI(
-        Weapon,
-        weaponOptions,
-        weaponBtn,
-        player.CurrentWeapon
-      );
-      updateItemListInUI(
-        HealingPotion,
-        potionOptions,
-        potionBtn,
-        player.CurrentPotion
-      );
-      updateItemListInUI(
-        Scroll,
-        scrollOptions,
-        scrollBtn,
-        player.CurrentScroll
-      );
-
+      updateUIAfterFight();
       spawnMonster(player.CurrentLocation);
     } else {
-      let damageToPlayer = randomNumberGenerator(
-        currentMonster.MinimumDamage,
-        currentMonster.MaximumDamage
-      );
-
-      addLine(
-        logDisplay,
-        "<span class='text-muted'>The</span> " +
-          currentMonster.Name +
-          " <span class='text-muted'>did</span> " +
-          damageToPlayer +
-          " <span class='text-muted'>points of damage.</span>"
-      );
-
-      if (currentMonster.IsPoisonous) {
-        if (currentMonster.IsPoisonous) {
-          damageToPlayer += poisonPlayer();
-        }
-      }
-
-      player.CurrentHitPoints -= damageToPlayer;
-      hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
-
-      if (player.CurrentHitPoints <= 0) {
-        playerDeath();
-      }
+      monsterAttack(currentMonster);
     }
   } else if (currentScroll.SpellType === SPELL_TYPES.HEALING) {
     let healingDone = currentScroll.getMagicalDamage(
@@ -511,29 +398,7 @@ scrollBtn.addEventListener("click", function (e) {
         " <span class='text-muted'> hit points.</span> "
     );
 
-    let damageToPlayer = currentMonster.getDamageToPlayer();
-
-    addLine(
-      logDisplay,
-      "<span class='text-muted'>The</span> " +
-        currentMonster.Name +
-        " <span class='text-muted'>did</span> " +
-        damageToPlayer +
-        " <span class='text-muted'>points of damage.</span>"
-    );
-
-    if (currentMonster.IsPoisonous) {
-      if (currentMonster.IsPoisonous) {
-        damageToPlayer += poisonPlayer();
-      }
-    }
-
-    player.CurrentHitPoints -= damageToPlayer;
-    hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
-
-    if (player.CurrentHitPoints <= 0) {
-      playerDeath();
-    }
+    monsterAttack(currentMonster);
   }
 
   updateInventoryTable(player.Inventory);
@@ -840,6 +705,43 @@ function poisonPlayer() {
   );
 
   return poisonDamage;
+}
+
+function monsterAttack(currentMonster) {
+  let damageToPlayer = currentMonster.getDamageToPlayer();
+
+  addLine(
+    logDisplay,
+    "<span class='text-muted'>The</span> " +
+      currentMonster.Name +
+      " <span class='text-muted'>did</span> " +
+      damageToPlayer +
+      " <span class='text-muted'>points of damage.</span>"
+  );
+
+  if (currentMonster.IsPoisonous) {
+    damageToPlayer += poisonPlayer();
+  }
+
+  player.CurrentHitPoints -= damageToPlayer;
+  hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
+
+  if (player.CurrentHitPoints <= 0) {
+    playerDeath();
+  }
+}
+
+function updateUIAfterFight() {
+  updatePlayerStats();
+  updateInventoryTable(player.Inventory);
+  updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
+  updateItemListInUI(
+    HealingPotion,
+    potionOptions,
+    potionBtn,
+    player.CurrentPotion
+  );
+  updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
 }
 
 function lootItems(currentMonster) {

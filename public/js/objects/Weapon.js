@@ -24,9 +24,10 @@ export class Weapon extends Item {
     this._MaximumDamage = value;
   }
 
-  getPhysicalDamage(minimumDamage, maximumDamage, strengthModifier) {
+  getPhysicalDamage(strengthModifier) {
     return (
-      randomNumberGenerator(minimumDamage, maximumDamage) + strengthModifier
+      randomNumberGenerator(this._MinimumDamage, this._MaximumDamage) +
+      strengthModifier
     );
   }
 }
