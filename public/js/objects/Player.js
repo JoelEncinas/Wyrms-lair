@@ -8,6 +8,7 @@ export class Player extends LivingCreature {
     maximumHitPoints,
     gold,
     experience,
+    level,
     currentLocation,
     currentWeapon,
     currentPotion,
@@ -17,7 +18,7 @@ export class Player extends LivingCreature {
     this._Gold = gold;
     this._Experience = experience;
     this._Inventory = [];
-    this._Level = 1;
+    this._Level = level;
     this._Quests = [];
     this._CurrentLocation = currentLocation;
     this._CurrentWeapon = currentWeapon;
@@ -31,6 +32,7 @@ export class Player extends LivingCreature {
       40,
       0,
       0,
+      1,
       locationByID(LOCATION_IDS.HOME),
       ITEM_IDS.RUSTY_SWORD,
       ITEM_IDS.HEALING_POTION,
@@ -46,10 +48,6 @@ export class Player extends LivingCreature {
       return 40;
     }
     return 40 + this._Level * 10;
-  }
-
-  set Gold(value) {
-    this._Gold = value;
   }
 
   get Gold() {
