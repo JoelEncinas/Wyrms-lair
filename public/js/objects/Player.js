@@ -249,6 +249,10 @@ export class Player extends LivingCreature {
   }
 
   strengthModifier() {
-    return (this._Level - 1) + 1;
+    return this._Level - 1 + 1;
+  }
+
+  intellectModifier() {
+    return parseInt(this._Level / 3);
   }
 }

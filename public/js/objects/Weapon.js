@@ -1,4 +1,5 @@
 import { Item } from "./Item.js";
+import { randomNumberGenerator } from "../utils/randomNumberGenerator.js";
 
 export class Weapon extends Item {
   constructor(id, name, namePlural, price, minimumDamage, maximumDamage) {
@@ -21,5 +22,11 @@ export class Weapon extends Item {
 
   set MaximumDamage(value) {
     this._MaximumDamage = value;
+  }
+
+  getPhysicalDamage(minimumDamage, maximumDamage, strengthModifier) {
+    return (
+      randomNumberGenerator(minimumDamage, maximumDamage) + strengthModifier
+    );
   }
 }

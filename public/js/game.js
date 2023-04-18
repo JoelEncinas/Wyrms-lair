@@ -77,7 +77,7 @@ const vendorPlayerInventory = document.getElementById(
 let currentMonster;
 let player = new Player();
 player = player.createDefaultPlayer();
-console.log(player.Level);
+
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_FIREBALL_I));
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_FIREBALL_I));
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
@@ -215,11 +215,11 @@ weaponBtn.addEventListener("click", function (e) {
     parseInt(weaponOptions.options[weaponOptions.selectedIndex].value)
   );
 
-  let damageToMonster =
-    randomNumberGenerator(
-      currentWeapon.MinimumDamage,
-      currentWeapon.MaximumDamage
-    ) + player.strengthModifier();
+  let damageToMonster = currentWeapon.getPhysicalDamage(
+    currentWeapon.MinimumDamage,
+    currentWeapon.MaximumDamage,
+    player.strengthModifier()
+  );
 
   currentMonster.CurrentHitPoints -= damageToMonster;
 
@@ -451,7 +451,6 @@ potionBtn.addEventListener("click", function (e) {
 });
 
 scrollBtn.addEventListener("click", function (e) {
-  // TODO
   player.CurrentScroll = parseInt(
     scrollOptions.options[scrollOptions.selectedIndex].value
   );
@@ -461,9 +460,10 @@ scrollBtn.addEventListener("click", function (e) {
   );
 
   if (currentScroll.SpellType === SPELL_TYPES.DAMAGE) {
-    let damageToMonster = randomNumberGenerator(
+    let damageToMonster = currentScroll.getMagicalDamage(
       currentScroll.MinimumDamage,
-      currentScroll.MaximumDamage
+      currentScroll.MaximumDamage,
+      player.intellectModifier()
     );
 
     currentMonster.CurrentHitPoints -= damageToMonster;
@@ -626,9 +626,10 @@ scrollBtn.addEventListener("click", function (e) {
       }
     }
   } else if (currentScroll.SpellType === SPELL_TYPES.HEALING) {
-    let healingDone = randomNumberGenerator(
+    let healingDone = currentScroll.getMagicalDamage(
       currentScroll.MinimumDamage,
-      currentScroll.MaximumDamage
+      currentScroll.MaximumDamage,
+      player.intellectModifier()
     );
 
     player.CurrentHitPoints += player.CurrentHitPoints + healingDone;
