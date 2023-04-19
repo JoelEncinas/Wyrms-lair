@@ -53,7 +53,7 @@ router.post("/login", async (req, res) => {
         expiresIn: "24h",
       });
       res.cookie("token", token);
-      return res.redirect("/protected");
+      return res.redirect("/game");
     } else {
       return res.render("login", { invalid_credentials: true });
     }

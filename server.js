@@ -25,11 +25,11 @@ hbs.registerPartials(__dirname + "/partials");
 
 // routes
 const authRoutes = require("./routes/auth");
-const protectedRoutes = require("./routes/protected");
+const gameRoutes = require("./routes/game");
 const indexRoutes = require("./routes/index");
 
 app.use("/auth", authRoutes);
-app.use("/protected", protectedRoutes);
+app.use("/game", gameRoutes);
 app.use("/", indexRoutes);
 
 // 404

@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 const router = express.Router();
 
-// Protected route
+// game route
 router.get("/", (req, res) => {
   // Verify JWT token from cookie
   const token = req.cookies.token;
@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
     }
 
     const user = await User.findOne({ _id: decoded.userId });
-    res.render("protected", { username: user.username });
+    res.render("game", { username: user.username });
   });
 });
 
