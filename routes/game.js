@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
     }
 
     const user = await User.findOne({ _id: decoded.userId });
-    res.status(200).render("game", { username: user.username });
+    res.status(200).render("game", { user: user });
   });
 });
 
