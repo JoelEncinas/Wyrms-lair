@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Register route
 router.get("/register", (req, res) => {
-  res.render("register");
+  res.status(200).render("register");
 });
 
 // Register a new user
@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
     const { username, password } = req.body;
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      return res.render("register", { existing_user: true });
+      return res.status(200).render("register", { existing_user: true });
     }
 
     // Hash password
@@ -35,7 +35,7 @@ router.post("/register", async (req, res) => {
 
 // Login route
 router.get("/login", (req, res) => {
-  res.render("login");
+  res.status(200).render("login");
 });
 
 // Log in an existing user
@@ -44,7 +44,7 @@ router.post("/login", async (req, res) => {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
     if (!user) {
-      return res.render("login", { username_not_found: true });
+      return res.status(200).render("login", { username_not_found: true });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -55,7 +55,7 @@ router.post("/login", async (req, res) => {
       res.cookie("token", token);
       return res.redirect("/game");
     } else {
-      return res.render("login", { invalid_credentials: true });
+      return res.status(200).render("login", { invalid_credentials: true });
     }
   } catch (err) {
     console.error(err);
