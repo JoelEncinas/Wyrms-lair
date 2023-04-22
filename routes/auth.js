@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Character = require("../models/Character");
 
 const router = express.Router();
 
@@ -25,6 +26,14 @@ router.post("/register", async (req, res) => {
     // Create a new user
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
+
+    // Create a new character associated with the user
+    const newCharacter = new Character({
+      name: `${username}'s character`,
+      level: 1,
+      user: newUser._id,
+    });
+    await newCharacter.save();
 
     res.redirect("/auth/login");
   } catch (err) {

@@ -16,5 +16,5 @@ const characterSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("MLCharacter", characterSchema);
+module.exports = mongoose.model("WLCharacter", characterSchema);
 

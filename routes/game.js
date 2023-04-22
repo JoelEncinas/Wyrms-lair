@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Character = require("../models/Character");
 
 const router = express.Router();
 
@@ -18,7 +19,8 @@ router.get("/", (req, res) => {
     }
 
     const user = await User.findOne({ _id: decoded.userId });
-    res.status(200).render("game", { user: user });
+    const character = await Character.findOne({ user: decoded.userId });
+    res.status(200).render("game", { user: user, character: character });
   });
 });
 
