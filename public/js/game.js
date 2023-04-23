@@ -16,6 +16,7 @@ import {
   ITEM_IDS,
   LOCATION_IDS,
   SPELL_TYPES,
+  items,
 } from "./world.js";
 
 // Utils
@@ -109,6 +110,13 @@ let player = new Player(
   parseInt(saveDataCurrentScroll.value)
 );
 
+const data = saveDataInventory.value;
+console.log(JSON.parse(`[${data}]`));
+
+// player.addItemToInventory(itemByID(data[0].id), data[0].quantity);
+
+function loadInventory() {}
+
 // SAVE DATA
 // TODO
 saveDataSubmit.addEventListener("click", function (e) {
@@ -118,9 +126,9 @@ saveDataSubmit.addEventListener("click", function (e) {
   saveDataMaximumHitPoints.value = player.MaximumHitPoints;
   saveDataGold.value = player.Gold;
   saveDataExperience.value = player.Experience;
-  /*saveDataInventory.value = JSON.stringify({
+  saveDataInventory.value = JSON.stringify({
     inventory: player.Inventory,
-  }); */
+  });
   saveDataLevel.value = player.Level;
   /*saveDataQuests.value = JSON.stringify({
     quests: player.Quests,
@@ -500,6 +508,7 @@ function updateUIAfterFight() {
 
 // Movement
 function moveTo(newLocation) {
+  console.log(player);
   if (!player.hasRequiredItemToEnter(newLocation)) {
     addLine(
       logDisplay,

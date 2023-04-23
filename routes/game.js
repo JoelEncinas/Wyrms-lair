@@ -27,7 +27,9 @@ router.get("/", (req, res) => {
         renderSaveMessage = true;
       }
 
-      const character = await Character.findOne({ user: decoded.userId });
+      const character = await Character.findOne({
+        user: decoded.userId,
+      });
 
       res.status(200).render("game", {
         character: character,
@@ -56,7 +58,7 @@ router.post("/save", async (req, res) => {
       currentScroll,
     } = req.body;
 
-    console.log(req.body);
+    console.log(inventory);
 
     const token = req.cookies.token;
     if (!token) {

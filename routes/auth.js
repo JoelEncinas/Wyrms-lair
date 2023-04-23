@@ -29,11 +29,21 @@ router.post("/register", async (req, res) => {
       maximumHitPoints: 40,
       gold: 0,
       experience: 0,
+      inventory: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+        {
+          id: 2,
+          quantity: 2,
+        },
+      ],
       level: 1,
       currentLocation: 1,
       currentWeapon: 1,
       currentPotion: 7,
-      currentScroll: 13
+      currentScroll: 13,
     });
     await newCharacter.save();
 

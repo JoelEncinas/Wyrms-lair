@@ -23,7 +23,10 @@ const characterSchema = new mongoose.Schema({
     required: true,
   },
   inventory: {
-    type: [String],
+    type: [{
+      id: Number,
+      quantity: Number
+    }],
   },
   level: {
     type: Number,
