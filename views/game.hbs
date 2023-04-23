@@ -9,17 +9,18 @@
     <title>Game</title>
   </head>
   <body>
-
-    {{user}}
-    {{character}}
-
     <div id="game" class="container p-3">
+      {{#if saved_game}}
+        {{> saved_game}}
+      {{/if}}
       <form action="/auth/logout" method="post">
         <button type="submit">Logout</button>
       </form>
       <!-- TODO -->
-      <form action="/auth/logout" method="post">
-        <button type="submit">Logout</button>
+      <form action="/game/save" method="post">
+        <input type="hidden" name="userData" value="{{json user}}" />
+        <input type="hidden" name="characterData" value="{{json character}}" />
+        <button type="submit">Save</button>
       </form>
 
       <h1 class="text-center">Wyrm's Lair</h1>

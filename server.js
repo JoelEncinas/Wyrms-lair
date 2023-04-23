@@ -22,6 +22,9 @@ app.use(express.static("public"));
 app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
 hbs.registerPartials(__dirname + "/partials");
+hbs.registerHelper("json", function (context) {
+  return JSON.stringify(context);
+});
 
 // routes
 const authRoutes = require("./routes/auth");
