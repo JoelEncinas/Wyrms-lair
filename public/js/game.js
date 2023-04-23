@@ -94,16 +94,20 @@ const vendorPlayerInventory = document.getElementById(
   "vendor-player-inventory"
 );
 
-// FIRST LOAD
-let currentMonster;
-let player = new Player();
-player = player.createDefaultPlayer();
-
-player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
-player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
-
-// LOAD DATA
 // TODO
+// LOAD DATA
+let currentMonster;
+let player = new Player(
+  parseInt(saveDataCurrentHitPoints.value),
+  parseInt(saveDataMaximumHitPoints.value),
+  parseInt(saveDataGold.value),
+  parseInt(saveDataExperience.value),
+  parseInt(saveDataLevel.value),
+  parseInt(saveDataCurrentLocation.value),
+  parseInt(saveDataCurrentWeapon.value),
+  parseInt(saveDataCurrentPotion.value),
+  parseInt(saveDataCurrentScroll.value)
+);
 
 // SAVE DATA
 // TODO

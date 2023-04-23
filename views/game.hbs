@@ -19,17 +19,17 @@
       </form>
       <!-- TODO -->
       <form id="save-data-form" action="/game/save" method="post">
-        <input id="save-data-currentHitPoints" type="hidden" name="currentHitPoints" value="" />
-        <input id="save-data-maximumHitPoints" type="hidden" name="maximumHitPoints" value="" />
-        <input id="save-data-gold" type="hidden" name="gold" value="" />
-        <input id="save-data-experience" type="hidden" name="experience" value="" />
-        <input id="save-data-inventory" type="hidden" name="inventory" value="" />
-        <input id="save-data-level" type="hidden" name="level" value="" />
-        <input id="save-data-quests" type="hidden" name="quests" value="" />
-        <input id="save-data-currentLocation" type="hidden" name="currentLocation" value="" />
-        <input id="save-data-currentWeapon" type="hidden" name="currentWeapon" value="" />
-        <input id="save-data-currentPotion" type="hidden" name="currentPotion" value="" />
-        <input id="save-data-currentScroll" type="hidden" name="currentScroll" value="" />
+        <input id="save-data-currentHitPoints" type="hidden" name="currentHitPoints" value="{{ character.currentHitPoints}}" />
+        <input id="save-data-maximumHitPoints" type="hidden" name="maximumHitPoints" value="{{ character.maximumHitPoints}}" />
+        <input id="save-data-gold" type="hidden" name="gold" value="{{ character.gold}}" />
+        <input id="save-data-experience" type="hidden" name="experience" value="{{ character.experience}}" />
+        <input id="save-data-inventory" type="hidden" name="inventory" value="{{ character.inventory}}" />
+        <input id="save-data-level" type="hidden" name="level" value="{{ character.level}}" />
+        <input id="save-data-quests" type="hidden" name="quests" value="{{ character.quests}}" />
+        <input id="save-data-currentLocation" type="hidden" name="currentLocation" value="{{ character.currentLocation}}" />
+        <input id="save-data-currentWeapon" type="hidden" name="currentWeapon" value="{{ character.currentWeapon}}" />
+        <input id="save-data-currentPotion" type="hidden" name="currentPotion" value="{{ character.currentPotion}}" />
+        <input id="save-data-currentScroll" type="hidden" name="currentScroll" value="{{ character.currentScroll}}" />
         <button id="save-data-submit" type="submit">Save</button>
       </form>
 
