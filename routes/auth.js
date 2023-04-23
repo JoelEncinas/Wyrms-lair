@@ -6,12 +6,10 @@ const Character = require("../models/Character");
 
 const router = express.Router();
 
-// Register route
 router.get("/register", (req, res) => {
   res.status(200).render("register");
 });
 
-// Register a new user
 router.post("/register", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -20,22 +18,26 @@ router.post("/register", async (req, res) => {
       return res.status(200).render("register", { existing_user: true });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
-    // Create a new character associated with the user
     const newCharacter = new Character({
-      name: `${username}'s character`,
-      level: 1,
       user: newUser._id,
+      currentHitPoints: 40,
+      maximumHitPoints: 40,
+      gold: 0,
+      experience: 0,
+      level: 1,
+      currentLocation: 1,
+      currentWeapon: 1,
+      currentPotion: 1,
+      currentScroll: 1
     });
     await newCharacter.save();
 
-    res.status(200).redirect("/auth/login");
+    res.status(201).redirect("/auth/login");
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
   }

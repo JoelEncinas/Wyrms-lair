@@ -20,7 +20,7 @@ export class Player extends LivingCreature {
     this._Inventory = [];
     this._Level = level;
     this._Quests = [];
-    this._CurrentLocation = currentLocation;
+    this._CurrentLocation = locationByID(currentLocation);
     this._CurrentWeapon = currentWeapon;
     this._CurrentPotion = currentPotion;
     this._CurrentScroll = currentScroll;
@@ -33,7 +33,7 @@ export class Player extends LivingCreature {
       0,
       0,
       1,
-      locationByID(LOCATION_IDS.HOME),
+      LOCATION_IDS.HOME,
       ITEM_IDS.RUSTY_SWORD,
       ITEM_IDS.HEALING_POTION,
       ITEM_IDS.SCROLL_FIREBALL_I

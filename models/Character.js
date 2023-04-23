@@ -24,7 +24,6 @@ const characterSchema = new mongoose.Schema({
   },
   inventory: {
     type: [String],
-    required: true,
   },
   level: {
     type: Number,
@@ -32,10 +31,9 @@ const characterSchema = new mongoose.Schema({
   },
   quests: {
     type: [String],
-    required: true,
   },
   currentLocation: {
-    type: String,
+    type: Number,
     required: true,
   },
   currentWeapon: {
