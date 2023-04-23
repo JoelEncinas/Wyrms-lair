@@ -19,9 +19,8 @@
       </form>
       <!-- TODO -->
       <form action="/game/save" method="post">
-        <input type="hidden" name="userData" value="{{json user}}" />
-        <input type="hidden" name="characterData" value="{{json character}}" />
-        <button type="submit">Save</button>
+        <input id="save-data-input" type="hidden" name="characterData" value="" />
+        <button id="save-data-submit" type="submit">Save</button>
       </form>
 
       <h1 class="text-center">Wyrm's Lair</h1>

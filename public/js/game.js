@@ -28,6 +28,10 @@ import {
 import { randomNumberGenerator } from "./utils/randomNumberGenerator.js";
 
 // UI
+// data
+let saveDataInput = document.getElementById("save-data-input");
+let saveDataSubmit = document.getElementById("save-data-submit");
+
 // character stats
 let hpText = document.getElementById("hit-points");
 let goldText = document.getElementById("gold");
@@ -80,6 +84,19 @@ player = player.createDefaultPlayer();
 
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
 player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
+
+// LOAD DATA
+// TODO
+
+// SAVE DATA
+// TODO
+saveDataSubmit.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  saveDataInput.value = JSON.parse(player);
+
+  form.submit();
+});
 
 updateLocationUI();
 updateMovementButtons(player.CurrentLocation);

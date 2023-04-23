@@ -27,16 +27,12 @@ router.get("/", (req, res) => {
         renderSaveMessage = true;
       }
 
-      const user = await User.findOne({ _id: decoded.userId });
       const character = await Character.findOne({ user: decoded.userId });
 
-      res
-        .status(200)
-        .render("game", {
-          user: user,
-          character: character,
-          saved_game: renderSaveMessage === true ? true : false,
-        });
+      res.status(200).render("game", {
+        character: character,
+        saved_game: renderSaveMessage === true ? true : false,
+      });
     });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
@@ -46,9 +42,7 @@ router.get("/", (req, res) => {
 // TODO
 router.post("/save", async (req, res) => {
   try {
-    const userData = JSON.parse(req.body.userData);
     const characterData = JSON.parse(req.body.characterData);
-    console.log(userData);
     console.log(characterData);
     res.cookie("save_game", "true");
     return res.status(201).redirect("/game");
