@@ -34,7 +34,7 @@ app.use("/", indexRoutes);
 
 // 404
 app.get("*", (req, res) => {
-  res.json({ message: "404" });
+  res.status(404).json({ message: "404" });
 });
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.pug2uxj.mongodb.net/?retryWrites=true&w=majority`;

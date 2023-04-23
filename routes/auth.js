@@ -35,9 +35,8 @@ router.post("/register", async (req, res) => {
     });
     await newCharacter.save();
 
-    res.redirect("/auth/login");
+    res.status(200).redirect("/auth/login");
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -62,12 +61,11 @@ router.post("/login", async (req, res) => {
         expiresIn: "24h",
       });
       res.cookie("token", token);
-      return res.redirect("/game");
+      return res.status(200).redirect("/game");
     } else {
       return res.status(200).render("login", { invalid_credentials: true });
     }
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -76,7 +74,7 @@ router.post("/login", async (req, res) => {
 router.post("/logout", (req, res) => {
   // Clear JWT token cookie
   res.clearCookie("token");
-  res.redirect("/auth/login");
+  res.status(200).redirect("/auth/login");
 });
 
 module.exports = router;

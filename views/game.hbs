@@ -10,13 +10,18 @@
   </head>
   <body>
 
-    {{ user }}
-    {{ character }}
+    {{user}}
+    {{character}}
 
     <div id="game" class="container p-3">
       <form action="/auth/logout" method="post">
         <button type="submit">Logout</button>
       </form>
+      <!-- TODO -->
+      <form action="/auth/logout" method="post">
+        <button type="submit">Logout</button>
+      </form>
+
       <h1 class="text-center">Wyrm's Lair</h1>
       <p class="text-muted text-center fs-6 fst-italic">* Optimal Resolution
         768px x 700px</p>
