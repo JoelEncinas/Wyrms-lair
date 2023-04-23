@@ -110,51 +110,21 @@ player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
 saveDataSubmit.addEventListener("click", function (e) {
   e.preventDefault();
 
-  console.log(player);
-
-  saveDataCurrentHitPoints.value = JSON.stringify({
-    currentHitPoints: player.CurrentHitPoints,
-  });
-
-  saveDataMaximumHitPoints.value = JSON.stringify({
-    maximumHitPoints: player.MaximumHitPoints,
-  });
-
-  saveDataGold.value = JSON.stringify({
-    gold: player.Gold,
-  });
-
-  saveDataExperience.value = JSON.stringify({
-    experience: player.Experience,
-  });
-
-  saveDataInventory.value = JSON.stringify({
+  saveDataCurrentHitPoints.value = player.CurrentHitPoints;
+  saveDataMaximumHitPoints.value = player.MaximumHitPoints;
+  saveDataGold.value = player.Gold;
+  saveDataExperience.value = player.Experience;
+  /*saveDataInventory.value = JSON.stringify({
     inventory: player.Inventory,
-  });
-
-  saveDataLevel.value = JSON.stringify({
-    level: player.Level,
-  });
-
-  saveDataQuests.value = JSON.stringify({
+  }); */
+  saveDataLevel.value = player.Level;
+  /*saveDataQuests.value = JSON.stringify({
     quests: player.Quests,
-  });
-
-  saveDataCurrentLocation.value = JSON.stringify({
-    currentLocation: player.CurrentLocation.ID,
-  });
-
-  saveDataCurrentWeapon.value = JSON.stringify({
-    currentWeapon: player.CurrentWeapon,
-  });
-
-  saveDataCurrentPotion.value = JSON.stringify({
-    currentPotion: player.CurrentPotion,
-  });
-
-  saveDataCurrentScroll.value = JSON.stringify({
-    currentScroll: player.CurrentScroll,
-  });
+  });*/
+  saveDataCurrentLocation.value = player.CurrentLocation.ID;
+  saveDataCurrentWeapon.value = player.CurrentWeapon;
+  saveDataCurrentPotion.value = player.CurrentPotion;
+  saveDataCurrentScroll.value = player.CurrentScroll;
 
   saveDataForm.submit();
 });

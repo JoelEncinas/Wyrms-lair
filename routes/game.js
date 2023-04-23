@@ -42,10 +42,52 @@ router.get("/", (req, res) => {
 // TODO
 router.post("/save", async (req, res) => {
   try {
-    // const characterData = JSON.parse(req.body.characterData);
+    const {
+      currentHitPoints,
+      maximumHitPoints,
+      gold,
+      experience,
+      inventory,
+      level,
+      quests,
+      currentLocation,
+      currentWeapon,
+      currentPotion,
+      currentScroll,
+    } = req.body;
+
     console.log(req.body);
-    res.cookie("save_game", "true");
-    return res.status(201).redirect("/game");
+
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).redirect("/auth/login");
+    }
+
+    jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
+      if (err) {
+        return res.status(401).redirect("/auth/login");
+      }
+
+      await Character.findOneAndUpdate(
+        { user: decoded.userId },
+        {
+          currentHitPoints: currentHitPoints,
+          maximumHitPoints: maximumHitPoints,
+          gold: gold,
+          experience: experience,
+          //inventory: JSON.parse(inventory),
+          level: level,
+          //quests: JSON.parse(quests),
+          currentLocation: currentLocation,
+          currentWeapon: currentWeapon,
+          currentPotion: currentPotion,
+          currentScroll: currentScroll,
+        }
+      );
+
+      res.cookie("save_game", "true");
+      return res.status(201).redirect("/game");
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
