@@ -42,8 +42,8 @@ router.get("/", (req, res) => {
 // TODO
 router.post("/save", async (req, res) => {
   try {
-    const characterData = JSON.parse(req.body.characterData);
-    console.log(characterData);
+    // const characterData = JSON.parse(req.body.characterData);
+    console.log(req.body);
     res.cookie("save_game", "true");
     return res.status(201).redirect("/game");
   } catch (err) {

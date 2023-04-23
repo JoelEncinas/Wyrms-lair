@@ -29,8 +29,25 @@ import { randomNumberGenerator } from "./utils/randomNumberGenerator.js";
 
 // UI
 // data
-let saveDataInput = document.getElementById("save-data-input");
+let saveDataCurrentHitPoints = document.getElementById(
+  "save-data-currentHitPoints"
+);
+let saveDataMaximumHitPoints = document.getElementById(
+  "save-data-maximumHitPoints"
+);
+let saveDataGold = document.getElementById("save-data-gold");
+let saveDataExperience = document.getElementById("save-data-experience");
+let saveDataInventory = document.getElementById("save-data-inventory");
+let saveDataLevel = document.getElementById("save-data-level");
+let saveDataQuests = document.getElementById("save-data-quests");
+let saveDataCurrentLocation = document.getElementById(
+  "save-data-currentLocation"
+);
+let saveDataCurrentWeapon = document.getElementById("save-data-currentWeapon");
+let saveDataCurrentPotion = document.getElementById("save-data-currentPotion");
+let saveDataCurrentScroll = document.getElementById("save-data-currentScroll");
 let saveDataSubmit = document.getElementById("save-data-submit");
+let saveDataForm = document.getElementById("save-data-form");
 
 // character stats
 let hpText = document.getElementById("hit-points");
@@ -93,9 +110,53 @@ player.addItemToInventory(itemByID(ITEM_IDS.SCROLL_RENEW_I));
 saveDataSubmit.addEventListener("click", function (e) {
   e.preventDefault();
 
-  saveDataInput.value = JSON.parse(player);
+  console.log(player);
 
-  form.submit();
+  saveDataCurrentHitPoints.value = JSON.stringify({
+    currentHitPoints: player.CurrentHitPoints,
+  });
+
+  saveDataMaximumHitPoints.value = JSON.stringify({
+    maximumHitPoints: player.MaximumHitPoints,
+  });
+
+  saveDataGold.value = JSON.stringify({
+    gold: player.Gold,
+  });
+
+  saveDataExperience.value = JSON.stringify({
+    experience: player.Experience,
+  });
+
+  saveDataInventory.value = JSON.stringify({
+    inventory: player.Inventory,
+  });
+
+  saveDataLevel.value = JSON.stringify({
+    level: player.Level,
+  });
+
+  saveDataQuests.value = JSON.stringify({
+    quests: player.Quests,
+  });
+
+  saveDataCurrentLocation.value = JSON.stringify({
+    currentLocation: player.CurrentLocation.ID,
+  });
+
+  saveDataCurrentWeapon.value = JSON.stringify({
+    currentWeapon: player.CurrentWeapon,
+  });
+
+  saveDataCurrentPotion.value = JSON.stringify({
+    currentPotion: player.CurrentPotion,
+  });
+
+  saveDataCurrentScroll.value = JSON.stringify({
+    currentScroll: player.CurrentScroll,
+  });
+
+  saveDataForm.submit();
 });
 
 updateLocationUI();
