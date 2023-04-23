@@ -30,17 +30,13 @@ router.get("/", (req, res) => {
       const user = await User.findOne({ _id: decoded.userId });
       const character = await Character.findOne({ user: decoded.userId });
 
-      if (renderSaveMessage) {
-        return res
-          .status(200)
-          .render("game", {
-            user: user,
-            character: character,
-            saved_game: true,
-          });
-      }
-
-      res.status(200).render("game", { user: user, character: character });
+      res
+        .status(200)
+        .render("game", {
+          user: user,
+          character: character,
+          saved_game: renderSaveMessage === true ? true : false,
+        });
     });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
