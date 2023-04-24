@@ -126,7 +126,7 @@ function loadPlayer(savedCharacter) {
 
   if (savedCharacter.inventory) {
     savedCharacter.inventory.forEach((item) => {
-      player.addItemToInventory(itemByID(item.id), item.Quantity);
+      player.addItemToInventory(itemByID(item.id), item.quantity);
     });
   }
 
@@ -150,9 +150,7 @@ saveDataSubmit.addEventListener("click", function (e) {
   saveDataMaximumHitPoints.value = player.MaximumHitPoints;
   saveDataGold.value = player.Gold;
   saveDataExperience.value = player.Experience;
-  /*saveDataInventory.value = JSON.stringify({
-    inventory: player.Inventory,
-  });*/
+  saveDataInventory.value = JSON.stringify(parseInventory());
   saveDataLevel.value = player.Level;
   /*saveDataQuests.value = JSON.stringify({
     quests: player.Quests,
@@ -162,8 +160,22 @@ saveDataSubmit.addEventListener("click", function (e) {
   saveDataCurrentPotion.value = player.CurrentPotion;
   saveDataCurrentScroll.value = player.CurrentScroll;
 
+  console.log(saveDataInventory.value);
+
   saveDataForm.submit();
 });
+
+function parseInventory() {
+  let inventory = [];
+  player.Inventory.forEach((item) => {
+    inventory.push({
+      id: item.Details.ID,
+      quantity: item.Quantity,
+    });
+  });
+
+  return inventory;
+}
 
 function loadUI() {
   updateLocationUI();
