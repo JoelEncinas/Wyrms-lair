@@ -189,6 +189,8 @@ function loadUI() {
   hideElement(potionOptions);
   hideElement(scrollBtn);
   hideElement(scrollOptions);
+  showInteractableUI(player.CurrentLocation);
+  updateAllItemListInUI();
 }
 
 // location btn events
@@ -527,9 +529,7 @@ function updateItemListInUI(itemType, itemOptions, itemBtn, currentItem) {
   }
 }
 
-function updateUIAfterFight() {
-  updatePlayerStats();
-  updateInventoryTable(player.Inventory);
+function updateAllItemListInUI() {
   updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
   updateItemListInUI(
     HealingPotion,
@@ -538,6 +538,12 @@ function updateUIAfterFight() {
     player.CurrentPotion
   );
   updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
+}
+
+function updateUIAfterFight() {
+  updatePlayerStats();
+  updateInventoryTable(player.Inventory);
+  updateAllItemListInUI();
 }
 
 // Movement
@@ -653,8 +659,19 @@ function moveTo(newLocation) {
       player.addQuest(player.CurrentLocation);
     }
   }
-  if (newLocation.MonsterLivingHere !== undefined) {
-    spawnMonster(newLocation);
+
+  showInteractableUI(newLocation);
+
+  updateInventoryTable(player.Inventory);
+  updateQuestsTable();
+  updateAllItemListInUI();
+  updatePlayerStats();
+}
+
+// show interactables
+function showInteractableUI(location) {
+  if (location.MonsterLivingHere !== undefined) {
+    spawnMonster(location);
 
     showElement(weaponBtn);
     showElement(weaponOptions);
@@ -673,23 +690,11 @@ function moveTo(newLocation) {
     hideElement(scrollOptions);
   }
 
-  if (newLocation.VendorWorkingHere !== undefined) {
+  if (location.VendorWorkingHere !== undefined) {
     showElement(vendorBtn);
   } else {
     hideElement(vendorBtn);
   }
-
-  updateInventoryTable(player.Inventory);
-  updateQuestsTable();
-  updateItemListInUI(Weapon, weaponOptions, weaponBtn, player.CurrentWeapon);
-  updateItemListInUI(
-    HealingPotion,
-    potionOptions,
-    potionBtn,
-    player.CurrentPotion
-  );
-  updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
-  updatePlayerStats();
 }
 
 // Spawn monster
