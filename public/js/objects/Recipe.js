@@ -1,10 +1,17 @@
-import { RecipeItem } from "./RecipeItem";
-
 export class Recipe {
-  constructor(name, recipeItemToTake, recipeItemToGive) {
+  constructor(id, name, recipeItemToTake, recipeItemToGive) {
+    this._ID = id;
     this._Name = name;
     this._RecipeItemToTake = recipeItemToTake;
     this._RecipeItemToGive = recipeItemToGive;
+  }
+
+  get ID() {
+    return this._ID;
+  }
+
+  set ID(value) {
+    this._ID = value;
   }
 
   get Name() {

@@ -99,7 +99,12 @@ const vendorPlayerInventory = document.getElementById(
 const craftBtn = document.getElementById("craft-btn");
 const craftModalTitle = document.getElementById("craft-modal-title");
 const craftTitle = document.getElementById("craft-title");
+const craftRecipeTitle = document.getElementById("craft-recipe-title");
 const craftLocation = document.getElementById("craft-modal-location");
+const craftTakeName = document.getElementById("craft-item-take-name");
+const craftTakeQuantity = document.getElementById("craft-item-take-quantity");
+const craftGiveName = document.getElementById("craft-item-give-name");
+const craftGiveQuantity = document.getElementById("craft-item-give-quantity");
 
 // TODO
 // LOAD DATA
@@ -193,13 +198,6 @@ function loadUI() {
   updateMovementButtons(player.CurrentLocation);
   updateQuestsTable();
   updateUIAfterFight();
-  hideElement(vendorBtn);
-  hideElement(weaponBtn);
-  hideElement(weaponOptions);
-  hideElement(potionBtn);
-  hideElement(potionOptions);
-  hideElement(scrollBtn);
-  hideElement(scrollOptions);
   showInteractableUI(player.CurrentLocation);
   updateAllItemListInUI();
 }
@@ -239,7 +237,15 @@ craftBtn.addEventListener("click", function (e) {
 
   craftModalTitle.innerText = "Craft";
   craftTitle.innerText = craft.Name;
+  craftRecipeTitle.innerText = craft.Recipe.Name;
   craftLocation.innerText = player.CurrentLocation.Name;
+
+  console.log(craft);
+
+  craftTakeName.innerText = craft.Recipe.RecipeItemToTake.Details.Name;
+  craftTakeQuantity.innerText = craft.Recipe.RecipeItemToTake.Quantity;
+  craftGiveName.innerText = craft.Recipe.RecipeItemToGive.Details.Name;
+  craftGiveQuantity.innerText = craft.Recipe.RecipeItemToGive.Quantity;
 });
 
 function updateVendorGold() {
@@ -742,6 +748,12 @@ function showInteractableUI(location) {
     showElement(vendorBtn);
   } else {
     hideElement(vendorBtn);
+  }
+
+  if (location.CraftHere !== undefined) {
+    showElement(craftBtn);
+  } else {
+    hideElement(craftBtn);
   }
 }
 

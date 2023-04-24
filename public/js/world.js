@@ -10,12 +10,16 @@ import { Weapon } from "./objects/Weapon.js";
 import { Scroll } from "./objects/Scroll.js";
 import { Region } from "./objects/Region.js";
 import { Craft } from "./objects/Craft.js";
+import { InventoryItem } from "./objects/InventoryItem.js";
+import { Recipe } from "./objects/Recipe.js";
+import { RecipeItem } from "./objects/RecipeItem.js";
 
 export const items = [];
 export const monsters = [];
 export const quests = [];
 export const locations = [];
 export const regions = [];
+export const recipes = [];
 
 export const ITEM_IDS = {
   RUSTY_SWORD: 1,
@@ -68,8 +72,14 @@ export const SPELL_TYPES = {
   HEALING: 2,
 };
 
+export const RECIPE_IDS = {
+  CRAFT_SCROLL_FIREBALL_I: 1,
+  CRAFT_SCROLL_RENEW_I: 2,
+};
+
 function populateWorld() {
   populateItems();
+  populateRecipes();
   populateMonsters();
   populateQuests();
   populateLocations();
@@ -146,6 +156,27 @@ function populateItems() {
       "Renew I"
     )
   );
+}
+
+function populateRecipes() {
+  const fireballIRecipeComponent = new RecipeItem(
+    itemByID(ITEM_IDS.RAT_TAIL),
+    3
+  );
+
+  const fireballIRecipeResult = new RecipeItem(
+    itemByID(ITEM_IDS.SCROLL_FIREBALL_I),
+    1
+  );
+
+  const fireballIRecipe = new Recipe(
+    RECIPE_IDS.CRAFT_SCROLL_FIREBALL_I,
+    "Craft Scroll: Fireball I",
+    fireballIRecipeComponent,
+    fireballIRecipeResult
+  );
+
+  recipes.push(fireballIRecipe);
 }
 
 function populateMonsters() {
@@ -289,7 +320,10 @@ function populateLocations() {
     itemByID(ITEM_IDS.ADVENTURER_PASS)
   );
 
-  const sabanaTheMage = new Craft("Sabana the Mage");
+  const sabanaTheMage = new Craft(
+    "Sabana the Mage",
+    recipeByID(RECIPE_IDS.CRAFT_SCROLL_FIREBALL_I)
+  );
   bridge.CraftHere = sabanaTheMage;
 
   const spiderField = new Location(
@@ -347,6 +381,10 @@ function populateLocations() {
 
 export function itemByID(id) {
   return items.find((item) => item.ID === id) || null;
+}
+
+export function recipeByID(id) {
+  return recipes.find((recipe) => recipe.ID === id) || null;
 }
 
 export function monsterByID(id) {

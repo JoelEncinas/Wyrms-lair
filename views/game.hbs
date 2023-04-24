@@ -195,7 +195,7 @@
               <button
                 id="vendor-btn"
                 type="button"
-                class="btn btn-outline-primary"
+                class="btn btn-outline-primary d-none"
                 data-bs-toggle="modal"
                 data-bs-target="#vendor-modal"
               >
@@ -255,7 +255,7 @@
               <button
                 id="craft-btn"
                 type="button"
-                class="btn btn-outline-primary"
+                class="btn btn-outline-primary d-none"
                 data-bs-toggle="modal"
                 data-bs-target="#craft-modal"
               >
@@ -281,7 +281,19 @@
                       ></button>
                     </div>
                     <div class="modal-body">
-                      <p>Craft</p>
+                      <h2 class="h5 mb-3" id="craft-title"></h2>
+                      <h3 class="h5 mb-3" id="craft-recipe-title"></h3>
+                      <div class="d-flex justify-content-around">
+                        <div>
+                          <p id="craft-item-take-name"></p>
+                          <p id="craft-item-take-quantity"></p>
+                        </div>
+                        <span>&gt;</span>
+                        <div>
+                          <p id="craft-item-give-name"></p>
+                          <p id="craft-item-give-quantity"></p>
+                        </div>
+                      </div>
                     </div>
                     <div class="modal-footer justify-content-between">
                       <p></p>
@@ -293,29 +305,29 @@
             </div>
 
             <div class="form-group">
-              <select id="weapon-options" class="form-select">
+              <select id="weapon-options" class="form-select d-none">
               </select>
               <button
                 id="weapon-btn"
-                class="btn btn-outline-danger"
+                class="btn btn-outline-danger d-none"
               >Attack</button>
             </div>
 
             <div class="form-group">
-              <select id="potion-options" class="form-select">
+              <select id="potion-options" class="form-select d-none">
               </select>
               <button
                 id="potion-btn"
-                class="btn btn-outline-success"
+                class="btn btn-outline-success d-none"
               >Drink</button>
             </div>
 
             <div class="form-group">
-              <select id="scroll-options" class="form-select">
+              <select id="scroll-options" class="form-select d-none">
               </select>
               <button
                 id="scroll-btn"
-                class="btn btn-outline-warning"
+                class="btn btn-outline-warning d-none"
               >Cast</button>
             </div>
           </div>
