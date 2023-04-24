@@ -313,6 +313,8 @@ function populateLocations() {
     "There is a large, tough-looking guard here."
   );
 
+  guardPost.LevelRequired = 10;
+
   const bridge = new Location(
     LOCATION_IDS.BRIDGE,
     "Bridge",

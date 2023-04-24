@@ -9,7 +9,7 @@ export class Location {
     locationToNorth,
     locationToEast,
     locationToSouth,
-    locationToWest, 
+    locationToWest,
     region
   ) {
     this._ID = id;
@@ -127,5 +127,13 @@ export class Location {
 
   set Region(value) {
     this._Region = value;
+  }
+
+  get LevelRequired() {
+    return this._LevelRequired;
+  }
+
+  set LevelRequired(value) {
+    this._LevelRequired = value;
   }
 }

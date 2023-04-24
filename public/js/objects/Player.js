@@ -274,4 +274,16 @@ export class Player extends LivingCreature {
   intellectModifier() {
     return parseInt(this._Level / 3);
   }
+
+  hasRequiredLevelToEnter(location) {
+    if (location.LevelRequired === undefined) {
+      return true;
+    }
+
+    if (this._Level >= location.LevelRequired) {
+      return true;
+    }
+
+    return false;
+  }
 }

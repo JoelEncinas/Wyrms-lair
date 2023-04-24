@@ -668,6 +668,15 @@ function moveTo(newLocation) {
     return;
   }
 
+  if (!player.hasRequiredLevelToEnter(newLocation)) {
+    addLine(
+      logDisplay,
+      "<span class='text-muted'>I'm not strong enough to go to that location.</span>"
+    );
+
+    return;
+  }
+
   player.CurrentLocation = newLocation;
 
   updateLocationUI();
