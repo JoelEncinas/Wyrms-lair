@@ -1,6 +1,13 @@
 import { LivingCreature } from "./LivingCreature.js";
 import { InventoryItem } from "./InventoryItem.js";
-import { itemByID, locationByID, LOCATION_IDS, ITEM_IDS } from "../world.js";
+import {
+  itemByID,
+  locationByID,
+  LOCATION_IDS,
+  ITEM_IDS,
+  questByID,
+} from "../world.js";
+import { PlayerQuest } from "./PlayerQuest.js";
 
 export class Player extends LivingCreature {
   constructor(
@@ -233,6 +240,14 @@ export class Player extends LivingCreature {
         return;
       }
     }
+  }
+
+  addQuest(location) {
+    this._Quests.push(new PlayerQuest(location.QuestAvailableHere));
+  }
+
+  addQuestById(id, isCompleted) {
+    this._Quests.push(new PlayerQuest(questByID(id), isCompleted));
   }
 
   experiencePointsForDefeatingAMonster() {

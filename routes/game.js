@@ -42,6 +42,30 @@ router.get("/", (req, res) => {
 });
 
 // TODO
+router.get("/save", async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).redirect("/auth/login");
+    }
+
+    jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
+      if (err) {
+        return res.status(401).redirect("/auth/login");
+      }
+
+      const character = await Character.findOne({
+        user: decoded.userId,
+      });
+
+      res.json(character);
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// TODO
 router.post("/save", async (req, res) => {
   try {
     const {
@@ -77,9 +101,9 @@ router.post("/save", async (req, res) => {
           maximumHitPoints: maximumHitPoints,
           gold: gold,
           experience: experience,
-          //inventory: JSON.parse(inventory),
+          inventory: JSON.parse(inventory),
           level: level,
-          //quests: JSON.parse(quests),
+          quests: JSON.parse(quests),
           currentLocation: currentLocation,
           currentWeapon: currentWeapon,
           currentPotion: currentPotion,

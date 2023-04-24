@@ -40,6 +40,12 @@ router.post("/register", async (req, res) => {
         },
       ],
       level: 1,
+      quests: [
+        {
+          id: 1,
+          isCompleted: false,
+        },
+      ],
       currentLocation: 1,
       currentWeapon: 1,
       currentPotion: 7,

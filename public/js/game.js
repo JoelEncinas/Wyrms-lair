@@ -97,25 +97,49 @@ const vendorPlayerInventory = document.getElementById(
 
 // TODO
 // LOAD DATA
+let player;
 let currentMonster;
-let player = new Player(
-  parseInt(saveDataCurrentHitPoints.value),
-  parseInt(saveDataMaximumHitPoints.value),
-  parseInt(saveDataGold.value),
-  parseInt(saveDataExperience.value),
-  parseInt(saveDataLevel.value),
-  parseInt(saveDataCurrentLocation.value),
-  parseInt(saveDataCurrentWeapon.value),
-  parseInt(saveDataCurrentPotion.value),
-  parseInt(saveDataCurrentScroll.value)
-);
 
-const data = saveDataInventory.value;
-console.log(JSON.parse(`[${data}]`));
+function loadData() {
+  fetch("/game/save")
+    .then((response) => response.json())
+    .then((data) => {
+      loadPlayer(data);
+    })
+    .then(() => loadUI())
+    .catch((error) => console.error(error));
+}
 
-// player.addItemToInventory(itemByID(data[0].id), data[0].quantity);
+function loadPlayer(savedCharacter) {
+  console.log(savedCharacter);
+  player = new Player(
+    savedCharacter.currentHitPoints,
+    savedCharacter.maximumHitPoints,
+    savedCharacter.gold,
+    savedCharacter.experience,
+    savedCharacter.level,
+    savedCharacter.currentLocation,
+    savedCharacter.currentWeapon,
+    savedCharacter.currentPotion,
+    savedCharacter.currentScroll
+  );
 
-function loadInventory() {}
+  if (savedCharacter.inventory) {
+    savedCharacter.inventory.forEach((item) => {
+      player.addItemToInventory(itemByID(item.id), item.Quantity);
+    });
+  }
+
+  if (savedCharacter.quests) {
+    savedCharacter.quests.forEach((quest) => {
+      player.addQuestById(quest.id, quest.isCompleted);
+    });
+  }
+
+  console.log(player);
+}
+
+loadData();
 
 // SAVE DATA
 // TODO
@@ -126,9 +150,9 @@ saveDataSubmit.addEventListener("click", function (e) {
   saveDataMaximumHitPoints.value = player.MaximumHitPoints;
   saveDataGold.value = player.Gold;
   saveDataExperience.value = player.Experience;
-  saveDataInventory.value = JSON.stringify({
+  /*saveDataInventory.value = JSON.stringify({
     inventory: player.Inventory,
-  });
+  });*/
   saveDataLevel.value = player.Level;
   /*saveDataQuests.value = JSON.stringify({
     quests: player.Quests,
@@ -141,17 +165,19 @@ saveDataSubmit.addEventListener("click", function (e) {
   saveDataForm.submit();
 });
 
-updateLocationUI();
-updateMovementButtons(player.CurrentLocation);
-updateQuestsTable();
-updateUIAfterFight();
-hideElement(vendorBtn);
-hideElement(weaponBtn);
-hideElement(weaponOptions);
-hideElement(potionBtn);
-hideElement(potionOptions);
-hideElement(scrollBtn);
-hideElement(scrollOptions);
+function loadUI() {
+  updateLocationUI();
+  updateMovementButtons(player.CurrentLocation);
+  updateQuestsTable();
+  updateUIAfterFight();
+  hideElement(vendorBtn);
+  hideElement(weaponBtn);
+  hideElement(weaponOptions);
+  hideElement(potionBtn);
+  hideElement(potionOptions);
+  hideElement(scrollBtn);
+  hideElement(scrollOptions);
+}
 
 // location btn events
 northBtn.addEventListener("click", function (e) {
@@ -616,7 +642,7 @@ function moveTo(newLocation) {
         }
       }
 
-      player.Quests.push(new PlayerQuest(newLocation.QuestAvailableHere));
+      player.addQuest(player.CurrentLocation);
     }
   }
   if (newLocation.MonsterLivingHere !== undefined) {

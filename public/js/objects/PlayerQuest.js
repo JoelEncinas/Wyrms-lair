@@ -1,7 +1,7 @@
 export class PlayerQuest {
-  constructor(details) {
+  constructor(details, isCompleted = false) {
     this._Details = details;
-    this._IsCompleted = false;
+    this._IsCompleted = isCompleted;
   }
 
   get Details() {

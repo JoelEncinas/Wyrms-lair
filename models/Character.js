@@ -23,17 +23,14 @@ const characterSchema = new mongoose.Schema({
     required: true,
   },
   inventory: {
-    type: [{
-      id: Number,
-      quantity: Number
-    }],
+    type: mongoose.Schema.Types.Mixed,
   },
   level: {
     type: Number,
     required: true,
   },
   quests: {
-    type: [String],
+    type: mongoose.Schema.Types.Mixed,
   },
   currentLocation: {
     type: Number,
