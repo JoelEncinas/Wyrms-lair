@@ -16,6 +16,10 @@
       <form action="/auth/logout" method="post">
         <button type="submit">Logout</button>
       </form>
+      <form action="/auth/delete-account" method="post">
+        <button type="submit">Delete Account</button>
+      </form>
+
       <!-- TODO -->
       <form id="save-data-form" action="/game/save" method="post">
         <input id="save-data-currentHitPoints" type="hidden" name="currentHitPoints" value="{{ character.currentHitPoints}}" />

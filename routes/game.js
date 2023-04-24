@@ -4,24 +4,21 @@ const Character = require("../models/Character");
 
 const router = express.Router();
 
-// game route
 router.get("/", (req, res) => {
   try {
-    // Verify JWT token from cookie
     const token = req.cookies.token;
     if (!token) {
-      return res.status(401).redirect("/auth/login");
+      return notAuthorized();
     }
 
     jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
       if (err) {
-        return res.status(401).redirect("/auth/login");
+        return notAuthorized();
       }
 
       const saveGame = req.cookies.save_game;
       let renderSaveMessage = false;
       if (saveGame) {
-        // Clear cookie
         res.cookie("save_game", null, { maxAge: 0 });
         renderSaveMessage = true;
       }
@@ -45,12 +42,12 @@ router.get("/save", async (req, res) => {
   try {
     const token = req.cookies.token;
     if (!token) {
-      return res.status(401).redirect("/auth/login");
+      return notAuthorized();
     }
 
     jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
       if (err) {
-        return res.status(401).redirect("/auth/login");
+        return notAuthorized();
       }
 
       const character = await Character.findOne({
@@ -83,12 +80,12 @@ router.post("/save", async (req, res) => {
 
     const token = req.cookies.token;
     if (!token) {
-      return res.status(401).redirect("/auth/login");
+      return notAuthorized();
     }
 
     jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
       if (err) {
-        return res.status(401).redirect("/auth/login");
+        return notAuthorized();
       }
 
       await Character.findOneAndUpdate(
@@ -116,5 +113,9 @@ router.post("/save", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+function notAuthorized() {
+  return res.status(401).redirect("/auth/login");
+}
 
 module.exports = router;

@@ -87,4 +87,30 @@ router.post("/logout", (req, res) => {
   res.status(200).redirect("/auth/login");
 });
 
+router.post("/delete-account", (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).redirect("/auth/login");
+    }
+
+    jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
+      if (err) {
+        return res.status(401).redirect("/auth/login");
+      }
+
+      await User.findOneAndDelete({
+        _id: decoded.userId,
+      });
+
+      await Character.findOneAndDelete({ user: decoded.userId });
+
+      res.clearCookie("token");
+      res.status(200).redirect("/auth/login");
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
