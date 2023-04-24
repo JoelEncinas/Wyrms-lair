@@ -224,9 +224,8 @@ vendorBtn.addEventListener("click", function (e) {
   vendorPlayerGold.innerText = "Gold " + player.Gold;
   vendorLocation.innerText = player.CurrentLocation.Name;
 
-  updateTradeTable(true, vendorVendorInventory, vendor.Inventory);
-
-  updateTradeTable(false, vendorPlayerInventory, player.Inventory);
+  updateTradeTablePlayer();
+  updateTradeTableVendor();
 });
 
 function updateVendorGold() {
@@ -400,21 +399,56 @@ function updateLocationUI() {
   locationDescription.innerText = player.CurrentLocation.Description;
 }
 
-function updateTradeTable(isVendor, element, inventory) {
-  const table = element.querySelector("table");
+function updateTradeTableVendor() {
+  const table = vendorVendorInventory.querySelector("table");
   table.innerHTML = "";
-  const tradeType = isVendor ? "Buy" : "Sell";
 
   let headers;
 
-  if (isVendor && player.Gold <= 0) {
+  if (player.Gold <= 0) {
     headers = "<p>You have no money!</p>";
   } else {
     headers =
       '<th scope="col">Name</th><th scope="col">Quantity</th><th scope="col">Price</th>';
   }
 
-  if (!isVendor && player.Inventory.length === 1) {
+  const headerRow = document.createElement("tr");
+  headerRow.innerHTML = headers;
+  table.appendChild(headerRow);
+
+  for (const item of player.CurrentLocation.VendorWorkingHere.Inventory) {
+    if (player.Gold > 0) {
+      if (item.Details.Price !== -1) {
+        const itemRow = document.createElement("tr");
+        itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Details.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ItemID}">Buy 1</button></td>`;
+        table.appendChild(itemRow);
+
+        const button = itemRow.querySelector("button");
+
+        button.addEventListener("click", () => {
+          player.addItemToInventory(item.Details);
+          player.CurrentLocation.VendorWorkingHere.removeItemFromInventory(
+            item.Details
+          );
+          player.Gold -= item.Details.Price;
+          updateVendorGold();
+          updateTradeTablePlayer();
+          updateTradeTableVendor();
+          updateInventoryTable(player.Inventory);
+          updatePlayerStats();
+        });
+      }
+    }
+  }
+}
+
+function updateTradeTablePlayer() {
+  const table = vendorPlayerInventory.querySelector("table");
+  table.innerHTML = "";
+
+  let headers;
+
+  if (player.Inventory.length === 1) {
     headers = "<p>No items to sell...</p>";
   } else {
     headers =
@@ -425,50 +459,26 @@ function updateTradeTable(isVendor, element, inventory) {
   headerRow.innerHTML = headers;
   table.appendChild(headerRow);
 
-  for (const item of inventory) {
-    if (!isVendor || player.Gold > 0) {
-      if (item.Details.Price !== -1) {
-        const itemRow = document.createElement("tr");
-        itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Details.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ItemID}">${tradeType} 1</button></td>`;
-        table.appendChild(itemRow);
+  for (const item of player.Inventory) {
+    if (item.Details.Price !== -1) {
+      const itemRow = document.createElement("tr");
+      itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Details.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ItemID}">Sell 1</button></td>`;
+      table.appendChild(itemRow);
 
-        const button = itemRow.querySelector("button");
+      const button = itemRow.querySelector("button");
 
-        button.addEventListener("click", () => {
-          if (isVendor) {
-            player.addItemToInventory(item.Details);
-            player.CurrentLocation.VendorWorkingHere.removeItemFromInventory(
-              item.Details
-            );
-            player.Gold -= item.Details.Price;
-            updateVendorGold();
-
-            updateTradeTable(
-              true,
-              vendorVendorInventory,
-              player.CurrentLocation.VendorWorkingHere.Inventory
-            );
-            updateTradeTable(false, vendorPlayerInventory, player.Inventory);
-          } else {
-            player.removeItemFromInventory(item.Details);
-            player.CurrentLocation.VendorWorkingHere.addItemToInventory(
-              item.Details
-            );
-            player.Gold += item.Details.Price;
-            updateVendorGold();
-
-            updateTradeTable(false, vendorPlayerInventory, player.Inventory);
-            updateTradeTable(
-              true,
-              vendorVendorInventory,
-              player.CurrentLocation.VendorWorkingHere.Inventory
-            );
-          }
-
-          updateInventoryTable(player.Inventory);
-          updatePlayerStats();
-        });
-      }
+      button.addEventListener("click", () => {
+        player.removeItemFromInventory(item.Details);
+        player.CurrentLocation.VendorWorkingHere.addItemToInventory(
+          item.Details
+        );
+        player.Gold += item.Details.Price;
+        updateVendorGold();
+        updateTradeTableVendor();
+        updateTradeTablePlayer();
+        updateInventoryTable(player.Inventory);
+        updatePlayerStats();
+      });
     }
   }
 }
