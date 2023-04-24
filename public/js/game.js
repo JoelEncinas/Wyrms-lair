@@ -3,7 +3,6 @@ import { HealingPotion } from "./objects/HealingPotion.js";
 import { InventoryItem } from "./objects/InventoryItem.js";
 import { Monster } from "./objects/Monster.js";
 import { Player } from "./objects/Player.js";
-import { PlayerQuest } from "./objects/PlayerQuest.js";
 import { Weapon } from "./objects/Weapon.js";
 import { Scroll } from "./objects/Scroll.js";
 
@@ -12,11 +11,8 @@ import {
   itemByID,
   monsterByID,
   locationByID,
-  regionByID,
-  ITEM_IDS,
   LOCATION_IDS,
   SPELL_TYPES,
-  items,
 } from "./world.js";
 
 // Utils
