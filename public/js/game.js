@@ -87,6 +87,7 @@ const scrollOptions = document.getElementById("scroll-options");
 const vendorBtn = document.getElementById("vendor-btn");
 const vendorModalTitle = document.getElementById("vendor-modal-title");
 const vendorTitle = document.getElementById("vendor-title");
+const vendorPlayerGold = document.getElementById("vendor-player-gold");
 const vendorLocation = document.getElementById("vendor-modal-location");
 const vendorVendorInventory = document.getElementById(
   "vendor-vendor-inventory"
@@ -221,12 +222,17 @@ vendorBtn.addEventListener("click", function (e) {
 
   vendorModalTitle.innerText = "Trade";
   vendorTitle.innerText = vendor.Name;
+  vendorPlayerGold.innerText = "Gold " + player.Gold;
   vendorLocation.innerText = player.CurrentLocation.Name;
 
   updateTradeTable(true, vendorVendorInventory, vendor.Inventory);
 
   updateTradeTable(false, vendorPlayerInventory, player.Inventory);
 });
+
+function updateVendorGold() {
+  vendorPlayerGold.innerText = "Gold " + player.Gold;
+}
 
 weaponBtn.addEventListener("click", function (e) {
   player.CurrentWeapon = parseInt(
@@ -404,7 +410,6 @@ function updateTradeTable(isVendor, element, inventory) {
       '<th scope="col">Name</th><th scope="col">Quantity</th><th scope="col">Price</th>';
   }
 
-  console.log(player.Inventory);
   if (!isVendor && player.Inventory.length === 1) {
     headers = "<p>No items to sell...</p>";
   } else {
@@ -432,6 +437,7 @@ function updateTradeTable(isVendor, element, inventory) {
               item.Details
             );
             player.Gold -= item.Details.Price;
+            updateVendorGold();
 
             updateTradeTable(
               true,
@@ -445,6 +451,7 @@ function updateTradeTable(isVendor, element, inventory) {
               item.Details
             );
             player.Gold += item.Details.Price;
+            updateVendorGold();
 
             updateTradeTable(false, vendorPlayerInventory, player.Inventory);
             updateTradeTable(
@@ -678,6 +685,7 @@ function moveTo(newLocation) {
   updateQuestsTable();
   updateAllItemListInUI();
   updatePlayerStats();
+  updateVendorGold();
 }
 
 // show interactables

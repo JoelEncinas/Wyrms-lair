@@ -1,6 +1,5 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
 const Character = require("../models/Character");
 
 const router = express.Router();
@@ -58,7 +57,7 @@ router.get("/save", async (req, res) => {
         user: decoded.userId,
       });
 
-      res.json(character);
+      res.status(200).json(character);
     });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
@@ -81,8 +80,6 @@ router.post("/save", async (req, res) => {
       currentPotion,
       currentScroll,
     } = req.body;
-
-    console.log(inventory);
 
     const token = req.cookies.token;
     if (!token) {
