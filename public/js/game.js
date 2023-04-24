@@ -404,6 +404,14 @@ function updateTradeTable(isVendor, element, inventory) {
       '<th scope="col">Name</th><th scope="col">Quantity</th><th scope="col">Price</th>';
   }
 
+  console.log(player.Inventory);
+  if (!isVendor && player.Inventory.length === 1) {
+    headers = "<p>No items to sell...</p>";
+  } else {
+    headers =
+      '<th scope="col">Name</th><th scope="col">Quantity</th><th scope="col">Price</th>';
+  }
+
   const headerRow = document.createElement("tr");
   headerRow.innerHTML = headers;
   table.appendChild(headerRow);
