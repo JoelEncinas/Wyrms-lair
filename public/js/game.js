@@ -396,57 +396,59 @@ function updateTradeTable(isVendor, element, headers, inventory) {
   table.appendChild(headerRow);
 
   for (const item of inventory) {
-    if (item.Details.Price !== -1) {
-      const itemRow = document.createElement("tr");
-      itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Details.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ItemID}">${tradeType} 1</button></td>`;
-      table.appendChild(itemRow);
+    if (!isVendor || player.Gold > 0) {
+      if (item.Details.Price !== -1) {
+        const itemRow = document.createElement("tr");
+        itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Details.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ItemID}">${tradeType} 1</button></td>`;
+        table.appendChild(itemRow);
 
-      const button = itemRow.querySelector("button");
+        const button = itemRow.querySelector("button");
 
-      button.addEventListener("click", () => {
-        if (isVendor) {
-          player.addItemToInventory(item.Details);
-          player.CurrentLocation.VendorWorkingHere.removeItemFromInventory(
-            item.Details
-          );
-          player.Gold -= item.Details.Price;
+        button.addEventListener("click", () => {
+          if (isVendor) {
+            player.addItemToInventory(item.Details);
+            player.CurrentLocation.VendorWorkingHere.removeItemFromInventory(
+              item.Details
+            );
+            player.Gold -= item.Details.Price;
 
-          updateTradeTable(
-            true,
-            vendorVendorInventory,
-            headers,
-            player.CurrentLocation.VendorWorkingHere.Inventory
-          );
-          updateTradeTable(
-            false,
-            vendorPlayerInventory,
-            headers,
-            player.Inventory
-          );
-        } else {
-          player.removeItemFromInventory(item.Details);
-          player.CurrentLocation.VendorWorkingHere.addItemToInventory(
-            item.Details
-          );
-          player.Gold += item.Details.Price;
+            updateTradeTable(
+              true,
+              vendorVendorInventory,
+              headers,
+              player.CurrentLocation.VendorWorkingHere.Inventory
+            );
+            updateTradeTable(
+              false,
+              vendorPlayerInventory,
+              headers,
+              player.Inventory
+            );
+          } else {
+            player.removeItemFromInventory(item.Details);
+            player.CurrentLocation.VendorWorkingHere.addItemToInventory(
+              item.Details
+            );
+            player.Gold += item.Details.Price;
 
-          updateTradeTable(
-            false,
-            vendorPlayerInventory,
-            headers,
-            player.Inventory
-          );
-          updateTradeTable(
-            true,
-            vendorVendorInventory,
-            headers,
-            player.CurrentLocation.VendorWorkingHere.Inventory
-          );
-        }
+            updateTradeTable(
+              false,
+              vendorPlayerInventory,
+              headers,
+              player.Inventory
+            );
+            updateTradeTable(
+              true,
+              vendorVendorInventory,
+              headers,
+              player.CurrentLocation.VendorWorkingHere.Inventory
+            );
+          }
 
-        updateInventoryTable(player.Inventory);
-        updatePlayerStats();
-      });
+          updateInventoryTable(player.Inventory);
+          updatePlayerStats();
+        });
+      }
     }
   }
 }
