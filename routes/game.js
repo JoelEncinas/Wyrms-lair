@@ -103,7 +103,7 @@ router.post("/save", async (req, res) => {
           experience: experience,
           inventory: JSON.parse(inventory),
           level: level,
-          // quests: JSON.parse(quests),
+          quests: JSON.parse(quests),
           currentLocation: currentLocation,
           currentWeapon: currentWeapon,
           currentPotion: currentPotion,

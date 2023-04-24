@@ -23,6 +23,7 @@ router.post("/register", async (req, res) => {
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
+    // default values
     const newCharacter = new Character({
       user: newUser._id,
       currentHitPoints: 40,
@@ -34,18 +35,9 @@ router.post("/register", async (req, res) => {
           id: 1,
           quantity: 1,
         },
-        {
-          id: 2,
-          quantity: 2,
-        },
       ],
       level: 1,
-      quests: [
-        {
-          id: 1,
-          isCompleted: false,
-        },
-      ],
+      quests: [],
       currentLocation: 1,
       currentWeapon: 1,
       currentPotion: 7,

@@ -111,7 +111,6 @@ function loadData() {
 }
 
 function loadPlayer(savedCharacter) {
-  console.log(savedCharacter);
   player = new Player(
     savedCharacter.currentHitPoints,
     savedCharacter.maximumHitPoints,
@@ -135,8 +134,6 @@ function loadPlayer(savedCharacter) {
       player.addQuestById(quest.id, quest.isCompleted);
     });
   }
-
-  console.log(player);
 }
 
 loadData();
@@ -152,15 +149,11 @@ saveDataSubmit.addEventListener("click", function (e) {
   saveDataExperience.value = player.Experience;
   saveDataInventory.value = JSON.stringify(parseInventory());
   saveDataLevel.value = player.Level;
-  /*saveDataQuests.value = JSON.stringify({
-    quests: player.Quests,
-  });*/
+  saveDataQuests.value = JSON.stringify(parseQuests());
   saveDataCurrentLocation.value = player.CurrentLocation.ID;
   saveDataCurrentWeapon.value = player.CurrentWeapon;
   saveDataCurrentPotion.value = player.CurrentPotion;
   saveDataCurrentScroll.value = player.CurrentScroll;
-
-  console.log(saveDataInventory.value);
 
   saveDataForm.submit();
 });
@@ -175,6 +168,18 @@ function parseInventory() {
   });
 
   return inventory;
+}
+
+function parseQuests() {
+  let quests = [];
+  player.Quests.forEach((quest) => {
+    quests.push({
+      id: quest.Details.ID,
+      isCompleted: quest.IsCompleted,
+    });
+  });
+
+  return quests;
 }
 
 function loadUI() {
@@ -548,7 +553,6 @@ function updateUIAfterFight() {
 
 // Movement
 function moveTo(newLocation) {
-  console.log(player);
   if (!player.hasRequiredItemToEnter(newLocation)) {
     addLine(
       logDisplay,
