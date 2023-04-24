@@ -113,6 +113,14 @@ export class Location {
     this._VendorWorkingHere = value;
   }
 
+  get CraftHere() {
+    return this._CraftHere;
+  }
+
+  set CraftHere(value) {
+    this._CraftHere = value;
+  }
+
   get Region() {
     return this._Region;
   }

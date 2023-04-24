@@ -9,6 +9,7 @@ import { Vendor } from "./objects/Vendor.js";
 import { Weapon } from "./objects/Weapon.js";
 import { Scroll } from "./objects/Scroll.js";
 import { Region } from "./objects/Region.js";
+import { Craft } from "./objects/Craft.js";
 
 export const items = [];
 export const monsters = [];
@@ -287,6 +288,9 @@ function populateLocations() {
     "A stone bridge crosses a wide river.",
     itemByID(ITEM_IDS.ADVENTURER_PASS)
   );
+
+  const sabanaTheMage = new Craft("Sabana the Mage");
+  bridge.CraftHere = sabanaTheMage;
 
   const spiderField = new Location(
     LOCATION_IDS.SPIDER_FIELD,

@@ -95,6 +95,12 @@ const vendorPlayerInventory = document.getElementById(
   "vendor-player-inventory"
 );
 
+// craft modal
+const craftBtn = document.getElementById("craft-btn");
+const craftModalTitle = document.getElementById("craft-modal-title");
+const craftTitle = document.getElementById("craft-title");
+const craftLocation = document.getElementById("craft-modal-location");
+
 // TODO
 // LOAD DATA
 let player;
@@ -226,6 +232,14 @@ vendorBtn.addEventListener("click", function (e) {
 
   updateTradeTablePlayer();
   updateTradeTableVendor();
+});
+
+craftBtn.addEventListener("click", function (e) {
+  let craft = player.CurrentLocation.CraftHere;
+
+  craftModalTitle.innerText = "Craft";
+  craftTitle.innerText = craft.Name;
+  craftLocation.innerText = player.CurrentLocation.Name;
 });
 
 function updateVendorGold() {
