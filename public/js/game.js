@@ -216,12 +216,9 @@ vendorBtn.addEventListener("click", function (e) {
   vendorTitle.innerText = vendor.Name;
   vendorLocation.innerText = player.CurrentLocation.Name;
 
-  const headers =
-    '<th scope="col">Name</th><th scope="col">Quantity</th><th scope="col">Price</th>';
+  updateTradeTable(true, vendorVendorInventory, vendor.Inventory);
 
-  updateTradeTable(true, vendorVendorInventory, headers, vendor.Inventory);
-
-  updateTradeTable(false, vendorPlayerInventory, headers, player.Inventory);
+  updateTradeTable(false, vendorPlayerInventory, player.Inventory);
 });
 
 weaponBtn.addEventListener("click", function (e) {
@@ -386,10 +383,19 @@ function updateLocationUI() {
   locationDescription.innerText = player.CurrentLocation.Description;
 }
 
-function updateTradeTable(isVendor, element, headers, inventory) {
+function updateTradeTable(isVendor, element, inventory) {
   const table = element.querySelector("table");
   table.innerHTML = "";
   const tradeType = isVendor ? "Buy" : "Sell";
+
+  let headers;
+
+  if (isVendor && player.Gold <= 0) {
+    headers = "<p>You have no money!</p>";
+  } else {
+    headers =
+      '<th scope="col">Name</th><th scope="col">Quantity</th><th scope="col">Price</th>';
+  }
 
   const headerRow = document.createElement("tr");
   headerRow.innerHTML = headers;
@@ -415,15 +421,9 @@ function updateTradeTable(isVendor, element, headers, inventory) {
             updateTradeTable(
               true,
               vendorVendorInventory,
-              headers,
               player.CurrentLocation.VendorWorkingHere.Inventory
             );
-            updateTradeTable(
-              false,
-              vendorPlayerInventory,
-              headers,
-              player.Inventory
-            );
+            updateTradeTable(false, vendorPlayerInventory, player.Inventory);
           } else {
             player.removeItemFromInventory(item.Details);
             player.CurrentLocation.VendorWorkingHere.addItemToInventory(
@@ -431,16 +431,10 @@ function updateTradeTable(isVendor, element, headers, inventory) {
             );
             player.Gold += item.Details.Price;
 
-            updateTradeTable(
-              false,
-              vendorPlayerInventory,
-              headers,
-              player.Inventory
-            );
+            updateTradeTable(false, vendorPlayerInventory, player.Inventory);
             updateTradeTable(
               true,
               vendorVendorInventory,
-              headers,
               player.CurrentLocation.VendorWorkingHere.Inventory
             );
           }
