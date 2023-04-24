@@ -26,7 +26,6 @@ import {
   showElement,
   hideElement,
 } from "./utils/displayUI.js";
-import { randomNumberGenerator } from "./utils/randomNumberGenerator.js";
 
 // UI
 // data
@@ -247,16 +246,21 @@ weaponBtn.addEventListener("click", function (e) {
     player.strengthModifier()
   );
 
-  currentMonster.CurrentHitPoints -= damageToMonster;
+  currentMonster.CurrentHitPoints -= damageToMonster.damage;
 
-  addLine(
-    logDisplay,
-    "<span class='text-muted'>You hit the</span> " +
+  const damageText = damageToMonster.isCrit
+    ? "<span class='text-muted'>Critical! You hit the</span> " +
       currentMonster.Name +
       " <span class='text-muted'>for</span> " +
-      damageToMonster +
+      damageToMonster.damage +
       " <span class='text-muted'>points of damage.</span>"
-  );
+    : "<span class='text-muted'>You hit the</span> " +
+      currentMonster.Name +
+      " <span class='text-muted'>for</span> " +
+      damageToMonster.damage +
+      " <span class='text-muted'>points of damage.</span>";
+
+  addLine(logDisplay, damageText);
 
   if (currentMonster.CurrentHitPoints <= 0) {
     addLine(

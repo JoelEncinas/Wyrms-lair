@@ -25,9 +25,15 @@ export class Weapon extends Item {
   }
 
   getPhysicalDamage(strengthModifier) {
-    return (
+    let isCrit = Math.random() < 0.05 ? true : false;
+    let damage =
       randomNumberGenerator(this._MinimumDamage, this._MaximumDamage) +
-      strengthModifier
-    );
+      strengthModifier;
+
+    if (isCrit) {
+      damage *= 2;
+    }
+
+    return { damage: damage, isCrit: isCrit };
   }
 }
