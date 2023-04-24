@@ -232,6 +232,15 @@ export class Player extends LivingCreature {
     }
   }
 
+  getQuantityOfItem(itemToFind) {
+    let item = this._Inventory.find((ii) => ii.Details.ID === itemToFind.ID);
+
+    if (item) {
+      return item.Quantity;
+    }
+    return false;
+  }
+
   markQuestCompleted(quest) {
     for (let pq of this.Quests) {
       if (pq.Details.ID === quest.ID) {

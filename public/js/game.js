@@ -105,6 +105,12 @@ const craftTakeName = document.getElementById("craft-item-take-name");
 const craftTakeQuantity = document.getElementById("craft-item-take-quantity");
 const craftGiveName = document.getElementById("craft-item-give-name");
 const craftGiveQuantity = document.getElementById("craft-item-give-quantity");
+const craftConvertBtnContainer = document.getElementById(
+  "craft-convert-btn-container"
+);
+const craftNotEnoughComponents = document.getElementById(
+  "craft-not-enough-components"
+);
 
 // TODO
 // LOAD DATA
@@ -239,14 +245,63 @@ craftBtn.addEventListener("click", function (e) {
   craftTitle.innerText = craft.Name;
   craftRecipeTitle.innerText = craft.Recipe.Name;
   craftLocation.innerText = player.CurrentLocation.Name;
-
-  console.log(craft);
-
   craftTakeName.innerText = craft.Recipe.RecipeItemToTake.Details.Name;
-  craftTakeQuantity.innerText = craft.Recipe.RecipeItemToTake.Quantity;
   craftGiveName.innerText = craft.Recipe.RecipeItemToGive.Details.Name;
-  craftGiveQuantity.innerText = craft.Recipe.RecipeItemToGive.Quantity;
+
+  updateCraftUI();
+  updateInventoryTable(player.Inventory);
 });
+
+function updateCraftUI() {
+  craftConvertBtnContainer.innerHTML = "";
+  let craft = player.CurrentLocation.CraftHere;
+
+  updateCraftRecipeUI(craft);
+
+  if (
+    player.getQuantityOfItem(craft.Recipe.RecipeItemToTake.Details) >=
+    craft.Recipe.RecipeItemToTake.Quantity
+  ) {
+    hideElement(craftNotEnoughComponents);
+    craftConvertBtnContainer.innerHTML = `<button class="btn btn-outline-dark" type="button">Craft</button>`;
+    const button = craftConvertBtnContainer.querySelector("button");
+
+    button.addEventListener("click", () => {
+      // TODO remove items from inventory and add item
+      // TODO show inventory
+      player.removeItemFromInventory(
+        craft.Recipe.RecipeItemToTake.Details,
+        craft.Recipe.RecipeItemToTake.Quantity
+      );
+      player.addItemToInventory(
+        craft.Recipe.RecipeItemToGive.Details,
+        craft.Recipe.RecipeItemToGive.Quantity
+      );
+
+      updateCraftUI();
+      updateCraftRecipeUI(craft);
+      updateInventoryTable(player.Inventory);
+    });
+  } else {
+    showElement(craftNotEnoughComponents);
+  }
+}
+
+function updateCraftRecipeUI(craft) {
+  if (
+    player.getQuantityOfItem(craft.Recipe.RecipeItemToTake.Details) === false
+  ) {
+    craftTakeQuantity.innerText =
+      "0 / " + craft.Recipe.RecipeItemToTake.Quantity;
+  } else {
+    craftTakeQuantity.innerText =
+      player.getQuantityOfItem(craft.Recipe.RecipeItemToTake.Details) +
+      " / " +
+      craft.Recipe.RecipeItemToTake.Quantity;
+  }
+
+  craftGiveQuantity.innerText = craft.Recipe.RecipeItemToGive.Quantity;
+}
 
 function updateVendorGold() {
   vendorPlayerGold.innerText = "Gold " + player.Gold;
