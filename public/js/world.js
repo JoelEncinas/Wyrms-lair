@@ -51,6 +51,11 @@ export const ITEM_IDS = {
   SACRED_RUNE: 28,
   HEART_OF_THE_MOUNTAIN: 29,
   RUNE_SWORD: 30,
+  RUM: 31,
+  STRONG_IRON_LOCKBOX: 32,
+  BIG_CITRINE: 33,
+  SACRED_KEY: 34,
+  BUCANEER_BANDANA: 35,
 };
 
 const UNSELLABLE_ITEM_PRICE = -1;
@@ -68,6 +73,8 @@ export const MONSTER_IDS = {
   YETI: 10,
   ICE_ELEMENTAL: 11,
   RISEN_GUARDIAN: 12,
+  PIRATE: 13,
+  MERMAID: 14,
 };
 
 export const QUEST_IDS = {
@@ -104,12 +111,18 @@ export const LOCATION_IDS = {
   ABANDONED_TOWER: 24,
   DWARF_MINE_ENTRANCE: 25,
   DWARF_MINE: 26,
+  BLACK_SAND_BEACH: 27,
+  PORT_ROYALE: 28,
+  BUCANEERS_HIDEOUT: 29,
+  SHIPWRECK_POINT: 30,
+  MERMAIDS_LAGOON: 31,
 };
 
 export const REGION_IDS = {
   ANNORA_VALLEY: 1,
   THE_BLASTED_WASTELAND: 2,
   ELSOS: 3,
+  RALI: 4,
 };
 
 export const SPELL_TYPES = {
@@ -121,6 +134,7 @@ export const RECIPE_IDS = {
   CRAFT_SCROLL_FIREBALL_I: 1,
   CRAFT_SCROLL_RENEW_I: 2,
   CRAFT_RUNE_SWORD: 3,
+  OPEN_STRONG_IRON_LOCKBOX: 4,
 };
 
 function populateWorld() {
@@ -192,7 +206,7 @@ function populateItems() {
       ITEM_IDS.GREATER_HEALING_POTION,
       "Greater Healing Potion",
       "Greater Healing Potions",
-      25,
+      20,
       100
     )
   );
@@ -281,6 +295,34 @@ function populateItems() {
   items.push(
     new Weapon(ITEM_IDS.RUNE_SWORD, "Rune Sword", "Rune Swords", 40, 10, 12)
   );
+  items.push(new HealingPotion(ITEM_IDS.RUM, "Rum", "Rum", 2, 1));
+  items.push(
+    new Item(
+      ITEM_IDS.STRONG_IRON_LOCKBOX,
+      "Strong Iron Lockbox",
+      "Strong Iron Lockbox",
+      1
+    )
+  );
+  items.push(
+    new Item(ITEM_IDS.BIG_CITRINE, "Big Citrine", "Big Citrines", 299)
+  );
+  items.push(
+    new Item(
+      ITEM_IDS.SACRED_KEY,
+      "Sacred Key",
+      "Sacred Keys",
+      UNSELLABLE_ITEM_PRICE
+    )
+  );
+  items.push(
+    new Item(
+      ITEM_IDS.BUCANEER_BANDANA,
+      "Bucaneer Bandana",
+      "Bucaneer Bandanas",
+      1
+    )
+  );
 }
 
 function populateRecipes() {
@@ -301,8 +343,6 @@ function populateRecipes() {
     fireballIRecipeResult
   );
 
-  recipes.push(fireballIRecipe);
-
   const runeSwordRecipeComponent = new RecipeItem(
     itemByID(ITEM_IDS.SACRED_RUNE),
     5
@@ -320,7 +360,26 @@ function populateRecipes() {
     runeSwordRecipeResult
   );
 
+  const strongIronLockboxRecipeComponent = new RecipeItem(
+    itemByID(ITEM_IDS.STRONG_IRON_LOCKBOX),
+    1
+  );
+
+  const strongIronLockboxRecipeResult = new RecipeItem(
+    itemByID(ITEM_IDS.BIG_CITRINE),
+    1
+  );
+
+  const strongIronLockboxRecipe = new Recipe(
+    RECIPE_IDS.OPEN_STRONG_IRON_LOCKBOX,
+    "Lockpick: Strong Iron Lockbox",
+    strongIronLockboxRecipeComponent,
+    strongIronLockboxRecipeResult
+  );
+
+  recipes.push(fireballIRecipe);
   recipes.push(runeSwordRecipe);
+  recipes.push(strongIronLockboxRecipe);
 }
 
 function populateMonsters() {
@@ -521,6 +580,39 @@ function populateMonsters() {
     new LootItem(itemByID(ITEM_IDS.ROLL_OF_PAPYRUS), 45, false)
   );
 
+  const pirate = new Monster(
+    MONSTER_IDS.PIRATE,
+    "Risen Guardian",
+    25,
+    30,
+    8,
+    240,
+    240,
+    20,
+    false
+  );
+
+  pirate.LootTable.push(new LootItem(itemByID(ITEM_IDS.RUM), 90, true));
+  pirate.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.ROLL_OF_PAPYRUS), 10, false)
+  );
+
+  const mermaid = new Monster(
+    MONSTER_IDS.PIRATE,
+    "Risen Guardian",
+    20,
+    23,
+    0,
+    200,
+    200,
+    20,
+    true
+  );
+
+  mermaid.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.STRONG_IRON_LOCKBOX), 60, true)
+  );
+
   monsters.push(rat);
   monsters.push(snake);
   monsters.push(giantSpider);
@@ -533,6 +625,8 @@ function populateMonsters() {
   monsters.push(yeti);
   monsters.push(iceElemental);
   monsters.push(risenGuardian);
+  monsters.push(pirate);
+  monsters.push(mermaid);
 }
 
 function populateQuests() {
@@ -610,11 +704,28 @@ function populateQuests() {
     new QuestCompletionItem(itemByID(ITEM_IDS.ELEMENTAL_WATER), 3)
   );
 
+  theHeartOfTheMountain.addRewardItems(
+    itemByID(ITEM_IDS.HEART_OF_THE_MOUNTAIN)
+  );
+
+  const wantedPirates = new Quest(
+    QUEST_IDS.WANTED_PIRATES,
+    "WANTED: Pirates",
+    "A wealthy merchant named Captain Xavier, needs your help in dealing with a group of pirates who have been causing trouble for the merchants that come to Port Royale.",
+    100
+  );
+
+  wantedPirates.QuestCompletionItems.push(
+    new QuestCompletionItem(itemByID(ITEM_IDS.BUCANEER_BANDANA), 4)
+  );
+
+  wantedPirates.addRewardItems(itemByID(ITEM_IDS.SACRED_KEY));
+
   quests.push(clearAlchemistGarden);
   quests.push(clearFarmersField);
   quests.push(theHungryMage);
   quests.push(elsasCloack);
-  quests.push(theHeartOfTheMountain);
+  quests.push(wantedPirates);
 }
 
 function populateLocations() {
@@ -801,8 +912,7 @@ function populateLocations() {
   );
 
   const ostaTheErmit = new Vendor("Osta the Ermit");
-  ostaTheErmit.addItemToInventory(itemByID(ITEM_IDS.PIECE_OF_FUR), 5);
-  ostaTheErmit.addItemToInventory(itemByID(ITEM_IDS.RAT_TAIL), 3);
+  ostaTheErmit.addItemToInventory(itemByID(ITEM_IDS.CANDLE), 10);
   theCrumblingCliffs.VendorWorkingHere = ostaTheErmit;
 
   const abandonedMine = new Location(
@@ -864,62 +974,62 @@ function populateLocations() {
 
   const mountainPass = new Location(
     LOCATION_IDS.MOUNTAIN_PASS,
-    "Mountain Pass",
+    "Winding Peaks",
     "Treacherous path through the mountains that is often blocked by snowdrifts and avalanches."
   );
   mountainPass.LevelRequired = 15;
 
   const frozenForest = new Location(
     LOCATION_IDS.FROZEN_FOREST,
-    "Frozen Forest",
-    "Overall, the Frozen Forest is a stunning yet perilous location, where the beauty of nature is both captivating and deadly. The trees, once lush and green, are now encased in a thick layer of frost and ice, giving them an otherworldly appearance."
+    "Frostwood",
+    "Overall, Frostwood is a stunning yet perilous location, where the beauty of nature is both captivating and deadly. The trees, once lush and green, are now encased in a thick layer of frost and ice, giving them an otherworldly appearance."
   );
   frozenForest.QuestAvailableHere = questByID(QUEST_IDS.ELSAS_CLOACK);
 
   const frozenLake = new Location(
     LOCATION_IDS.FROZEN_LAKE,
-    "Frozen Lake",
+    "Crystal Lake",
     "The lake is vast, with a surface that stretches out in every direction, covered in a layer of pristine snow that twinkles like diamonds in the bright sunlight."
   );
   frozenLake.MonsterLivingHere = monsterByID(MONSTER_IDS.ICE_SPIRIT);
 
   const yetisDen = new Location(
     LOCATION_IDS.YETIS_DEN,
-    "Yeti's Den",
+    "Frost Giant's Keep",
     "The walls are lined with massive paw prints, and the air is thick with the musky scent of the beasts. The tunnels twist and turn in a labyrinthine pattern, making it easy to get lost in the darkness."
   );
   yetisDen.MonsterLivingHere = monsterByID(MONSTER_IDS.YETI);
 
   const iceCavern = new Location(
     LOCATION_IDS.ICE_CAVERN,
-    "Ice Cavern",
-    "As you enter the ice cavern, you are met with a dazzling sight. The walls and ceiling are made entirely of ice, and they glimmer and sparkle in the dim light, casting an ethereal glow over everything in the chamber."
+    "Glacier Grotto",
+    "As you enter the grotto, you are met with a dazzling sight. The walls and ceiling are made entirely of ice, and they glimmer and sparkle in the dim light, casting an ethereal glow over everything in the chamber."
   );
   iceCavern.QuestAvailableHere = questByID(QUEST_IDS.THE_HEART_OF_THE_MOUNTAIN);
 
   const iceTemple = new Location(
     LOCATION_IDS.ICE_TEMPLE,
-    "Winter's Temple",
+    "Frozen Sanctum",
     "As you step inside, you are immediately struck by the sheer size and grandeur of the temple. The interior is carved entirely out of ice, with massive columns that stretch up to the ceiling, towering over you like giants."
   );
   iceTemple.MonsterLivingHere = monsterByID(MONSTER_IDS.ICE_ELEMENTAL);
 
   const abandonedTower = new Location(
     LOCATION_IDS.ABANDONED_TOWER,
-    "Abandoned Tower",
-    "The abandoned tower looms over the surrounding landscape, a towering structure that seems to defy both time and nature. From a distance, it looks like a dark, ominous spike piercing the sky."
+    "Shattered Keep",
+    "This abandoned Keep looms over the surrounding landscape, a towering structure that seems to defy both time and nature. From a distance, it looks like a dark, ominous spike piercing the sky."
   );
   abandonedTower.MonsterLivingHere = monsterByID(MONSTER_IDS.RISEN_GUARDIAN);
 
   const dwarfMineEntrance = new Location(
     LOCATION_IDS.DWARF_MINE_ENTRANCE,
-    "Dwarf Mine Entrance",
-    "The dwarf mine is a sprawling underground labyrinth. As you enter the mine, you are greeted by the sound of pickaxes striking stone, and the soft glow of lanterns and torches that line the walls."
+    "Stonefall Entrance",
+    "The Ironheart Mine is a sprawling underground labyrinth. From the entrance, you are greeted by the sound of pickaxes striking stone, and the soft glow of lanterns and torches that line the walls."
   );
 
   const dwarfMine = new Location(
     LOCATION_IDS.DWARF_MINE,
-    "Dwarf Mine",
+    "Ironheart Mine",
     "The dwarves who work the mine are tough and resilient, and they welcome those who come to trade or do business, as long as they respect the rules and customs of the underground world.",
     itemByID(ITEM_IDS.HEART_OF_THE_MOUNTAIN)
   );
@@ -978,133 +1088,86 @@ function populateLocations() {
   dwarfMineEntrance.Region = elsos;
   dwarfMine.Region = elsos;
 
-  // ELSOS
-  const elsos = new Region(
-    REGION_IDS.ELSOS,
-    "Elsos Peaks",
-    "Towering peaks covered in sparkling white snow dominate the landscape. The quiet stillness of the mountains is only interrupted by the occasional sound of an avalanche, sending a cascade of snow and ice crashing down the slopes."
+  // RALI
+  const rali = new Region(
+    REGION_IDS.RALI,
+    "Rali",
+    "A picturesque bay with crystal-clear waters and a coral reef that is home to a large population of sharks."
   );
 
-  regions.push(elsos);
+  regions.push(rali);
 
-  const mountainPass = new Location(
-    LOCATION_IDS.MOUNTAIN_PASS,
-    "Mountain Pass",
-    "Treacherous path through the mountains that is often blocked by snowdrifts and avalanches."
-  );
-  mountainPass.LevelRequired = 15;
-
-  const frozenForest = new Location(
-    LOCATION_IDS.FROZEN_FOREST,
-    "Frozen Forest",
-    "Overall, the Frozen Forest is a stunning yet perilous location, where the beauty of nature is both captivating and deadly. The trees, once lush and green, are now encased in a thick layer of frost and ice, giving them an otherworldly appearance."
-  );
-  frozenForest.QuestAvailableHere = questByID(QUEST_IDS.ELSAS_CLOACK);
-
-  const frozenLake = new Location(
-    LOCATION_IDS.FROZEN_LAKE,
-    "Frozen Lake",
-    "The lake is vast, with a surface that stretches out in every direction, covered in a layer of pristine snow that twinkles like diamonds in the bright sunlight."
-  );
-  frozenLake.MonsterLivingHere = monsterByID(MONSTER_IDS.ICE_SPIRIT);
-
-  const yetisDen = new Location(
-    LOCATION_IDS.YETIS_DEN,
-    "Yeti's Den",
-    "The walls are lined with massive paw prints, and the air is thick with the musky scent of the beasts. The tunnels twist and turn in a labyrinthine pattern, making it easy to get lost in the darkness."
-  );
-  yetisDen.MonsterLivingHere = monsterByID(MONSTER_IDS.YETI);
-
-  const iceCavern = new Location(
-    LOCATION_IDS.ICE_CAVERN,
-    "Ice Cavern",
-    "As you enter the ice cavern, you are met with a dazzling sight. The walls and ceiling are made entirely of ice, and they glimmer and sparkle in the dim light, casting an ethereal glow over everything in the chamber."
-  );
-  iceCavern.QuestAvailableHere = questByID(QUEST_IDS.THE_HEART_OF_THE_MOUNTAIN);
-
-  const iceTemple = new Location(
-    LOCATION_IDS.ICE_TEMPLE,
-    "Winter's Temple",
-    "As you step inside, you are immediately struck by the sheer size and grandeur of the temple. The interior is carved entirely out of ice, with massive columns that stretch up to the ceiling, towering over you like giants."
-  );
-  iceTemple.MonsterLivingHere = monsterByID(MONSTER_IDS.ICE_ELEMENTAL);
-
-  const abandonedTower = new Location(
-    LOCATION_IDS.ABANDONED_TOWER,
-    "Abandoned Tower",
-    "The abandoned tower looms over the surrounding landscape, a towering structure that seems to defy both time and nature. From a distance, it looks like a dark, ominous spike piercing the sky."
-  );
-  abandonedTower.MonsterLivingHere = monsterByID(MONSTER_IDS.RISEN_GUARDIAN);
-
-  const dwarfMineEntrance = new Location(
-    LOCATION_IDS.DWARF_MINE_ENTRANCE,
-    "Dwarf Mine Entrance",
-    "The dwarf mine is a sprawling underground labyrinth. As you enter the mine, you are greeted by the sound of pickaxes striking stone, and the soft glow of lanterns and torches that line the walls."
+  const blackSandBeach = new Location(
+    LOCATION_IDS.BLACK_SAND_BEACH,
+    "Black Sand Beach",
+    "Secluded beach with dark, volcanic sand and treacherous currents that make it a dangerous place to swim."
   );
 
-  const dwarfMine = new Location(
-    LOCATION_IDS.DWARF_MINE,
-    "Dwarf Mine",
-    "The dwarves who work the mine are tough and resilient, and they welcome those who come to trade or do business, as long as they respect the rules and customs of the underground world.",
-    itemByID(ITEM_IDS.HEART_OF_THE_MOUNTAIN)
+  const portRoyale = new Location(
+    LOCATION_IDS.PORT_ROYALE,
+    "Port Royale",
+    "Bustling port town that serves as the hub of trade and commerce in the region. It is also notorious for being a haven for smugglers and pirates."
   );
 
-  const jonaTheSmith = new Craft(
-    "Jona the Smith",
-    recipeByID(RECIPE_IDS.CRAFT_RUNE_SWORD)
+  portRoyale.QuestAvailableHere = questByID(QUEST_IDS.WANTED_PIRATES);
+  const edwardTheLockWhisperer = new Craft(
+    "Edward the Lock Whisperer",
+    recipeByID(RECIPE_IDS.OPEN_STRONG_IRON_LOCKBOX)
   );
-  dwarfMine.CraftHere = jonaTheSmith;
+  portRoyale.CraftHere = edwardTheLockWhisperer;
 
-  theCrumblingCliffs.LocationToNorth = mountainPass;
+  const blackBarrelBlake = new Vendor("Black Barrel Blake");
+  blackBarrelBlake.addItemToInventory(itemByID(ITEM_IDS.RUM), 99);
+  portRoyale.VendorWorkingHere = blackBarrelBlake;
 
-  mountainPass.LocationToNorth = frozenForest;
-  mountainPass.LocationToSouth = theCrumblingCliffs;
+  const bucaneersHideout = new Location(
+    LOCATION_IDS.BUCANEERS_HIDEOUT,
+    "Bucaneer's Hideout",
+    "Hidden cove that is home to a notorious group of pirates who use it as a base for their raids and plundering."
+  );
 
-  frozenForest.LocationToSouth = mountainPass;
-  frozenForest.LocationToEast = iceCavern;
-  frozenForest.LocationToWest = frozenLake;
+  bucaneersHideout.MonsterLivingHere = monsterByID(MONSTER_IDS.ICE_SPIRIT);
 
-  frozenLake.LocationToEast = frozenForest;
-  frozenLake.LocationToNorth = yetisDen;
+  const shipwreckPoint = new Location(
+    LOCATION_IDS.SHIPWRECK_POINT,
+    "Shipwreck Point",
+    "Rocky promontory that juts out into the sea, where the treacherous currents and jagged rocks have caused many ships to wreck over the years."
+  );
 
-  yetisDen.LocationToSouth = frozenLake;
+  const mermaidsLagoon = new Location(
+    LOCATION_IDS.MERMAIDS_LAGOON,
+    "Mermaid's Lagoon",
+    "Tranquil lagoon hidden behind a series of rocky cliffs, rumored to be home to a colony of mermaids."
+  );
+  mermaidsLagoon.MonsterLivingHere = monsterByID(MONSTER_IDS.ICE_SPIRIT);
 
-  iceCavern.LocationToNorth = iceTemple;
-  iceCavern.LocationToEast = abandonedTower;
-  iceCavern.LocationToWest = frozenForest;
+  sunsetOasis.LocationToSouth = blackSandBeach;
 
-  iceTemple.LocationToSouth = iceCavern;
+  blackSandBeach.LocationToNorth = sunsetOasis;
+  blackSandBeach.LocationToSouth = portRoyale;
 
-  abandonedTower.LocationToSouth = dwarfMineEntrance;
-  abandonedTower.LocationToWest = iceCavern;
+  portRoyale.LocationToSouth = bucaneersHideout;
+  portRoyale.LocationToNorth = blackSandBeach;
+  portRoyale.LocationToWest = shipwreckPoint;
+  portRoyale.LocationToEast = mermaidsLagoon;
 
-  dwarfMineEntrance.LocationToNorth = abandonedTower;
-  dwarfMineEntrance.LocationToEast = dwarfMine;
+  bucaneersHideout.LocationToNorth = portRoyale;
 
-  dwarfMineEntrance.LocationToWest = dwarfMineEntrance;
+  mermaidsLagoon.LocationToWest = portRoyale;
 
-  // TODO
-  sunsetOasis.LocationToSouth = theAcidPits;
+  shipwreckPoint.LocationToEast = portRoyale;
 
-  locations.push(mountainPass);
-  locations.push(frozenForest);
-  locations.push(frozenLake);
-  locations.push(yetisDen);
-  locations.push(iceCavern);
-  locations.push(iceTemple);
-  locations.push(abandonedTower);
-  locations.push(dwarfMineEntrance);
-  locations.push(dwarfMine);
+  locations.push(blackSandBeach);
+  locations.push(portRoyale);
+  locations.push(bucaneersHideout);
+  locations.push(shipwreckPoint);
+  locations.push(mermaidsLagoon);
 
-  mountainPass.Region = elsos;
-  frozenForest.Region = elsos;
-  frozenLake.Region = elsos;
-  yetisDen.Region = elsos;
-  iceCavern.Region = elsos;
-  iceTemple.Region = elsos;
-  abandonedTower.Region = elsos;
-  dwarfMineEntrance.Region = elsos;
-  dwarfMine.Region = elsos;
+  blackSandBeach.Region = rali;
+  portRoyale.Region = rali;
+  bucaneersHideout.Region = rali;
+  shipwreckPoint.Region = rali;
+  mermaidsLagoon.Region = rali;
 }
 
 export function itemByID(id) {
