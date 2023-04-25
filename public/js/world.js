@@ -45,6 +45,12 @@ export const ITEM_IDS = {
   SILVER_SPADE: 22,
   BLUE_CRYSTAL: 23,
   CANDLE: 24,
+  ESSENCE_OF_UNDEATH: 25,
+  YETI_FUR: 26,
+  ELEMENTAL_WATER: 27,
+  SACRED_RUNE: 28,
+  HEART_OF_THE_MOUNTAIN: 29,
+  RUNE_SWORD: 30,
 };
 
 const UNSELLABLE_ITEM_PRICE = -1;
@@ -58,6 +64,10 @@ export const MONSTER_IDS = {
   FIRE_SCORPION: 6,
   OOZE: 7,
   GOBLIN: 8,
+  ICE_SPIRIT: 9,
+  YETI: 10,
+  ICE_ELEMENTAL: 11,
+  RISEN_GUARDIAN: 12,
 };
 
 export const QUEST_IDS = {
@@ -85,11 +95,21 @@ export const LOCATION_IDS = {
   THE_CRATER: 15,
   THE_CRUMBLING_CLIFFS: 16,
   ABANDONED_MINE: 17,
+  MOUNTAIN_PASS: 18,
+  FROZEN_FOREST: 19,
+  FROZEN_LAKE: 20,
+  YETIS_DEN: 21,
+  ICE_CAVERN: 22,
+  ICE_TEMPLE: 23,
+  ABANDONED_TOWER: 24,
+  DWARF_MINE_ENTRANCE: 25,
+  DWARF_MINE: 26,
 };
 
 export const REGION_IDS = {
   ANNORA_VALLEY: 1,
   THE_BLASTED_WASTELAND: 2,
+  ELSOS: 3,
 };
 
 export const SPELL_TYPES = {
@@ -100,6 +120,7 @@ export const SPELL_TYPES = {
 export const RECIPE_IDS = {
   CRAFT_SCROLL_FIREBALL_I: 1,
   CRAFT_SCROLL_RENEW_I: 2,
+  CRAFT_RUNE_SWORD: 3,
 };
 
 function populateWorld() {
@@ -199,7 +220,7 @@ function populateItems() {
       "Renew I"
     )
   );
-  items.push(new Item(ITEM_IDS.BRIGHT_DUST, "Bright Dust", "Bright Dust", 3));
+  items.push(new Item(ITEM_IDS.BRIGHT_DUST, "Bright Dust", "Bright Dusts", 3));
   items.push(new Item(ITEM_IDS.BONE, "Bone", "Bones", 2));
   items.push(
     new Item(ITEM_IDS.ROLL_OF_PAPYRUS, "Roll of Papyrus", "Rolls of Papyrus", 3)
@@ -208,25 +229,25 @@ function populateItems() {
     new Item(ITEM_IDS.SCORPION_TAIL, "Scorpion Tail", "Scorpion Tails", 1)
   );
   items.push(
-    new Item(ITEM_IDS.MYSTERY_MEAT, "Mystery Meat", "Mystery Meat", 2)
+    new Item(ITEM_IDS.MYSTERY_MEAT, "Mystery Meat", "Mystery Meats", 2)
   );
   items.push(
     new HealingPotion(
       ITEM_IDS.MYSTERY_STEW,
       "Mystery Stew",
-      "Mystery Stew",
+      "Mystery Stews",
       15,
       100
     )
   );
   items.push(
-    new Item(ITEM_IDS.GELATINOUS_GOO, "Gelatinous Goo", "Gelatinous Goo", 1)
+    new Item(ITEM_IDS.GELATINOUS_GOO, "Gelatinous Goo", "Gelatinous Goos", 1)
   );
   items.push(
     new Weapon(
       ITEM_IDS.SILVER_SPADE,
       "Silver Spade",
-      "Silver Spaded",
+      "Silver Spades",
       30,
       7,
       11
@@ -236,6 +257,30 @@ function populateItems() {
     new Item(ITEM_IDS.BLUE_CRYSTAL, "Blue Crystal", "Blue Crystals", 3)
   );
   items.push(new Item(ITEM_IDS.CANDLE, "Candle", "Candles", 1));
+  items.push(
+    new Item(
+      ITEM_IDS.ESSENCE_OF_UNDEATH,
+      "Essence of Undeath",
+      "Essences of Undeath",
+      2
+    )
+  );
+  items.push(new Item(ITEM_IDS.YETI_FUR, "Yeti Fur", "Yeti Furs", 2));
+  items.push(
+    new Item(ITEM_IDS.ELEMENTAL_WATER, "Elemental Water", "Elemental Waters", 3)
+  );
+  items.push(new Item(ITEM_IDS.SACRED_RUNE, "Sacred Rune", "Sacred Runes", 3));
+  items.push(
+    new Item(
+      ITEM_IDS.HEART_OF_THE_MOUNTAIN,
+      "Heart of the Mountain",
+      "Hearts of the Mountain",
+      UNSELLABLE_ITEM_PRICE
+    )
+  );
+  items.push(
+    new Weapon(ITEM_IDS.RUNE_SWORD, "Rune Sword", "Rune Swords", 40, 10, 12)
+  );
 }
 
 function populateRecipes() {
@@ -257,6 +302,25 @@ function populateRecipes() {
   );
 
   recipes.push(fireballIRecipe);
+
+  const runeSwordRecipeComponent = new RecipeItem(
+    itemByID(ITEM_IDS.SACRED_RUNE),
+    5
+  );
+
+  const runeSwordRecipeResult = new RecipeItem(
+    itemByID(ITEM_IDS.RUNE_SWORD),
+    1
+  );
+
+  const runeSwordRecipe = new Recipe(
+    RECIPE_IDS.CRAFT_RUNE_SWORD,
+    "Craft Weapon: Rune Sword",
+    runeSwordRecipeComponent,
+    runeSwordRecipeResult
+  );
+
+  recipes.push(runeSwordRecipe);
 }
 
 function populateMonsters() {
@@ -370,8 +434,8 @@ function populateMonsters() {
   const goblin = new Monster(
     MONSTER_IDS.GOBLIN,
     "Goblin",
-    20,
     13,
+    20,
     3,
     200,
     200,
@@ -384,6 +448,79 @@ function populateMonsters() {
   );
   goblin.LootTable.push(new LootItem(itemByID(ITEM_IDS.CANDLE), 25, false));
 
+  const yeti = new Monster(
+    MONSTER_IDS.YETI,
+    "Yeti",
+    15,
+    22,
+    0,
+    205,
+    205,
+    16,
+    false
+  );
+
+  yeti.LootTable.push(new LootItem(itemByID(ITEM_IDS.YETI_FUR), 80, true));
+
+  const iceSpirit = new Monster(
+    MONSTER_IDS.ICE_SPIRIT,
+    "Ice Spirit",
+    15,
+    23,
+    0,
+    215,
+    215,
+    17,
+    false
+  );
+
+  iceSpirit.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.ESSENCE_OF_UNDEATH), 85, true)
+  );
+
+  iceSpirit.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.SACRED_RUNE), 15, false)
+  );
+
+  const iceElemental = new Monster(
+    MONSTER_IDS.ICE_ELEMENTAL,
+    "Ice Elemental",
+    14,
+    21,
+    0,
+    215,
+    215,
+    17,
+    false
+  );
+
+  iceElemental.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.ELEMENTAL_WATER), 70, true)
+  );
+
+  iceElemental.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.SACRED_RUNE), 70, false)
+  );
+
+  const risenGuardian = new Monster(
+    MONSTER_IDS.RISEN_GUARDIAN,
+    "Risen Guardian",
+    15,
+    25,
+    5,
+    230,
+    230,
+    18,
+    false
+  );
+
+  risenGuardian.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.ESSENCE_OF_UNDEATH), 55, true)
+  );
+  risenGuardian.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.ROLL_OF_PAPYRUS), 45, false)
+  );
+
   monsters.push(rat);
   monsters.push(snake);
   monsters.push(giantSpider);
@@ -392,6 +529,10 @@ function populateMonsters() {
   monsters.push(fireScorpion);
   monsters.push(ooze);
   monsters.push(goblin);
+  monsters.push(iceSpirit);
+  monsters.push(yeti);
+  monsters.push(iceElemental);
+  monsters.push(risenGuardian);
 }
 
 function populateQuests() {
@@ -447,9 +588,33 @@ function populateQuests() {
 
   honestWork.addRewardItems(itemByID(ITEM_IDS.SILVER_SPADE));
 
+  const elsasCloack = new Quest(
+    QUEST_IDS.ELSAS_CLOACK,
+    "Elsa's Cloak",
+    "A skilled tailor named Elsa, needs your help in obtaining three yeti pelts to create a warm and durable cloak for a wealthy client. She tells you that the only place to find yetis is in a nearby cave.",
+    20
+  );
+
+  elsasCloack.QuestCompletionItems.push(
+    new QuestCompletionItem(itemByID(ITEM_IDS.YETI_FUR), 4)
+  );
+
+  const theHeartOfTheMountain = new Quest(
+    QUEST_IDS.THE_HEART_OF_THE_MOUNTAIN,
+    "The Heart of the Mountain",
+    "Zephyr needs your help obtaining elemental waters. He tells you that the waters are necessary to craft the Heart of the Mountain, an artifact that will allow you to access the Dwarf Mines.",
+    0
+  );
+
+  theHeartOfTheMountain.QuestCompletionItems.push(
+    new QuestCompletionItem(itemByID(ITEM_IDS.ELEMENTAL_WATER), 3)
+  );
+
   quests.push(clearAlchemistGarden);
   quests.push(clearFarmersField);
   quests.push(theHungryMage);
+  quests.push(elsasCloack);
+  quests.push(theHeartOfTheMountain);
 }
 
 function populateLocations() {
@@ -668,7 +833,6 @@ function populateLocations() {
   theCrater.LocationToSouth = theAcidPits;
   theCrater.LocationToWest = abandonedMine;
 
-  // theCrumblingCliffs.LocationToNorth = theCrater;
   theCrumblingCliffs.LocationToSouth = theCrater;
 
   locations.push(sandDunes);
@@ -710,36 +874,42 @@ function populateLocations() {
     "Frozen Forest",
     "Overall, the Frozen Forest is a stunning yet perilous location, where the beauty of nature is both captivating and deadly. The trees, once lush and green, are now encased in a thick layer of frost and ice, giving them an otherworldly appearance."
   );
+  frozenForest.QuestAvailableHere = questByID(QUEST_IDS.ELSAS_CLOACK);
 
   const frozenLake = new Location(
     LOCATION_IDS.FROZEN_LAKE,
     "Frozen Lake",
     "The lake is vast, with a surface that stretches out in every direction, covered in a layer of pristine snow that twinkles like diamonds in the bright sunlight."
   );
+  frozenLake.MonsterLivingHere = monsterByID(MONSTER_IDS.ICE_SPIRIT);
 
   const yetisDen = new Location(
     LOCATION_IDS.YETIS_DEN,
     "Yeti's Den",
     "The walls are lined with massive paw prints, and the air is thick with the musky scent of the beasts. The tunnels twist and turn in a labyrinthine pattern, making it easy to get lost in the darkness."
   );
+  yetisDen.MonsterLivingHere = monsterByID(MONSTER_IDS.YETI);
 
   const iceCavern = new Location(
     LOCATION_IDS.ICE_CAVERN,
     "Ice Cavern",
     "As you enter the ice cavern, you are met with a dazzling sight. The walls and ceiling are made entirely of ice, and they glimmer and sparkle in the dim light, casting an ethereal glow over everything in the chamber."
   );
+  iceCavern.QuestAvailableHere = questByID(QUEST_IDS.THE_HEART_OF_THE_MOUNTAIN);
 
   const iceTemple = new Location(
     LOCATION_IDS.ICE_TEMPLE,
     "Winter's Temple",
     "As you step inside, you are immediately struck by the sheer size and grandeur of the temple. The interior is carved entirely out of ice, with massive columns that stretch up to the ceiling, towering over you like giants."
   );
+  iceTemple.MonsterLivingHere = monsterByID(MONSTER_IDS.ICE_ELEMENTAL);
 
   const abandonedTower = new Location(
     LOCATION_IDS.ABANDONED_TOWER,
     "Abandoned Tower",
     "The abandoned tower looms over the surrounding landscape, a towering structure that seems to defy both time and nature. From a distance, it looks like a dark, ominous spike piercing the sky."
   );
+  abandonedTower.MonsterLivingHere = monsterByID(MONSTER_IDS.RISEN_GUARDIAN);
 
   const dwarfMineEntrance = new Location(
     LOCATION_IDS.DWARF_MINE_ENTRANCE,
@@ -750,32 +920,171 @@ function populateLocations() {
   const dwarfMine = new Location(
     LOCATION_IDS.DWARF_MINE,
     "Dwarf Mine",
-    "The dwarves who work the mine are tough and resilient, and they welcome those who come to trade or do business, as long as they respect the rules and customs of the underground world."
+    "The dwarves who work the mine are tough and resilient, and they welcome those who come to trade or do business, as long as they respect the rules and customs of the underground world.",
+    itemByID(ITEM_IDS.HEART_OF_THE_MOUNTAIN)
   );
 
-  spiderField._LocationToEast = burningWastes;
+  const jonaTheSmith = new Craft(
+    "Jona the Smith",
+    recipeByID(RECIPE_IDS.CRAFT_RUNE_SWORD)
+  );
+  dwarfMine.CraftHere = jonaTheSmith;
 
-  sandDunes.LocationToWest = spiderField;
+  theCrumblingCliffs.LocationToNorth = mountainPass;
 
-  sunsetOasis.LocationToNorth = theAcidPits;
-  sunsetOasis.LocationToEast = sandDunes;
-  sunsetOasis.LocationToWest = seaOfBones;
+  mountainPass.LocationToNorth = frozenForest;
+  mountainPass.LocationToSouth = theCrumblingCliffs;
 
-  seaOfBones.LocationToEast = sunsetOasis;
-  seaOfBones.LocationToWest = burningWastes;
+  frozenForest.LocationToSouth = mountainPass;
+  frozenForest.LocationToEast = iceCavern;
+  frozenForest.LocationToWest = frozenLake;
 
-  burningWastes.LocationToEast = seaOfBones;
-  // burningWastes.LocationToWest = burningWastes;
+  frozenLake.LocationToEast = frozenForest;
+  frozenLake.LocationToNorth = yetisDen;
 
-  theAcidPits.LocationToSouth = sunsetOasis;
-  theAcidPits.LocationToNorth = theCrater;
+  yetisDen.LocationToSouth = frozenLake;
 
-  theCrater.LocationToNorth = theCrumblingCliffs;
-  theCrater.LocationToSouth = theAcidPits;
-  theCrater.LocationToWest = abandonedMine;
+  iceCavern.LocationToNorth = iceTemple;
+  iceCavern.LocationToEast = abandonedTower;
+  iceCavern.LocationToWest = frozenForest;
 
-  // theCrumblingCliffs.LocationToNorth = theCrater;
-  theCrumblingCliffs.LocationToSouth = theCrater;
+  iceTemple.LocationToSouth = iceCavern;
+
+  abandonedTower.LocationToSouth = dwarfMineEntrance;
+  abandonedTower.LocationToWest = iceCavern;
+
+  dwarfMineEntrance.LocationToNorth = abandonedTower;
+  dwarfMineEntrance.LocationToEast = dwarfMine;
+
+  dwarfMineEntrance.LocationToWest = dwarfMineEntrance;
+
+  locations.push(mountainPass);
+  locations.push(frozenForest);
+  locations.push(frozenLake);
+  locations.push(yetisDen);
+  locations.push(iceCavern);
+  locations.push(iceTemple);
+  locations.push(abandonedTower);
+  locations.push(dwarfMineEntrance);
+  locations.push(dwarfMine);
+
+  mountainPass.Region = elsos;
+  frozenForest.Region = elsos;
+  frozenLake.Region = elsos;
+  yetisDen.Region = elsos;
+  iceCavern.Region = elsos;
+  iceTemple.Region = elsos;
+  abandonedTower.Region = elsos;
+  dwarfMineEntrance.Region = elsos;
+  dwarfMine.Region = elsos;
+
+  // ELSOS
+  const elsos = new Region(
+    REGION_IDS.ELSOS,
+    "Elsos Peaks",
+    "Towering peaks covered in sparkling white snow dominate the landscape. The quiet stillness of the mountains is only interrupted by the occasional sound of an avalanche, sending a cascade of snow and ice crashing down the slopes."
+  );
+
+  regions.push(elsos);
+
+  const mountainPass = new Location(
+    LOCATION_IDS.MOUNTAIN_PASS,
+    "Mountain Pass",
+    "Treacherous path through the mountains that is often blocked by snowdrifts and avalanches."
+  );
+  mountainPass.LevelRequired = 15;
+
+  const frozenForest = new Location(
+    LOCATION_IDS.FROZEN_FOREST,
+    "Frozen Forest",
+    "Overall, the Frozen Forest is a stunning yet perilous location, where the beauty of nature is both captivating and deadly. The trees, once lush and green, are now encased in a thick layer of frost and ice, giving them an otherworldly appearance."
+  );
+  frozenForest.QuestAvailableHere = questByID(QUEST_IDS.ELSAS_CLOACK);
+
+  const frozenLake = new Location(
+    LOCATION_IDS.FROZEN_LAKE,
+    "Frozen Lake",
+    "The lake is vast, with a surface that stretches out in every direction, covered in a layer of pristine snow that twinkles like diamonds in the bright sunlight."
+  );
+  frozenLake.MonsterLivingHere = monsterByID(MONSTER_IDS.ICE_SPIRIT);
+
+  const yetisDen = new Location(
+    LOCATION_IDS.YETIS_DEN,
+    "Yeti's Den",
+    "The walls are lined with massive paw prints, and the air is thick with the musky scent of the beasts. The tunnels twist and turn in a labyrinthine pattern, making it easy to get lost in the darkness."
+  );
+  yetisDen.MonsterLivingHere = monsterByID(MONSTER_IDS.YETI);
+
+  const iceCavern = new Location(
+    LOCATION_IDS.ICE_CAVERN,
+    "Ice Cavern",
+    "As you enter the ice cavern, you are met with a dazzling sight. The walls and ceiling are made entirely of ice, and they glimmer and sparkle in the dim light, casting an ethereal glow over everything in the chamber."
+  );
+  iceCavern.QuestAvailableHere = questByID(QUEST_IDS.THE_HEART_OF_THE_MOUNTAIN);
+
+  const iceTemple = new Location(
+    LOCATION_IDS.ICE_TEMPLE,
+    "Winter's Temple",
+    "As you step inside, you are immediately struck by the sheer size and grandeur of the temple. The interior is carved entirely out of ice, with massive columns that stretch up to the ceiling, towering over you like giants."
+  );
+  iceTemple.MonsterLivingHere = monsterByID(MONSTER_IDS.ICE_ELEMENTAL);
+
+  const abandonedTower = new Location(
+    LOCATION_IDS.ABANDONED_TOWER,
+    "Abandoned Tower",
+    "The abandoned tower looms over the surrounding landscape, a towering structure that seems to defy both time and nature. From a distance, it looks like a dark, ominous spike piercing the sky."
+  );
+  abandonedTower.MonsterLivingHere = monsterByID(MONSTER_IDS.RISEN_GUARDIAN);
+
+  const dwarfMineEntrance = new Location(
+    LOCATION_IDS.DWARF_MINE_ENTRANCE,
+    "Dwarf Mine Entrance",
+    "The dwarf mine is a sprawling underground labyrinth. As you enter the mine, you are greeted by the sound of pickaxes striking stone, and the soft glow of lanterns and torches that line the walls."
+  );
+
+  const dwarfMine = new Location(
+    LOCATION_IDS.DWARF_MINE,
+    "Dwarf Mine",
+    "The dwarves who work the mine are tough and resilient, and they welcome those who come to trade or do business, as long as they respect the rules and customs of the underground world.",
+    itemByID(ITEM_IDS.HEART_OF_THE_MOUNTAIN)
+  );
+
+  const jonaTheSmith = new Craft(
+    "Jona the Smith",
+    recipeByID(RECIPE_IDS.CRAFT_RUNE_SWORD)
+  );
+  dwarfMine.CraftHere = jonaTheSmith;
+
+  theCrumblingCliffs.LocationToNorth = mountainPass;
+
+  mountainPass.LocationToNorth = frozenForest;
+  mountainPass.LocationToSouth = theCrumblingCliffs;
+
+  frozenForest.LocationToSouth = mountainPass;
+  frozenForest.LocationToEast = iceCavern;
+  frozenForest.LocationToWest = frozenLake;
+
+  frozenLake.LocationToEast = frozenForest;
+  frozenLake.LocationToNorth = yetisDen;
+
+  yetisDen.LocationToSouth = frozenLake;
+
+  iceCavern.LocationToNorth = iceTemple;
+  iceCavern.LocationToEast = abandonedTower;
+  iceCavern.LocationToWest = frozenForest;
+
+  iceTemple.LocationToSouth = iceCavern;
+
+  abandonedTower.LocationToSouth = dwarfMineEntrance;
+  abandonedTower.LocationToWest = iceCavern;
+
+  dwarfMineEntrance.LocationToNorth = abandonedTower;
+  dwarfMineEntrance.LocationToEast = dwarfMine;
+
+  dwarfMineEntrance.LocationToWest = dwarfMineEntrance;
+
+  // TODO
+  sunsetOasis.LocationToSouth = theAcidPits;
 
   locations.push(mountainPass);
   locations.push(frozenForest);
