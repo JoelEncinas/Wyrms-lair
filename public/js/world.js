@@ -40,6 +40,11 @@ export const ITEM_IDS = {
   ROLL_OF_PAPYRUS: 17,
   SCORPION_TAIL: 18,
   MYSTERY_MEAT: 19,
+  MYSTERY_STEW: 20,
+  GELATINOUS_GOO: 21,
+  SILVER_SPADE: 22,
+  BLUE_CRYSTAL: 23,
+  CANDLE: 24,
 };
 
 const UNSELLABLE_ITEM_PRICE = -1;
@@ -51,11 +56,15 @@ export const MONSTER_IDS = {
   DUST_DEVIL: 4,
   SKELETON: 5,
   FIRE_SCORPION: 6,
+  OOZE: 7,
+  GOBLIN: 8,
 };
 
 export const QUEST_IDS = {
   CLEAR_ALCHEMIST_GARDEN: 1,
   CLEAR_FARMERS_FIELD: 2,
+  THE_HUNGRY_MAGE: 3,
+  HONEST_WORK: 4,
 };
 
 export const LOCATION_IDS = {
@@ -190,45 +199,44 @@ function populateItems() {
       "Renew I"
     )
   );
+  items.push(new Item(ITEM_IDS.BRIGHT_DUST, "Bright Dust", "Bright Dust", 3));
+  items.push(new Item(ITEM_IDS.BONE, "Bone", "Bones", 2));
   items.push(
-    new Item(
-      ITEM_IDS.BRIGHT_DUST,
-      "Bright Dust",
-      "Bright Dust",
-      3,
+    new Item(ITEM_IDS.ROLL_OF_PAPYRUS, "Roll of Papyrus", "Rolls of Papyrus", 3)
+  );
+  items.push(
+    new Item(ITEM_IDS.SCORPION_TAIL, "Scorpion Tail", "Scorpion Tails", 1)
+  );
+  items.push(
+    new Item(ITEM_IDS.MYSTERY_MEAT, "Mystery Meat", "Mystery Meat", 2)
+  );
+  items.push(
+    new HealingPotion(
+      ITEM_IDS.MYSTERY_STEW,
+      "Mystery Stew",
+      "Mystery Stew",
+      15,
+      100
     )
   );
   items.push(
-    new Item(
-      ITEM_IDS.BONE,
-      "Bone",
-      "Bones",
-      2,
+    new Item(ITEM_IDS.GELATINOUS_GOO, "Gelatinous Goo", "Gelatinous Goo", 1)
+  );
+  items.push(
+    new Weapon(
+      ITEM_IDS.SILVER_SPADE,
+      "Silver Spade",
+      "Silver Spaded",
+      30,
+      7,
+      11
     )
   );
   items.push(
-    new Item(
-      ITEM_IDS.ROLL_OF_PAPYRUS,
-      "Roll of Papyrus",
-      "Rolls of Papyrus",
-      3,
-    )
+    new Item(ITEM_IDS.BLUE_CRYSTAL, "Blue Crystal", "Blue Crystals", 3)
   );
   items.push(
-    new Item(
-      ITEM_IDS.SCORPION_TAIL,
-      "Scorpion Tail",
-      "Scorpion Tails",
-      1,
-    )
-  );
-  items.push(
-    new Item(
-      ITEM_IDS.MYSTERY_MEAT,
-      "Mystery Meat",
-      "Mystery Meat",
-      2,
-    )
+    new Item(ITEM_IDS.CANDLE, "Candle", "Candles", 1)
   );
 }
 
@@ -345,12 +353,47 @@ function populateMonsters() {
     new LootItem(itemByID(ITEM_IDS.MYSTERY_MEAT), 25, false)
   );
 
+  const ooze = new Monster(
+    MONSTER_IDS.OOZE,
+    "Ooze",
+    15,
+    18,
+    0,
+    160,
+    160,
+    14,
+    true
+  );
+
+  ooze.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.GELATINOUS_GOO), 70, true)
+  );
+
+  const goblin = new Monster(
+    MONSTER_IDS.GOBLIN,
+    "Goblin",
+    20,
+    13,
+    3,
+    200,
+    200,
+    15,
+    false
+  );
+
+  goblin.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.BLUE_CRYSTAL), 75, true)
+  );
+  goblin.LootTable.push(new LootItem(itemByID(ITEM_IDS.CANDLE), 25, false));
+
   monsters.push(rat);
   monsters.push(snake);
   monsters.push(giantSpider);
   monsters.push(dustDevil);
   monsters.push(skeleton);
   monsters.push(fireScorpion);
+  monsters.push(ooze);
+  monsters.push(goblin);
 }
 
 function populateQuests() {
@@ -370,7 +413,7 @@ function populateQuests() {
   const clearFarmersField = new Quest(
     QUEST_IDS.CLEAR_FARMERS_FIELD,
     "The Farmer's Plight",
-    "A farmer by the name of John has reported a severe infestation of venomous snakes in his fields, and he fears for the safety of his family and his livestock. You have to venture into John's fields and eliminate the snake population.",
+    "A farmer by the name of Arlic has reported a severe infestation of venomous snakes in his fields, and he fears for the safety of his family and his livestock. You have to venture into Arlic's fields and eliminate the snake population.",
     5
   );
 
@@ -380,8 +423,35 @@ function populateQuests() {
 
   clearFarmersField.addRewardItems(itemByID(ITEM_IDS.ADVENTURER_PASS));
 
+  const theHungryMage = new Quest(
+    QUEST_IDS.THE_HUNGRY_MAGE,
+    "The Hungry Mage",
+    "Sabana the mage hasn't eaten in days. To prepare her famous Mystery Stew she will need meat from the scorpions that live to the west. Hurry!",
+    6
+  );
+
+  theHungryMage.QuestCompletionItems.push(
+    new QuestCompletionItem(itemByID(ITEM_IDS.MYSTERY_MEAT), 3)
+  );
+
+  theHungryMage.addRewardItems(itemByID(ITEM_IDS.MYSTERY_STEW));
+
+  const honestWork = new Quest(
+    QUEST_IDS.HONEST_WORK,
+    "Honest Work",
+    "The Company is mining near the Abandoned Mine to the west. They can't get into the mine because of all the goblins. Take their crystals from them, and show them they don't have the run of the mine.",
+    25
+  );
+
+  honestWork.QuestCompletionItems.push(
+    new QuestCompletionItem(itemByID(ITEM_IDS.BLUE_CRYSTAL), 3)
+  );
+
+  honestWork.addRewardItems(itemByID(ITEM_IDS.SILVER_SPADE));
+
   quests.push(clearAlchemistGarden);
   quests.push(clearFarmersField);
+  quests.push(theHungryMage);
 }
 
 function populateLocations() {
@@ -518,12 +588,14 @@ function populateLocations() {
     "Sand Dunes",
     "Vast expanse of shifting sand dunes that stretch on for miles. The wind is fierce and unrelenting, and travelers can easily become lost in the endless sea of sand."
   );
+  sandDunes.MonsterLivingHere = monsterByID(MONSTER_IDS.DUST_DEVIL);
 
   const sunsetOasis = new Location(
     LOCATION_IDS.SUNSET_OASIS,
     "Sunset Oasis",
     "The oasis is a patch of lush greenery that sits amidst the endless sea of sand, surrounded by palm trees and sparkling pools of water. The sight of it is a welcome relief to travelers who have been wandering through the desert for days, struggling to survive in the blistering heat and relentless sandstorms."
   );
+  sunsetOasis.QuestAvailableHere = questByID(QUEST_IDS.THE_HUNGRY_MAGE);
 
   const sabanaTheMage = new Craft(
     "Sabana the Mage",
@@ -536,24 +608,28 @@ function populateLocations() {
     "Sea of Bones",
     "Bleak and barren landscape where the ground is littered with the bones of long-dead creatures. Looks haunted by restless spirits and dark magic."
   );
+  seaOfBones.MonsterLivingHere = monsterByID(MONSTER_IDS.SKELETON);
 
   const burningWastes = new Location(
     LOCATION_IDS.BURNING_WASTES,
     "Burning Wastes",
     "Place of searing heat, where the sun beats down relentlessly on the parched earth, and where the sand burns like fire beneath your feet."
   );
+  burningWastes.MonsterLivingHere = monsterByID(MONSTER_IDS.FIRE_SCORPION);
 
   const theAcidPits = new Location(
     LOCATION_IDS.THE_ACID_PITS,
     "The Acid Pits",
     "A series of deep pits filled with acidic sludge. The fumes from the pits are toxic and can cause severe burns and respiratory problems."
   );
+  theAcidPits.MonsterLivingHere = monsterByID(MONSTER_IDS.OOZE);
 
   const theCrater = new Location(
     LOCATION_IDS.THE_CRATER,
     "The Crater",
-    "A massive impact crater caused by a meteor strike. The area is scorched and blasted, with twisted metal and debris scattered throughout."
+    "Crater caused by a meteor strike. The area is scorched and blasted, with twisted metal and debris scattered throughout."
   );
+  theCrater.QuestAvailableHere = questByID(QUEST_IDS.HONEST_WORK);
 
   const theCrumblingCliffs = new Location(
     LOCATION_IDS.THE_CRUMBLING_CLIFFS,
@@ -571,6 +647,7 @@ function populateLocations() {
     "Abandoned Mine",
     "A long-abandoned mine filled with dark and twisting tunnels. The air is thick with dust and the smell of sulfur, and the area is infested with dangerous creatures."
   );
+  abandonedMine.MonsterLivingHere = monsterByID(MONSTER_IDS.GOBLIN);
 
   spiderField._LocationToEast = burningWastes;
 
