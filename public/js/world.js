@@ -235,9 +235,7 @@ function populateItems() {
   items.push(
     new Item(ITEM_IDS.BLUE_CRYSTAL, "Blue Crystal", "Blue Crystals", 3)
   );
-  items.push(
-    new Item(ITEM_IDS.CANDLE, "Candle", "Candles", 1)
-  );
+  items.push(new Item(ITEM_IDS.CANDLE, "Candle", "Candles", 1));
 }
 
 function populateRecipes() {
@@ -606,7 +604,7 @@ function populateLocations() {
   const seaOfBones = new Location(
     LOCATION_IDS.SEA_OF_BONES,
     "Sea of Bones",
-    "Bleak and barren landscape where the ground is littered with the bones of long-dead creatures. Looks haunted by restless spirits and dark magic."
+    "Bleak and barren landscape where the ground is littered with the bones of long-dead creatures. Seems haunted by restless spirits and dark magic."
   );
   seaOfBones.MonsterLivingHere = monsterByID(MONSTER_IDS.SKELETON);
 
@@ -690,6 +688,114 @@ function populateLocations() {
   theCrater.Region = theBlastedWasteland;
   theCrumblingCliffs.Region = theBlastedWasteland;
   abandonedMine.Region = theBlastedWasteland;
+
+  // ELSOS
+  const elsos = new Region(
+    REGION_IDS.ELSOS,
+    "Elsos Peaks",
+    "Towering peaks covered in sparkling white snow dominate the landscape. The quiet stillness of the mountains is only interrupted by the occasional sound of an avalanche, sending a cascade of snow and ice crashing down the slopes."
+  );
+
+  regions.push(elsos);
+
+  const mountainPass = new Location(
+    LOCATION_IDS.MOUNTAIN_PASS,
+    "Mountain Pass",
+    "Treacherous path through the mountains that is often blocked by snowdrifts and avalanches."
+  );
+  mountainPass.LevelRequired = 15;
+
+  const frozenForest = new Location(
+    LOCATION_IDS.FROZEN_FOREST,
+    "Frozen Forest",
+    "Overall, the Frozen Forest is a stunning yet perilous location, where the beauty of nature is both captivating and deadly. The trees, once lush and green, are now encased in a thick layer of frost and ice, giving them an otherworldly appearance."
+  );
+
+  const frozenLake = new Location(
+    LOCATION_IDS.FROZEN_LAKE,
+    "Frozen Lake",
+    "The lake is vast, with a surface that stretches out in every direction, covered in a layer of pristine snow that twinkles like diamonds in the bright sunlight."
+  );
+
+  const yetisDen = new Location(
+    LOCATION_IDS.YETIS_DEN,
+    "Yeti's Den",
+    "The walls are lined with massive paw prints, and the air is thick with the musky scent of the beasts. The tunnels twist and turn in a labyrinthine pattern, making it easy to get lost in the darkness."
+  );
+
+  const iceCavern = new Location(
+    LOCATION_IDS.ICE_CAVERN,
+    "Ice Cavern",
+    "As you enter the ice cavern, you are met with a dazzling sight. The walls and ceiling are made entirely of ice, and they glimmer and sparkle in the dim light, casting an ethereal glow over everything in the chamber."
+  );
+
+  const iceTemple = new Location(
+    LOCATION_IDS.ICE_TEMPLE,
+    "Winter's Temple",
+    "As you step inside, you are immediately struck by the sheer size and grandeur of the temple. The interior is carved entirely out of ice, with massive columns that stretch up to the ceiling, towering over you like giants."
+  );
+
+  const abandonedTower = new Location(
+    LOCATION_IDS.ABANDONED_TOWER,
+    "Abandoned Tower",
+    "The abandoned tower looms over the surrounding landscape, a towering structure that seems to defy both time and nature. From a distance, it looks like a dark, ominous spike piercing the sky."
+  );
+
+  const dwarfMineEntrance = new Location(
+    LOCATION_IDS.DWARF_MINE_ENTRANCE,
+    "Dwarf Mine Entrance",
+    "The dwarf mine is a sprawling underground labyrinth. As you enter the mine, you are greeted by the sound of pickaxes striking stone, and the soft glow of lanterns and torches that line the walls."
+  );
+
+  const dwarfMine = new Location(
+    LOCATION_IDS.DWARF_MINE,
+    "Dwarf Mine",
+    "The dwarves who work the mine are tough and resilient, and they welcome those who come to trade or do business, as long as they respect the rules and customs of the underground world."
+  );
+
+  spiderField._LocationToEast = burningWastes;
+
+  sandDunes.LocationToWest = spiderField;
+
+  sunsetOasis.LocationToNorth = theAcidPits;
+  sunsetOasis.LocationToEast = sandDunes;
+  sunsetOasis.LocationToWest = seaOfBones;
+
+  seaOfBones.LocationToEast = sunsetOasis;
+  seaOfBones.LocationToWest = burningWastes;
+
+  burningWastes.LocationToEast = seaOfBones;
+  // burningWastes.LocationToWest = burningWastes;
+
+  theAcidPits.LocationToSouth = sunsetOasis;
+  theAcidPits.LocationToNorth = theCrater;
+
+  theCrater.LocationToNorth = theCrumblingCliffs;
+  theCrater.LocationToSouth = theAcidPits;
+  theCrater.LocationToWest = abandonedMine;
+
+  // theCrumblingCliffs.LocationToNorth = theCrater;
+  theCrumblingCliffs.LocationToSouth = theCrater;
+
+  locations.push(mountainPass);
+  locations.push(frozenForest);
+  locations.push(frozenLake);
+  locations.push(yetisDen);
+  locations.push(iceCavern);
+  locations.push(iceTemple);
+  locations.push(abandonedTower);
+  locations.push(dwarfMineEntrance);
+  locations.push(dwarfMine);
+
+  mountainPass.Region = elsos;
+  frozenForest.Region = elsos;
+  frozenLake.Region = elsos;
+  yetisDen.Region = elsos;
+  iceCavern.Region = elsos;
+  iceTemple.Region = elsos;
+  abandonedTower.Region = elsos;
+  dwarfMineEntrance.Region = elsos;
+  dwarfMine.Region = elsos;
 }
 
 export function itemByID(id) {
