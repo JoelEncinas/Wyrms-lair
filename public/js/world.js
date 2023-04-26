@@ -1020,6 +1020,8 @@ function populateLocations() {
   theCrater.LocationToSouth = theAcidPits;
   theCrater.LocationToEast = abandonedMine;
 
+  abandonedMine.LocationToWest = theCrater;
+
   theCrumblingCliffs.LocationToSouth = theCrater;
 
   locations.push(sandDunes);

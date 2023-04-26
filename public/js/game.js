@@ -138,8 +138,6 @@ function loadPlayer(savedCharacter) {
     savedCharacter.race
   );
 
-  console.log(player);
-
   if (savedCharacter.inventory) {
     savedCharacter.inventory.forEach((item) => {
       player.addItemToInventory(itemByID(item.id), item.quantity);
@@ -426,12 +424,23 @@ scrollBtn.addEventListener("click", function (e) {
     );
 
     if (currentMonster.CurrentHitPoints <= 0) {
-      addLine(
-        logDisplay,
-        "<span class='text-muted'>You defeated the</span> " +
-          currentMonster.Name +
-          " <span class='text-muted'>.</span>"
-      );
+      if (currentMonster.ID === 16) {
+        addLine(
+          logDisplay,
+          "<span class='text-muted'>You defeated </span> " +
+            currentMonster.Name +
+            " <span class='text-muted'>. Congratulations! You completed the game!!!</span>"
+        );
+
+        player.HasSlayWyrm = true;
+      } else {
+        addLine(
+          logDisplay,
+          "<span class='text-muted'>You defeated the</span> " +
+            currentMonster.Name +
+            " <span class='text-muted'>.</span>"
+        );
+      }
 
       receiveExp(currentMonster);
       receiveGold(currentMonster);
@@ -466,6 +475,7 @@ scrollBtn.addEventListener("click", function (e) {
 
 // Update UI
 function updatePlayerStats() {
+  console.log(player.CurrentHitPoints);
   hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
   goldText.innerText = player.Gold;
   experienceText.innerText = player.Experience;
@@ -700,6 +710,7 @@ function moveTo(newLocation) {
   updateLocationUI();
 
   updateMovementButtons(newLocation);
+  console.log(player.CurrentHitPoints);
   player.CurrentHitPoints = player.MaximumHitPoints;
   updatePlayerStats();
 
@@ -910,6 +921,7 @@ function spawnMonster(newLocation) {
 
 // Combat
 function restoreHealthWithConsumable(amountToHeal, item) {
+  console.log(player.CurrentHitPoints);
   player.CurrentHitPoints += amountToHeal;
 
   if (player.CurrentHitPoints > player.MaximumHitPoints) {
@@ -935,6 +947,7 @@ function monsterAttack(currentMonster) {
     damageToPlayer += poisonPlayer();
   }
 
+  console.log(player.CurrentHitPoints);
   player.CurrentHitPoints -= damageToPlayer;
   hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 
