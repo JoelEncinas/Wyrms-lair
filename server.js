@@ -21,7 +21,7 @@ app.use(express.static("public"));
 // handlebars
 app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
-hbs.registerPartials(__dirname + "/partials");
+hbs.registerPartials(__dirname + "/views/partials");
 hbs.registerHelper("json", function (context) {
   return JSON.stringify(context);
 });

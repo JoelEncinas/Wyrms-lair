@@ -5,6 +5,11 @@
 
 /* NAVBAR */
 
+.navbar-brand img {
+  width: 50px;
+  border-radius: 50%;
+}
+
 #navbar-login-btn,
 #navbar-register-btn {
   min-width: 70px;
