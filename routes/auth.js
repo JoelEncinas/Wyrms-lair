@@ -42,6 +42,7 @@ router.post("/register", async (req, res) => {
       currentWeapon: 1,
       currentPotion: 7,
       currentScroll: 13,
+      hasSlayWyrm: false
     });
     await newCharacter.save();
 

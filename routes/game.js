@@ -76,6 +76,7 @@ router.post("/save", async (req, res) => {
       currentWeapon,
       currentPotion,
       currentScroll,
+      hasSlayWyrm
     } = req.body;
 
     const token = req.cookies.token;
@@ -102,6 +103,7 @@ router.post("/save", async (req, res) => {
           currentWeapon: currentWeapon,
           currentPotion: currentPotion,
           currentScroll: currentScroll,
+          hasSlayWyrm: hasSlayWyrm,
         }
       );
 

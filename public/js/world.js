@@ -57,7 +57,7 @@ export const ITEM_IDS = {
   SACRED_KEY: 34,
   BUCANEER_BANDANA: 35,
   HOLY_WATER: 36,
-  BLAZE_BRINGER: 37
+  BLAZE_BRINGER: 37,
 };
 
 const UNSELLABLE_ITEM_PRICE = -1;
@@ -1277,7 +1277,11 @@ function populateLocations() {
     "A vast room filled with ancient tomes and scrolls, detailing the history and secrets of the fire gods and their dragons."
   );
 
-  // add craft here
+  const highPriestessAurora = new Craft(
+    "High Priestess Aurora",
+    recipeByID(RECIPE_IDS.CRAFT_SCROLL_RENEW_I)
+  );
+  library.CraftHere = highPriestessAurora;
 
   const towerOfTheFlamekeeper = new Location(
     LOCATION_IDS.TOWER_OF_THE_FLAMEKEEPER,

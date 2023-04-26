@@ -19,7 +19,8 @@ export class Player extends LivingCreature {
     currentLocation,
     currentWeapon,
     currentPotion,
-    currentScroll
+    currentScroll,
+    hasSlayWyrm
   ) {
     super(maximumHitPoints, currentHitPoints);
     this._Gold = gold;
@@ -31,23 +32,7 @@ export class Player extends LivingCreature {
     this._CurrentWeapon = currentWeapon;
     this._CurrentPotion = currentPotion;
     this._CurrentScroll = currentScroll;
-  }
-
-  createDefaultPlayer() {
-    let player = new Player(
-      40,
-      40,
-      0,
-      0,
-      1,
-      LOCATION_IDS.HOME,
-      ITEM_IDS.RUSTY_SWORD,
-      ITEM_IDS.HEALING_POTION,
-      ITEM_IDS.SCROLL_FIREBALL_I
-    );
-    player.addItemToInventory(itemByID(ITEM_IDS.RUSTY_SWORD));
-
-    return player;
+    this._HasSlayWyrm = hasSlayWyrm;
   }
 
   get MaximumHitPoints() {
@@ -285,5 +270,13 @@ export class Player extends LivingCreature {
     }
 
     return false;
+  }
+
+  get HasSlayWyrm() {
+    return this._HasSlayWyrm;
+  }
+
+  set HasSlayWyrm(value) {
+    this._HasSlayWyrm = value;
   }
 }

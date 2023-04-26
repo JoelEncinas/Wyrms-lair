@@ -48,6 +48,10 @@ const characterSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  hasSlayWyrm: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("WLCharacter", characterSchema);

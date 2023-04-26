@@ -133,7 +133,8 @@ function loadPlayer(savedCharacter) {
     savedCharacter.currentLocation,
     savedCharacter.currentWeapon,
     savedCharacter.currentPotion,
-    savedCharacter.currentScroll
+    savedCharacter.currentScroll,
+    savedCharacter.hasSlayWyrm
   );
 
   if (savedCharacter.inventory) {
@@ -167,6 +168,7 @@ saveDataSubmit.addEventListener("click", function (e) {
   saveDataCurrentWeapon.value = player.CurrentWeapon;
   saveDataCurrentPotion.value = player.CurrentPotion;
   saveDataCurrentScroll.value = player.CurrentScroll;
+  saveDataHasSlayWyrm.value = player.HasSlayWyrm;
 
   saveDataForm.submit();
 });
@@ -333,18 +335,29 @@ weaponBtn.addEventListener("click", function (e) {
   addLine(logDisplay, damageText);
 
   if (currentMonster.CurrentHitPoints <= 0) {
-    addLine(
-      logDisplay,
-      "<span class='text-muted'>You defeated the</span> " +
-        currentMonster.Name +
-        " <span class='text-muted'>.</span>"
-    );
+    if (currentMonster.ID === 16) {
+      addLine(
+        logDisplay,
+        "<span class='text-muted'>You defeated </span> " +
+          currentMonster.Name +
+          " <span class='text-muted'>. Congratulations! You completed the game!!!</span>"
+      );
 
-    receiveExp(currentMonster);
-    receiveGold(currentMonster);
-    lootItems(currentMonster);
-    updateUIAfterFight();
-    spawnMonster(player.CurrentLocation);
+      player.HasSlayWyrm = true;
+    } else {
+      addLine(
+        logDisplay,
+        "<span class='text-muted'>You defeated the</span> " +
+          currentMonster.Name +
+          " <span class='text-muted'>.</span>"
+      );
+
+      receiveExp(currentMonster);
+      receiveGold(currentMonster);
+      lootItems(currentMonster);
+      updateUIAfterFight();
+      spawnMonster(player.CurrentLocation);
+    }
   } else {
     monsterAttack(currentMonster);
   }
@@ -512,7 +525,7 @@ function updateTradeTableVendor() {
       }
     }
   } else {
-    let headers = "<p>I've got nothing more to trade.</p>"
+    let headers = "<p>I've got nothing more to trade.</p>";
 
     const headerRow = document.createElement("tr");
     headerRow.innerHTML = headers;
@@ -827,30 +840,70 @@ function showInteractableUI(location) {
 // Spawn monster
 function spawnMonster(newLocation) {
   addLine(logDisplay, "");
-  addLine(
-    logDisplay,
-    "<span class='text-muted'>You see a</span> " +
-      newLocation.MonsterLivingHere.Name +
-      "<span class='text-muted'>.</span>"
-  );
 
-  let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
+  if (newLocation.MonsterLivingHere.ID === 16 && player.HasSlayWyrm === false) {
+    addLine(
+      logDisplay,
+      "<span class='text-muted'>You see </span> " +
+        newLocation.MonsterLivingHere.Name +
+        "<span class='text-muted'>.</span>"
+    );
 
-  currentMonster = new Monster(
-    standardMonster.ID,
-    standardMonster.Name,
-    standardMonster.MinimumDamage,
-    standardMonster.MaximumDamage,
-    standardMonster.RewardGold,
-    standardMonster.CurrentHitPoints,
-    standardMonster.MaximumHitPoints,
-    standardMonster.Level,
-    standardMonster.IsPoisonous
-  );
+    let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
 
-  currentMonster.LootTable.push(
-    ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
-  );
+    currentMonster = new Monster(
+      standardMonster.ID,
+      standardMonster.Name,
+      standardMonster.MinimumDamage,
+      standardMonster.MaximumDamage,
+      standardMonster.RewardGold,
+      standardMonster.CurrentHitPoints,
+      standardMonster.MaximumHitPoints,
+      standardMonster.Level,
+      standardMonster.IsPoisonous
+    );
+
+    currentMonster.LootTable.push(
+      ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
+    );
+  } else if (
+    newLocation.MonsterLivingHere.ID === 16 &&
+    player.HasSlayWyrm === true
+  ) {
+    currentMonster = null;
+
+    hideElement(weaponBtn);
+    hideElement(weaponOptions);
+    hideElement(potionBtn);
+    hideElement(potionOptions);
+    hideElement(scrollBtn);
+    hideElement(scrollOptions);
+  } else {
+    addLine(
+      logDisplay,
+      "<span class='text-muted'>You see a</span> " +
+        newLocation.MonsterLivingHere.Name +
+        "<span class='text-muted'>.</span>"
+    );
+
+    let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
+
+    currentMonster = new Monster(
+      standardMonster.ID,
+      standardMonster.Name,
+      standardMonster.MinimumDamage,
+      standardMonster.MaximumDamage,
+      standardMonster.RewardGold,
+      standardMonster.CurrentHitPoints,
+      standardMonster.MaximumHitPoints,
+      standardMonster.Level,
+      standardMonster.IsPoisonous
+    );
+
+    currentMonster.LootTable.push(
+      ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
+    );
+  }
 }
 
 // Combat
