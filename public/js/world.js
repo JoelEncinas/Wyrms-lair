@@ -40,7 +40,7 @@ export const ITEM_IDS = {
   ROLL_OF_PAPYRUS: 17,
   SCORPION_TAIL: 18,
   MYSTERY_MEAT: 19,
-  MYSTERY_STEW: 20,
+  MYSTERY_SOUP: 20,
   GELATINOUS_GOO: 21,
   SILVER_SPADE: 22,
   BLUE_CRYSTAL: 23,
@@ -86,6 +86,9 @@ export const QUEST_IDS = {
   CLEAR_FARMERS_FIELD: 2,
   THE_HUNGRY_MAGE: 3,
   HONEST_WORK: 4,
+  ELSAS_CLOAK: 5,
+  THE_HEART_OF_THE_MOUNTAIN: 6,
+  WANTED_PIRATES: 7,
 };
 
 export const LOCATION_IDS = {
@@ -258,9 +261,9 @@ function populateItems() {
   );
   items.push(
     new HealingPotion(
-      ITEM_IDS.MYSTERY_STEW,
-      "Mystery Stew",
-      "Mystery Stews",
+      ITEM_IDS.MYSTERY_SOUP,
+      "Mystery Soup",
+      "Mystery Soups",
       15,
       100
     )
@@ -741,7 +744,7 @@ function populateQuests() {
     new QuestCompletionItem(itemByID(ITEM_IDS.MYSTERY_MEAT), 3)
   );
 
-  theHungryMage.addRewardItems(itemByID(ITEM_IDS.MYSTERY_STEW));
+  theHungryMage.addRewardItems(itemByID(ITEM_IDS.MYSTERY_SOUP));
 
   const honestWork = new Quest(
     QUEST_IDS.HONEST_WORK,
@@ -757,7 +760,7 @@ function populateQuests() {
   honestWork.addRewardItems(itemByID(ITEM_IDS.SILVER_SPADE));
 
   const elsasCloack = new Quest(
-    QUEST_IDS.ELSAS_CLOACK,
+    QUEST_IDS.ELSAS_CLOAK,
     "Elsa's Cloak",
     "A skilled tailor named Elsa, needs your help in obtaining three yeti pelts to create a warm and durable cloak for a wealthy client. She tells you that the only place to find yetis is in a nearby cave.",
     20
@@ -1058,7 +1061,7 @@ function populateLocations() {
     "Frostwood",
     "Overall, Frostwood is a stunning yet perilous location, where the beauty of nature is both captivating and deadly. The trees, once lush and green, are now encased in a thick layer of frost and ice, giving them an otherworldly appearance."
   );
-  frozenForest.QuestAvailableHere = questByID(QUEST_IDS.ELSAS_CLOACK);
+  frozenForest.QuestAvailableHere = questByID(QUEST_IDS.ELSAS_CLOAK);
 
   const frozenLake = new Location(
     LOCATION_IDS.FROZEN_LAKE,
@@ -1200,7 +1203,7 @@ function populateLocations() {
     "Hidden cove that is home to a notorious group of pirates who use it as a base for their raids and plundering."
   );
 
-  bucaneersHideout.MonsterLivingHere = monsterByID(MONSTER_IDS.ICE_SPIRIT);
+  bucaneersHideout.MonsterLivingHere = monsterByID(MONSTER_IDS.PIRATE);
 
   const shipwreckPoint = new Location(
     LOCATION_IDS.SHIPWRECK_POINT,
@@ -1213,7 +1216,7 @@ function populateLocations() {
     "Mermaid's Lagoon",
     "Tranquil lagoon hidden behind a series of rocky cliffs, rumored to be home to a colony of mermaids."
   );
-  mermaidsLagoon.MonsterLivingHere = monsterByID(MONSTER_IDS.ICE_SPIRIT);
+  mermaidsLagoon.MonsterLivingHere = monsterByID(MONSTER_IDS.MERMAID);
 
   sunsetOasis.LocationToSouth = blackSandBeach;
 
