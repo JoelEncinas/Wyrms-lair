@@ -353,6 +353,8 @@ weaponBtn.addEventListener("click", function (e) {
 });
 
 potionBtn.addEventListener("click", function (e) {
+  hideMovementButtons();
+
   player.CurrentPotion = parseInt(
     potionOptions.options[potionOptions.selectedIndex].value
   );
@@ -384,6 +386,8 @@ potionBtn.addEventListener("click", function (e) {
 });
 
 scrollBtn.addEventListener("click", function (e) {
+  hideMovementButtons();
+
   player.CurrentScroll = parseInt(
     scrollOptions.options[scrollOptions.selectedIndex].value
   );

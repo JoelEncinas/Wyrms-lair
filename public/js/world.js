@@ -581,7 +581,7 @@ function populateMonsters() {
   );
 
   iceSpirit.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.SACRED_RUNE), 55, false)
+    new LootItem(itemByID(ITEM_IDS.SACRED_RUNE), 45, false)
   );
 
   const iceElemental = new Monster(
@@ -803,6 +803,7 @@ function populateQuests() {
   quests.push(theHungryMage);
   quests.push(honestWork);
   quests.push(elsasCloack);
+  quests.push(theHeartOfTheMountain);
   quests.push(wantedPirates);
 }
 
