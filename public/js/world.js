@@ -625,7 +625,7 @@ function populateMonsters() {
 
   const pirate = new Monster(
     MONSTER_IDS.PIRATE,
-    "Risen Guardian",
+    "Pirate",
     25,
     30,
     8,
