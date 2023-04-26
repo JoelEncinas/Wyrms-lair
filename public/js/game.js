@@ -330,6 +330,16 @@ weaponBtn.addEventListener("click", function (e) {
       addLine(logDisplay, "");
 
       player.HasSlayWyrm = true;
+
+      updateMovementButtons(player.CurrentLocation);
+      showInteractableUI(player.CurrentLocation);
+
+      receiveExp(currentMonster);
+      receiveGold(currentMonster);
+      lootItems(currentMonster);
+      player.CurrentHitPoints = player.MaximumHitPoints;
+      updateUIAfterFight();
+      spawnMonster(player.CurrentLocation);
     } else {
       addLine(
         logDisplay,
@@ -822,14 +832,14 @@ function moveTo(newLocation) {
 
 function showInteractableUI(location) {
   if (location.MonsterLivingHere !== undefined) {
-    spawnMonster(location);
-
     showElement(weaponBtn);
     showElement(weaponOptions);
     showElement(potionBtn);
     showElement(potionOptions);
     showElement(scrollBtn);
     showElement(scrollOptions);
+
+    spawnMonster(location);
   } else {
     currentMonster = null;
 
@@ -855,6 +865,7 @@ function showInteractableUI(location) {
 }
 
 function spawnMonster(newLocation) {
+  console.log(player);
   let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
 
   currentMonster = new Monster(

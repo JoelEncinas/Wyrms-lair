@@ -637,6 +637,9 @@ function populateMonsters() {
 
   pirate.LootTable.push(new LootItem(itemByID(ITEM_IDS.RUM), 95, true));
   pirate.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.BUCANEER_BANDANA), 85, true)
+  );
+  pirate.LootTable.push(
     new LootItem(itemByID(ITEM_IDS.ROLL_OF_PAPYRUS), 65, false)
   );
 
@@ -1278,7 +1281,7 @@ function populateLocations() {
     "Located in a nearby tower, houses an impressive collection of weapons and armor, including enchanted swords and shields said to be forged with dragon fire."
   );
 
-  armory.MonsterLivingHere = monsterByID(MONSTER_IDS.HELLFIRE_SMITH);
+  armory.MonsterLivingHere = monsterByID(MONSTER_IDS.HOLY_SMITH);
 
   const library = new Location(
     LOCATION_IDS.LIBRARY,
