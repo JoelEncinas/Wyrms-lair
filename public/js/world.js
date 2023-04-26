@@ -801,6 +801,7 @@ function populateQuests() {
   quests.push(clearAlchemistGarden);
   quests.push(clearFarmersField);
   quests.push(theHungryMage);
+  quests.push(honestWork);
   quests.push(elsasCloack);
   quests.push(wantedPirates);
 }

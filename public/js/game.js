@@ -723,6 +723,7 @@ function moveTo(newLocation) {
   updatePlayerStats();
 
   if (newLocation.QuestAvailableHere !== undefined) {
+    console.log(player);
     let playerAlreadyHasQuest = player.hasThisQuest(
       newLocation.QuestAvailableHere
     );
