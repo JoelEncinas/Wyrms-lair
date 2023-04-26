@@ -56,6 +56,8 @@ export const ITEM_IDS = {
   BIG_CITRINE: 33,
   SACRED_KEY: 34,
   BUCANEER_BANDANA: 35,
+  HOLY_WATER: 36,
+  BLAZE_BRINGER: 37
 };
 
 const UNSELLABLE_ITEM_PRICE = -1;
@@ -75,6 +77,8 @@ export const MONSTER_IDS = {
   RISEN_GUARDIAN: 12,
   PIRATE: 13,
   MERMAID: 14,
+  HOLY_SMITH: 15,
+  WYRM: 16,
 };
 
 export const QUEST_IDS = {
@@ -116,6 +120,12 @@ export const LOCATION_IDS = {
   BUCANEERS_HIDEOUT: 29,
   SHIPWRECK_POINT: 30,
   MERMAIDS_LAGOON: 31,
+  CATHEDRAL_ENTRANCE: 32,
+  MAIN_HALL: 33,
+  LIBRARY: 34,
+  ARMORY: 35,
+  TOWER_OF_THE_FLAMEKEEPER: 36,
+  INNER_SANCTUM: 37,
 };
 
 export const REGION_IDS = {
@@ -123,6 +133,7 @@ export const REGION_IDS = {
   THE_BLASTED_WASTELAND: 2,
   ELSOS: 3,
   RALI: 4,
+  WYRMS_KEEP: 5,
 };
 
 export const SPELL_TYPES = {
@@ -216,8 +227,8 @@ function populateItems() {
       "Scroll: Fireball I",
       "Scrolls: Fireball I",
       25,
-      30,
-      40,
+      35,
+      50,
       SPELL_TYPES.DAMAGE,
       "Fireball I"
     )
@@ -228,8 +239,8 @@ function populateItems() {
       "Scroll: Renew I",
       "Scrolls: Renew I",
       25,
-      25,
-      50,
+      100,
+      150,
       SPELL_TYPES.HEALING,
       "Renew I"
     )
@@ -323,6 +334,17 @@ function populateItems() {
       1
     )
   );
+  items.push(new Item(ITEM_IDS.HOLY_WATER, "Holy Water", "Holy Water", 1));
+  items.push(
+    new Weapon(
+      ITEM_IDS.BLAZE_BRINGER,
+      "Blaze Bringer",
+      "Blaze Bringers",
+      99,
+      30,
+      40
+    )
+  );
 }
 
 function populateRecipes() {
@@ -333,6 +355,23 @@ function populateRecipes() {
 
   const fireballIRecipeResult = new RecipeItem(
     itemByID(ITEM_IDS.SCROLL_FIREBALL_I),
+    1
+  );
+
+  const renewIRecipe = new Recipe(
+    RECIPE_IDS.CRAFT_SCROLL_RENEW_I,
+    "Craft Scroll: Renew I",
+    renewIRecipeComponent,
+    renewIRecipeResult
+  );
+
+  const renewIRecipeComponent = new RecipeItem(
+    itemByID(ITEM_IDS.HOLY_WATER),
+    3
+  );
+
+  const renewIRecipeResult = new RecipeItem(
+    itemByID(ITEM_IDS.SCROLL_RENEW_I),
     1
   );
 
@@ -598,8 +637,8 @@ function populateMonsters() {
   );
 
   const mermaid = new Monster(
-    MONSTER_IDS.PIRATE,
-    "Risen Guardian",
+    MONSTER_IDS.MERMAID,
+    "Mermaid",
     20,
     23,
     0,
@@ -611,6 +650,38 @@ function populateMonsters() {
 
   mermaid.LootTable.push(
     new LootItem(itemByID(ITEM_IDS.STRONG_IRON_LOCKBOX), 60, true)
+  );
+
+  const holySmith = new Monster(
+    MONSTER_IDS.HOLY_SMITH,
+    "Holy Smith",
+    25,
+    30,
+    10,
+    270,
+    270,
+    25,
+    false
+  );
+
+  holySmith.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.HOLY_WATER), 80, true)
+  );
+
+  const wyrm = new Monster(
+    MONSTER_IDS.WYRM,
+    "Wyrm, Herald of Fire",
+    30,
+    40,
+    9999,
+    300,
+    300,
+    25,
+    false
+  );
+
+  wyrm.LootTable.push(
+    new LootItem(itemByID(ITEM_IDS.BLAZE_BRINGER), 100, true)
   );
 
   monsters.push(rat);
@@ -627,6 +698,8 @@ function populateMonsters() {
   monsters.push(risenGuardian);
   monsters.push(pirate);
   monsters.push(mermaid);
+  monsters.push(holySmith);
+  monsters.push(wyrm);
 }
 
 function populateQuests() {
@@ -1168,6 +1241,90 @@ function populateLocations() {
   bucaneersHideout.Region = rali;
   shipwreckPoint.Region = rali;
   mermaidsLagoon.Region = rali;
+
+  // FLAMEKEEPER'S CATHEDRAL
+  const flamekeepersCathedral = new Region(
+    REGION_IDS.WYRMS_KEEP,
+    "Wyrm's Keep",
+    "This ancient cathedral is home to a magnificent dragon that is said to hold the power of fire itself."
+  );
+
+  regions.push(flamekeepersCathedral);
+
+  const cathedralEntrance = new Location(
+    LOCATION_IDS.CATHEDRAL_ENTRANCE,
+    "Cathedral Entrance",
+    "You see a grand structure, adorned with intricate gothic architecture and stained glass windows that depict the deeds of the fire gods."
+  );
+
+  const mainHall = new Location(
+    LOCATION_IDS.MAIN_HALL,
+    "Main Hall",
+    "This hall seems to lead to the dragon's lair, a vast chamber deep within the cathedral."
+  );
+
+  const armory = new Location(
+    LOCATION_IDS.ARMORY,
+    "The Armory",
+    "Located in a nearby tower, houses an impressive collection of weapons and armor, including enchanted swords and shields said to be forged with dragon fire."
+  );
+
+  armory.MonsterLivingHere = monsterByID(MONSTER_IDS.HELLFIRE_SMITH);
+
+  const library = new Location(
+    LOCATION_IDS.LIBRARY,
+    "The Library",
+    "A vast room filled with ancient tomes and scrolls, detailing the history and secrets of the fire gods and their dragons."
+  );
+
+  // add craft here
+
+  const towerOfTheFlamekeeper = new Location(
+    LOCATION_IDS.TOWER_OF_THE_FLAMEKEEPER,
+    "Tower of the Flamekeeper",
+    "The highest point in the cathedral, offering breathtaking views of the surrounding countryside."
+  );
+
+  const innerSanctum = new Location(
+    LOCATION_IDS.INNER_SANCTUM,
+    "Inner Sanctum",
+    "The walls are adorned with intricate carvings and shimmering gold leaf, with long tapestries depicting dragons and their fiery breaths hanging from the ceiling. The air in the Inner Sanctum is warm and humid, tinged with the scent of sulfur and smoke."
+  );
+
+  innerSanctum.MonsterLivingHere = monsterByID(MONSTER_IDS.WYRM);
+
+  burningWastes.LocationToEast = cathedralEntrance;
+
+  cathedralEntrance.LocationToWest = burningWastes;
+  cathedralEntrance.LocationToEast = mainHall;
+
+  mainHall.LocationToSouth = library;
+  mainHall.LocationToNorth = armory;
+  mainHall.LocationToWest = cathedralEntrance;
+  mainHall.LocationToEast = towerOfTheFlamekeeper;
+
+  library.LocationToNorth = mainHall;
+
+  armory.LocationToSouth = mainHall;
+
+  towerOfTheFlamekeeper.LocationToEast = innerSanctum;
+  towerOfTheFlamekeeper.LocationToWest = mainHall;
+
+  innerSanctum.LocationToWest = towerOfTheFlamekeeper;
+
+  locations.push(cathedralEntrance);
+  locations.push(mainHall);
+  locations.push(library);
+  locations.push(armory);
+  locations.push(towerOfTheFlamekeeper);
+  locations.push(innerSanctum);
+
+  cathedralEntrance.Region = flamekeepersCathedral;
+  mainHall.Region = flamekeepersCathedral;
+  library.Region = flamekeepersCathedral;
+  armory.Region = flamekeepersCathedral;
+  towerOfTheFlamekeeper.Region = flamekeepersCathedral;
+  innerSanctum.Region = flamekeepersCathedral;
 }
 
 export function itemByID(id) {
