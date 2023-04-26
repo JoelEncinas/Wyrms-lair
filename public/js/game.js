@@ -306,6 +306,8 @@ function updateVendorGold() {
 }
 
 weaponBtn.addEventListener("click", function (e) {
+  // hide buttons
+
   player.CurrentWeapon = parseInt(
     weaponOptions.options[weaponOptions.selectedIndex].value
   );
@@ -351,6 +353,8 @@ weaponBtn.addEventListener("click", function (e) {
           currentMonster.Name +
           " <span class='text-muted'>.</span>"
       );
+
+      // show buttons again
 
       receiveExp(currentMonster);
       receiveGold(currentMonster);
@@ -409,6 +413,8 @@ scrollBtn.addEventListener("click", function (e) {
       player.intellectModifier()
     );
 
+    // hide buttons
+
     currentMonster.CurrentHitPoints -= damageToMonster;
 
     player.removeItemFromInventory(currentScroll);
@@ -442,6 +448,8 @@ scrollBtn.addEventListener("click", function (e) {
             " <span class='text-muted'>.</span>"
         );
       }
+
+      // show buttons again
 
       receiveExp(currentMonster);
       receiveGold(currentMonster);
@@ -1049,7 +1057,36 @@ function playerDeath() {
       currentMonster.Name +
       " <span class='text-muted'>killed you...</span>"
   );
+  addLine(
+    logDisplay,
+    "<span class='text-primary'>Wake up adventurer, your time hasn't come yet.</span> "
+  );
+  addLine(
+    logDisplay,
+    "<span class='text-muted'>Everything looks dizzy...</span> "
+  );
 
-  moveTo(locationByID(LOCATION_IDS.HOME));
+  let respawnPoint;
+
+  switch (player.CurrentLocation.Region.ID) {
+    case 1:
+      respawnPoint = locationByID(LOCATION_IDS.HOME);
+      break;
+    case 2:
+      respawnPoint = locationByID(LOCATION_IDS.SUNSET_OASIS);
+      break;
+    case 3:
+      respawnPoint = locationByID(LOCATION_IDS.FROZEN_FOREST);
+      break;
+    case 4:
+      respawnPoint = locationByID(LOCATION_IDS.PORT_ROYALE);
+      break;
+    case 5:
+      respawnPoint = locationByID(LOCATION_IDS.CATHEDRAL_ENTRANCE);
+      break;
+    default:
+      respawnPoint = locationByID(LOCATION_IDS.HOME);
+  }
+  moveTo(respawnPoint);
   updateMovementButtons(player.CurrentLocation);
 }
