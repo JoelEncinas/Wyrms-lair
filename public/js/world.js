@@ -521,7 +521,7 @@ function populateMonsters() {
     MONSTER_IDS.OOZE,
     "Ooze",
     15,
-    18,
+    20,
     0,
     160,
     160,
@@ -536,8 +536,8 @@ function populateMonsters() {
   const goblin = new Monster(
     MONSTER_IDS.GOBLIN,
     "Goblin",
-    13,
-    20,
+    16,
+    21,
     3,
     200,
     200,
@@ -553,8 +553,8 @@ function populateMonsters() {
   const yeti = new Monster(
     MONSTER_IDS.YETI,
     "Yeti",
-    15,
-    22,
+    16,
+    23,
     0,
     205,
     205,
@@ -567,8 +567,8 @@ function populateMonsters() {
   const iceSpirit = new Monster(
     MONSTER_IDS.ICE_SPIRIT,
     "Ice Spirit",
-    15,
-    23,
+    17,
+    25,
     0,
     215,
     215,
@@ -587,8 +587,8 @@ function populateMonsters() {
   const iceElemental = new Monster(
     MONSTER_IDS.ICE_ELEMENTAL,
     "Ice Elemental",
-    14,
-    21,
+    16,
+    25,
     0,
     215,
     215,
@@ -607,7 +607,7 @@ function populateMonsters() {
   const risenGuardian = new Monster(
     MONSTER_IDS.RISEN_GUARDIAN,
     "Risen Guardian",
-    15,
+    17,
     25,
     5,
     230,
@@ -646,8 +646,8 @@ function populateMonsters() {
     20,
     23,
     0,
-    200,
-    200,
+    210,
+    210,
     20,
     true
   );
@@ -659,8 +659,8 @@ function populateMonsters() {
   const holySmith = new Monster(
     MONSTER_IDS.HOLY_SMITH,
     "Holy Smith",
-    25,
     30,
+    34,
     10,
     270,
     270,
@@ -675,11 +675,11 @@ function populateMonsters() {
   const wyrm = new Monster(
     MONSTER_IDS.WYRM,
     "Wyrm, Herald of Fire",
-    30,
-    40,
+    35,
+    45,
     9999,
-    300,
-    300,
+    350,
+    350,
     25,
     false
   );
@@ -774,7 +774,7 @@ function populateQuests() {
     QUEST_IDS.THE_HEART_OF_THE_MOUNTAIN,
     "The Heart of the Mountain",
     "Zephyr needs your help obtaining elemental waters. He tells you that the waters are necessary to craft the Heart of the Mountain, an artifact that will allow you to access the Dwarf Mines.",
-    0
+    10
   );
 
   theHeartOfTheMountain.QuestCompletionItems.push(
@@ -1147,7 +1147,7 @@ function populateLocations() {
   dwarfMineEntrance.LocationToNorth = abandonedTower;
   dwarfMineEntrance.LocationToEast = dwarfMine;
 
-  dwarfMineEntrance.LocationToWest = dwarfMineEntrance;
+  dwarfMine.LocationToWest = dwarfMineEntrance;
 
   locations.push(mountainPass);
   locations.push(frozenForest);

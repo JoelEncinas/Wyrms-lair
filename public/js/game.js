@@ -339,6 +339,7 @@ weaponBtn.addEventListener("click", function (e) {
       );
 
       updateMovementButtons(player.CurrentLocation);
+      showInteractableUI(player.CurrentLocation);
 
       receiveExp(currentMonster);
       receiveGold(currentMonster);
