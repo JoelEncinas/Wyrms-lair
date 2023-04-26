@@ -19,6 +19,12 @@ export function updateElementClass(element, location) {
   }
 }
 
+export function hideLocationBtn(element) {
+  if (!element.classList.contains("disabled")) {
+    element.classList.add("disabled");
+  }
+}
+
 export function showElement(element) {
   if (element.classList.length > 0) {
     [...element.classList].forEach((className) => {

@@ -427,8 +427,8 @@ function populateRecipes() {
 
 function populateMonsters() {
   const rat = new Monster(MONSTER_IDS.RAT, "Rat", 4, 8, 0, 30, 30, 3, false);
-  rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.RAT_TAIL), 75, false));
-  rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.PIECE_OF_FUR), 65, true));
+  rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.RAT_TAIL), 85, false));
+  rat.LootTable.push(new LootItem(itemByID(ITEM_IDS.PIECE_OF_FUR), 75, true));
 
   const snake = new Monster(
     MONSTER_IDS.SNAKE,
@@ -441,8 +441,8 @@ function populateMonsters() {
     4,
     true
   );
-  snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKE_FANG), 75, false));
-  snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKESKIN), 65, true));
+  snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKE_FANG), 85, false));
+  snake.LootTable.push(new LootItem(itemByID(ITEM_IDS.SNAKESKIN), 75, true));
 
   const giantSpider = new Monster(
     MONSTER_IDS.GIANT_SPIDER,
@@ -456,10 +456,10 @@ function populateMonsters() {
     true
   );
   giantSpider.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.SPIDER_FANG), 75, true)
+    new LootItem(itemByID(ITEM_IDS.SPIDER_FANG), 85, true)
   );
   giantSpider.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.SPIDER_SILK), 25, false)
+    new LootItem(itemByID(ITEM_IDS.SPIDER_SILK), 75, false)
   );
 
   const dustDevil = new Monster(
@@ -475,7 +475,7 @@ function populateMonsters() {
   );
 
   dustDevil.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.BRIGHT_DUST), 100, true)
+    new LootItem(itemByID(ITEM_IDS.BRIGHT_DUST), 95, true)
   );
 
   const skeleton = new Monster(
@@ -492,7 +492,7 @@ function populateMonsters() {
 
   skeleton.LootTable.push(new LootItem(itemByID(ITEM_IDS.BONE), 75, true));
   skeleton.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.ROLL_OF_PAPYRUS), 20, false)
+    new LootItem(itemByID(ITEM_IDS.ROLL_OF_PAPYRUS), 45, false)
   );
   skeleton.LootTable.push(
     new LootItem(itemByID(ITEM_IDS.BATTLEWORN_HAMMER), 5, false)
@@ -511,10 +511,10 @@ function populateMonsters() {
   );
 
   fireScorpion.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.SCORPION_TAIL), 75, true)
+    new LootItem(itemByID(ITEM_IDS.SCORPION_TAIL), 85, true)
   );
   fireScorpion.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.MYSTERY_MEAT), 25, false)
+    new LootItem(itemByID(ITEM_IDS.MYSTERY_MEAT), 75, false)
   );
 
   const ooze = new Monster(
@@ -530,7 +530,7 @@ function populateMonsters() {
   );
 
   ooze.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.GELATINOUS_GOO), 70, true)
+    new LootItem(itemByID(ITEM_IDS.GELATINOUS_GOO), 95, true)
   );
 
   const goblin = new Monster(
@@ -546,9 +546,9 @@ function populateMonsters() {
   );
 
   goblin.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.BLUE_CRYSTAL), 75, true)
+    new LootItem(itemByID(ITEM_IDS.BLUE_CRYSTAL), 85, true)
   );
-  goblin.LootTable.push(new LootItem(itemByID(ITEM_IDS.CANDLE), 25, false));
+  goblin.LootTable.push(new LootItem(itemByID(ITEM_IDS.CANDLE), 75, false));
 
   const yeti = new Monster(
     MONSTER_IDS.YETI,
@@ -562,7 +562,7 @@ function populateMonsters() {
     false
   );
 
-  yeti.LootTable.push(new LootItem(itemByID(ITEM_IDS.YETI_FUR), 80, true));
+  yeti.LootTable.push(new LootItem(itemByID(ITEM_IDS.YETI_FUR), 75, true));
 
   const iceSpirit = new Monster(
     MONSTER_IDS.ICE_SPIRIT,
@@ -577,11 +577,11 @@ function populateMonsters() {
   );
 
   iceSpirit.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.ESSENCE_OF_UNDEATH), 85, true)
+    new LootItem(itemByID(ITEM_IDS.ESSENCE_OF_UNDEATH), 75, true)
   );
 
   iceSpirit.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.SACRED_RUNE), 15, false)
+    new LootItem(itemByID(ITEM_IDS.SACRED_RUNE), 55, false)
   );
 
   const iceElemental = new Monster(
@@ -597,11 +597,11 @@ function populateMonsters() {
   );
 
   iceElemental.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.ELEMENTAL_WATER), 70, true)
+    new LootItem(itemByID(ITEM_IDS.ELEMENTAL_WATER), 85, true)
   );
 
   iceElemental.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.SACRED_RUNE), 70, false)
+    new LootItem(itemByID(ITEM_IDS.SACRED_RUNE), 55, false)
   );
 
   const risenGuardian = new Monster(
@@ -617,7 +617,7 @@ function populateMonsters() {
   );
 
   risenGuardian.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.ESSENCE_OF_UNDEATH), 55, true)
+    new LootItem(itemByID(ITEM_IDS.ESSENCE_OF_UNDEATH), 75, true)
   );
   risenGuardian.LootTable.push(
     new LootItem(itemByID(ITEM_IDS.ROLL_OF_PAPYRUS), 45, false)
@@ -635,9 +635,9 @@ function populateMonsters() {
     false
   );
 
-  pirate.LootTable.push(new LootItem(itemByID(ITEM_IDS.RUM), 90, true));
+  pirate.LootTable.push(new LootItem(itemByID(ITEM_IDS.RUM), 95, true));
   pirate.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.ROLL_OF_PAPYRUS), 10, false)
+    new LootItem(itemByID(ITEM_IDS.ROLL_OF_PAPYRUS), 65, false)
   );
 
   const mermaid = new Monster(
@@ -653,7 +653,7 @@ function populateMonsters() {
   );
 
   mermaid.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.STRONG_IRON_LOCKBOX), 60, true)
+    new LootItem(itemByID(ITEM_IDS.STRONG_IRON_LOCKBOX), 50, true)
   );
 
   const holySmith = new Monster(
@@ -669,7 +669,7 @@ function populateMonsters() {
   );
 
   holySmith.LootTable.push(
-    new LootItem(itemByID(ITEM_IDS.HOLY_WATER), 80, true)
+    new LootItem(itemByID(ITEM_IDS.HOLY_WATER), 85, true)
   );
 
   const wyrm = new Monster(

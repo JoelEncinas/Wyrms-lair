@@ -1,4 +1,3 @@
-// Objects
 import { HealingPotion } from "./objects/HealingPotion.js";
 import { InventoryItem } from "./objects/InventoryItem.js";
 import { Monster } from "./objects/Monster.js";
@@ -6,7 +5,6 @@ import { Player } from "./objects/Player.js";
 import { Weapon } from "./objects/Weapon.js";
 import { Scroll } from "./objects/Scroll.js";
 
-// World
 import {
   itemByID,
   monsterByID,
@@ -15,16 +13,14 @@ import {
   SPELL_TYPES,
 } from "./world.js";
 
-// Utils
 import {
   addLine,
   updateElementClass,
+  hideLocationBtn,
   showElement,
   hideElement,
 } from "./utils/displayUI.js";
 
-// UI
-// data
 let saveDataCurrentHitPoints = document.getElementById(
   "save-data-currentHitPoints"
 );
@@ -46,33 +42,26 @@ let saveDataHasSlayWyrm = document.getElementById("save-data-hasSlayWyrm");
 let saveDataSubmit = document.getElementById("save-data-submit");
 let saveDataForm = document.getElementById("save-data-form");
 
-// character stats
 let raceText = document.getElementById("race");
 let hpText = document.getElementById("hit-points");
 let goldText = document.getElementById("gold");
 let experienceText = document.getElementById("experience");
 let levelText = document.getElementById("level");
 
-// location
 let locationName = document.getElementById("location-name");
 let locationDescription = document.getElementById("location-description");
 
-// inventory
 const inventoryContainer = document.getElementById("inventory");
 
-// log
 let logDisplay = document.getElementById("log-display");
 
-// character movement
 const northBtn = document.getElementById("north");
 const eastBtn = document.getElementById("east");
 const southBtn = document.getElementById("south");
 const westBtn = document.getElementById("west");
 
-// quests
 const questsContainer = document.getElementById("quests");
 
-// character actions
 const weaponBtn = document.getElementById("weapon-btn");
 const weaponOptions = document.getElementById("weapon-options");
 const potionBtn = document.getElementById("potion-btn");
@@ -80,7 +69,6 @@ const potionOptions = document.getElementById("potion-options");
 const scrollBtn = document.getElementById("scroll-btn");
 const scrollOptions = document.getElementById("scroll-options");
 
-// vendor modal
 const vendorBtn = document.getElementById("vendor-btn");
 const vendorModalTitle = document.getElementById("vendor-modal-title");
 const vendorTitle = document.getElementById("vendor-title");
@@ -93,7 +81,6 @@ const vendorPlayerInventory = document.getElementById(
   "vendor-player-inventory"
 );
 
-// craft modal
 const craftBtn = document.getElementById("craft-btn");
 const craftModalTitle = document.getElementById("craft-modal-title");
 const craftTitle = document.getElementById("craft-title");
@@ -206,7 +193,6 @@ function loadUI() {
   updateAllItemListInUI();
 }
 
-// location btn events
 northBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToNorth);
 });
@@ -223,7 +209,6 @@ westBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToWest);
 });
 
-// action btn events
 vendorBtn.addEventListener("click", function (e) {
   let vendor = player.CurrentLocation.VendorWorkingHere;
 
@@ -265,8 +250,6 @@ function updateCraftUI() {
     const button = craftConvertBtnContainer.querySelector("button");
 
     button.addEventListener("click", () => {
-      // TODO remove items from inventory and add item
-      // TODO show inventory
       player.removeItemFromInventory(
         craft.Recipe.RecipeItemToTake.Details,
         craft.Recipe.RecipeItemToTake.Quantity
@@ -306,7 +289,7 @@ function updateVendorGold() {
 }
 
 weaponBtn.addEventListener("click", function (e) {
-  // hide buttons
+  hideMovementButtons();
 
   player.CurrentWeapon = parseInt(
     weaponOptions.options[weaponOptions.selectedIndex].value
@@ -342,8 +325,9 @@ weaponBtn.addEventListener("click", function (e) {
         logDisplay,
         "<span class='text-muted'>You defeated </span> " +
           currentMonster.Name +
-          " <span class='text-muted'>. Congratulations! You completed the game!!!</span>"
+          " <span class='text-muted'>. Congratulations! You completed the game!!! Thanks for playing.</span>"
       );
+      addLine(logDisplay, "");
 
       player.HasSlayWyrm = true;
     } else {
@@ -354,7 +338,7 @@ weaponBtn.addEventListener("click", function (e) {
           " <span class='text-muted'>.</span>"
       );
 
-      // show buttons again
+      updateMovementButtons(player.CurrentLocation);
 
       receiveExp(currentMonster);
       receiveGold(currentMonster);
@@ -413,7 +397,7 @@ scrollBtn.addEventListener("click", function (e) {
       player.intellectModifier()
     );
 
-    // hide buttons
+    hideMovementButtons();
 
     currentMonster.CurrentHitPoints -= damageToMonster;
 
@@ -436,7 +420,7 @@ scrollBtn.addEventListener("click", function (e) {
           logDisplay,
           "<span class='text-muted'>You defeated </span> " +
             currentMonster.Name +
-            " <span class='text-muted'>. Congratulations! You completed the game!!!</span>"
+            " <span class='text-muted'>. Congratulations! You completed the game!!! Thanks for playing.</span>"
         );
 
         player.HasSlayWyrm = true;
@@ -449,7 +433,7 @@ scrollBtn.addEventListener("click", function (e) {
         );
       }
 
-      // show buttons again
+      updateMovementButtons(player.CurrentLocation);
 
       receiveExp(currentMonster);
       receiveGold(currentMonster);
@@ -483,12 +467,18 @@ scrollBtn.addEventListener("click", function (e) {
   updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
 });
 
-// Update UI
 function updatePlayerStats() {
   hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
   goldText.innerText = player.Gold;
   experienceText.innerText = player.Experience;
   levelText.innerText = player.Level;
+}
+
+function hideMovementButtons() {
+  hideLocationBtn(northBtn);
+  hideLocationBtn(eastBtn);
+  hideLocationBtn(southBtn);
+  hideLocationBtn(westBtn);
 }
 
 function updateMovementButtons(location) {
@@ -692,7 +682,6 @@ function updateUIAfterFight() {
   updateAllItemListInUI();
 }
 
-// Movement
 function moveTo(newLocation) {
   if (!player.hasRequiredItemToEnter(newLocation)) {
     addLine(
@@ -811,6 +800,8 @@ function moveTo(newLocation) {
         }
       }
 
+      addLine(logDisplay, "");
+
       player.addQuest(player.CurrentLocation);
     }
   }
@@ -824,7 +815,6 @@ function moveTo(newLocation) {
   updateVendorGold();
 }
 
-// show interactables
 function showInteractableUI(location) {
   if (location.MonsterLivingHere !== undefined) {
     spawnMonster(location);
@@ -859,9 +849,24 @@ function showInteractableUI(location) {
   }
 }
 
-// Spawn monster
 function spawnMonster(newLocation) {
-  addLine(logDisplay, "");
+  let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
+
+  currentMonster = new Monster(
+    standardMonster.ID,
+    standardMonster.Name,
+    standardMonster.MinimumDamage,
+    standardMonster.MaximumDamage,
+    standardMonster.RewardGold,
+    standardMonster.CurrentHitPoints,
+    standardMonster.MaximumHitPoints,
+    standardMonster.Level,
+    standardMonster.IsPoisonous
+  );
+
+  currentMonster.LootTable.push(
+    ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
+  );
 
   if (newLocation.MonsterLivingHere.ID === 16 && player.HasSlayWyrm === false) {
     addLine(
@@ -869,24 +874,6 @@ function spawnMonster(newLocation) {
       "<span class='text-muted'>You see </span> " +
         newLocation.MonsterLivingHere.Name +
         "<span class='text-muted'>.</span>"
-    );
-
-    let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
-
-    currentMonster = new Monster(
-      standardMonster.ID,
-      standardMonster.Name,
-      standardMonster.MinimumDamage,
-      standardMonster.MaximumDamage,
-      standardMonster.RewardGold,
-      standardMonster.CurrentHitPoints,
-      standardMonster.MaximumHitPoints,
-      standardMonster.Level,
-      standardMonster.IsPoisonous
-    );
-
-    currentMonster.LootTable.push(
-      ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
     );
   } else if (
     newLocation.MonsterLivingHere.ID === 16 &&
@@ -907,28 +894,9 @@ function spawnMonster(newLocation) {
         newLocation.MonsterLivingHere.Name +
         "<span class='text-muted'>.</span>"
     );
-
-    let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
-
-    currentMonster = new Monster(
-      standardMonster.ID,
-      standardMonster.Name,
-      standardMonster.MinimumDamage,
-      standardMonster.MaximumDamage,
-      standardMonster.RewardGold,
-      standardMonster.CurrentHitPoints,
-      standardMonster.MaximumHitPoints,
-      standardMonster.Level,
-      standardMonster.IsPoisonous
-    );
-
-    currentMonster.LootTable.push(
-      ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
-    );
   }
 }
 
-// Combat
 function restoreHealthWithConsumable(amountToHeal, item) {
   player.CurrentHitPoints += amountToHeal;
 
@@ -1049,6 +1017,7 @@ function lootItems(currentMonster) {
       );
     }
   });
+  addLine(logDisplay, "");
 }
 
 function playerDeath() {
@@ -1066,6 +1035,7 @@ function playerDeath() {
     logDisplay,
     "<span class='text-muted'>Everything looks dizzy...</span> "
   );
+  addLine(logDisplay, "");
 
   let respawnPoint;
 
