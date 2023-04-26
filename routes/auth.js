@@ -12,7 +12,8 @@ router.get("/register", (req, res) => {
 
 router.post("/register", async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, race } = req.body;
+    console.log(req.body);
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(200).render("register", { existing_user: true });
@@ -42,7 +43,8 @@ router.post("/register", async (req, res) => {
       currentWeapon: 1,
       currentPotion: 7,
       currentScroll: 13,
-      hasSlayWyrm: false
+      hasSlayWyrm: false,
+      race: race,
     });
     await newCharacter.save();
 

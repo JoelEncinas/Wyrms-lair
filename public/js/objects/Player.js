@@ -1,10 +1,7 @@
 import { LivingCreature } from "./LivingCreature.js";
 import { InventoryItem } from "./InventoryItem.js";
 import {
-  itemByID,
   locationByID,
-  LOCATION_IDS,
-  ITEM_IDS,
   questByID,
 } from "../world.js";
 import { PlayerQuest } from "./PlayerQuest.js";
@@ -20,7 +17,8 @@ export class Player extends LivingCreature {
     currentWeapon,
     currentPotion,
     currentScroll,
-    hasSlayWyrm
+    hasSlayWyrm,
+    race
   ) {
     super(maximumHitPoints, currentHitPoints);
     this._Gold = gold;
@@ -33,6 +31,7 @@ export class Player extends LivingCreature {
     this._CurrentPotion = currentPotion;
     this._CurrentScroll = currentScroll;
     this._HasSlayWyrm = hasSlayWyrm;
+    this._Race = race;
   }
 
   get MaximumHitPoints() {
@@ -64,7 +63,7 @@ export class Player extends LivingCreature {
         Math.floor((this._Experience + experienceToAdd - 200) / 200) + 2;
 
       if (newLevel > this._Level) {
-        this._Level = Math.min(newLevel, 25); 
+        this._Level = Math.min(newLevel, 25);
         this._Experience += experienceToAdd;
         return true;
       }
@@ -278,5 +277,13 @@ export class Player extends LivingCreature {
 
   set HasSlayWyrm(value) {
     this._HasSlayWyrm = value;
+  }
+
+  get Race() {
+    return this._Race;
+  }
+
+  set Race(value) {
+    this._Race = value;
   }
 }

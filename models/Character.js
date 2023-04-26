@@ -52,6 +52,10 @@ const characterSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  race: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("WLCharacter", characterSchema);

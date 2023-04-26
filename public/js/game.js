@@ -47,6 +47,7 @@ let saveDataSubmit = document.getElementById("save-data-submit");
 let saveDataForm = document.getElementById("save-data-form");
 
 // character stats
+let raceText = document.getElementById("race");
 let hpText = document.getElementById("hit-points");
 let goldText = document.getElementById("gold");
 let experienceText = document.getElementById("experience");
@@ -109,8 +110,6 @@ const craftNotEnoughComponents = document.getElementById(
   "craft-not-enough-components"
 );
 
-// TODO
-// LOAD DATA
 let player;
 let currentMonster;
 
@@ -135,10 +134,11 @@ function loadPlayer(savedCharacter) {
     savedCharacter.currentWeapon,
     savedCharacter.currentPotion,
     savedCharacter.currentScroll,
-    savedCharacter.hasSlayWyrm
+    savedCharacter.hasSlayWyrm,
+    savedCharacter.race
   );
 
-  console.log(player)
+  console.log(player);
 
   if (savedCharacter.inventory) {
     savedCharacter.inventory.forEach((item) => {
@@ -155,8 +155,6 @@ function loadPlayer(savedCharacter) {
 
 loadData();
 
-// SAVE DATA
-// TODO
 saveDataSubmit.addEventListener("click", function (e) {
   e.preventDefault();
 
@@ -201,6 +199,7 @@ function parseQuests() {
 }
 
 function loadUI() {
+  raceText.innerText = `${player.Race}`;
   updateLocationUI();
   updateMovementButtons(player.CurrentLocation);
   updateQuestsTable();
