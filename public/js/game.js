@@ -42,6 +42,7 @@ let saveDataCurrentLocation = document.getElementById(
 let saveDataCurrentWeapon = document.getElementById("save-data-currentWeapon");
 let saveDataCurrentPotion = document.getElementById("save-data-currentPotion");
 let saveDataCurrentScroll = document.getElementById("save-data-currentScroll");
+let saveDataHasSlayWyrm = document.getElementById("save-data-hasSlayWyrm");
 let saveDataSubmit = document.getElementById("save-data-submit");
 let saveDataForm = document.getElementById("save-data-form");
 
@@ -136,6 +137,8 @@ function loadPlayer(savedCharacter) {
     savedCharacter.currentScroll,
     savedCharacter.hasSlayWyrm
   );
+
+  console.log(player)
 
   if (savedCharacter.inventory) {
     savedCharacter.inventory.forEach((item) => {

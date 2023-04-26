@@ -358,11 +358,11 @@ function populateRecipes() {
     1
   );
 
-  const renewIRecipe = new Recipe(
-    RECIPE_IDS.CRAFT_SCROLL_RENEW_I,
-    "Craft Scroll: Renew I",
-    renewIRecipeComponent,
-    renewIRecipeResult
+  const fireballIRecipe = new Recipe(
+    RECIPE_IDS.CRAFT_SCROLL_FIREBALL_I,
+    "Craft Scroll: Fireball I",
+    fireballIRecipeComponent,
+    fireballIRecipeResult
   );
 
   const renewIRecipeComponent = new RecipeItem(
@@ -375,11 +375,11 @@ function populateRecipes() {
     1
   );
 
-  const fireballIRecipe = new Recipe(
-    RECIPE_IDS.CRAFT_SCROLL_FIREBALL_I,
-    "Craft Scroll: Fireball I",
-    fireballIRecipeComponent,
-    fireballIRecipeResult
+  const renewIRecipe = new Recipe(
+    RECIPE_IDS.CRAFT_SCROLL_RENEW_I,
+    "Craft Scroll: Renew I",
+    renewIRecipeComponent,
+    renewIRecipeResult
   );
 
   const runeSwordRecipeComponent = new RecipeItem(
@@ -417,6 +417,7 @@ function populateRecipes() {
   );
 
   recipes.push(fireballIRecipe);
+  recipes.push(renewIRecipe);
   recipes.push(runeSwordRecipe);
   recipes.push(strongIronLockboxRecipe);
 }
@@ -995,26 +996,26 @@ function populateLocations() {
   );
   abandonedMine.MonsterLivingHere = monsterByID(MONSTER_IDS.GOBLIN);
 
-  spiderField._LocationToEast = burningWastes;
+  spiderField._LocationToEast = sandDunes;
 
   sandDunes.LocationToWest = spiderField;
+  sandDunes.LocationToEast = sunsetOasis;
 
   sunsetOasis.LocationToNorth = theAcidPits;
-  sunsetOasis.LocationToEast = sandDunes;
-  sunsetOasis.LocationToWest = seaOfBones;
+  sunsetOasis.LocationToEast = seaOfBones;
+  sunsetOasis.LocationToWest = sandDunes;
 
-  seaOfBones.LocationToEast = sunsetOasis;
-  seaOfBones.LocationToWest = burningWastes;
+  seaOfBones.LocationToEast = burningWastes;
+  seaOfBones.LocationToWest = sunsetOasis;
 
-  burningWastes.LocationToEast = seaOfBones;
-  // burningWastes.LocationToWest = burningWastes;
+  burningWastes.LocationToWest = seaOfBones;
 
   theAcidPits.LocationToSouth = sunsetOasis;
   theAcidPits.LocationToNorth = theCrater;
 
   theCrater.LocationToNorth = theCrumblingCliffs;
   theCrater.LocationToSouth = theAcidPits;
-  theCrater.LocationToWest = abandonedMine;
+  theCrater.LocationToEast = abandonedMine;
 
   theCrumblingCliffs.LocationToSouth = theCrater;
 
@@ -1254,7 +1255,8 @@ function populateLocations() {
   const cathedralEntrance = new Location(
     LOCATION_IDS.CATHEDRAL_ENTRANCE,
     "Cathedral Entrance",
-    "You see a grand structure, adorned with intricate gothic architecture and stained glass windows that depict the deeds of the fire gods."
+    "You see a grand structure, adorned with intricate gothic architecture and stained glass windows that depict the deeds of the fire gods.",
+    itemByID(ITEM_IDS.SACRED_KEY)
   );
 
   const mainHall = new Location(
