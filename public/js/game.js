@@ -355,6 +355,7 @@ weaponBtn.addEventListener("click", function (e) {
       receiveExp(currentMonster);
       receiveGold(currentMonster);
       lootItems(currentMonster);
+      player.CurrentHitPoints = player.MaximumHitPoints;
       updateUIAfterFight();
       spawnMonster(player.CurrentLocation);
     }
@@ -445,6 +446,7 @@ scrollBtn.addEventListener("click", function (e) {
       receiveExp(currentMonster);
       receiveGold(currentMonster);
       lootItems(currentMonster);
+      player.CurrentHitPoints = player.MaximumHitPoints;
       updateUIAfterFight();
       spawnMonster(player.CurrentLocation);
     } else {
