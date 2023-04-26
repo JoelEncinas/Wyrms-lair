@@ -372,7 +372,7 @@ potionBtn.addEventListener("click", function (e) {
     parseInt(potionOptions.options[potionOptions.selectedIndex].value)
   );
 
-  restoreHealthWithConsumable(currentPotion.amountToHeal, currentPotion);
+  restoreHealthWithConsumable(currentPotion.AmountToHeal, currentPotion);
 
   addLine(
     logDisplay,
@@ -475,7 +475,6 @@ scrollBtn.addEventListener("click", function (e) {
 
 // Update UI
 function updatePlayerStats() {
-  console.log(player.CurrentHitPoints);
   hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
   goldText.innerText = player.Gold;
   experienceText.innerText = player.Experience;
@@ -710,7 +709,6 @@ function moveTo(newLocation) {
   updateLocationUI();
 
   updateMovementButtons(newLocation);
-  console.log(player.CurrentHitPoints);
   player.CurrentHitPoints = player.MaximumHitPoints;
   updatePlayerStats();
 
@@ -921,7 +919,6 @@ function spawnMonster(newLocation) {
 
 // Combat
 function restoreHealthWithConsumable(amountToHeal, item) {
-  console.log(player.CurrentHitPoints);
   player.CurrentHitPoints += amountToHeal;
 
   if (player.CurrentHitPoints > player.MaximumHitPoints) {
@@ -947,7 +944,6 @@ function monsterAttack(currentMonster) {
     damageToPlayer += poisonPlayer();
   }
 
-  console.log(player.CurrentHitPoints);
   player.CurrentHitPoints -= damageToPlayer;
   hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
 
