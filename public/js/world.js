@@ -307,7 +307,7 @@ function populateItems() {
     )
   );
   items.push(
-    new Weapon(ITEM_IDS.RUNE_SWORD, "Rune Sword", "Rune Swords", 40, 10, 12)
+    new Weapon(ITEM_IDS.RUNE_SWORD, "Rune Sword", "Rune Swords", 40, 12, 15)
   );
   items.push(new HealingPotion(ITEM_IDS.RUM, "Rum", "Rum", 2, 1));
   items.push(

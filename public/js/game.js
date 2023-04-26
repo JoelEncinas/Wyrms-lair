@@ -11,6 +11,7 @@ import {
   locationByID,
   LOCATION_IDS,
   SPELL_TYPES,
+  MONSTER_IDS,
 } from "./world.js";
 
 import {
@@ -320,7 +321,7 @@ weaponBtn.addEventListener("click", function (e) {
   addLine(logDisplay, damageText);
 
   if (currentMonster.CurrentHitPoints <= 0) {
-    if (currentMonster.ID === 16) {
+    if (currentMonster.ID === MONSTER_IDS.WYRM) {
       addLine(
         logDisplay,
         "<span class='text-muted'>You defeated </span> " +
@@ -331,32 +332,32 @@ weaponBtn.addEventListener("click", function (e) {
 
       player.HasSlayWyrm = true;
 
-      updateMovementButtons(player.CurrentLocation);
-      showInteractableUI(player.CurrentLocation);
-
       receiveExp(currentMonster);
       receiveGold(currentMonster);
       lootItems(currentMonster);
       player.CurrentHitPoints = player.MaximumHitPoints;
+
+      updateMovementButtons(player.CurrentLocation);
+      showInteractableUI(player.CurrentLocation);
+
       updateUIAfterFight();
-      spawnMonster(player.CurrentLocation);
     } else {
       addLine(
         logDisplay,
         "<span class='text-muted'>You defeated the</span> " +
           currentMonster.Name +
-          " <span class='text-muted'>.</span>"
+          "<span class='text-muted'>.</span>"
       );
-
-      updateMovementButtons(player.CurrentLocation);
-      showInteractableUI(player.CurrentLocation);
 
       receiveExp(currentMonster);
       receiveGold(currentMonster);
       lootItems(currentMonster);
       player.CurrentHitPoints = player.MaximumHitPoints;
+
+      updateMovementButtons(player.CurrentLocation);
+      showInteractableUI(player.CurrentLocation);
+
       updateUIAfterFight();
-      spawnMonster(player.CurrentLocation);
     }
   } else {
     monsterAttack(currentMonster);
@@ -418,19 +419,32 @@ scrollBtn.addEventListener("click", function (e) {
 
     player.removeItemFromInventory(currentScroll);
 
-    addLine(
-      logDisplay,
-      "<span class='text-muted'>You cast </span> " +
-        currentScroll.SpellName +
-        " <span class='text-muted'>. It deals </span>" +
-        damageToMonster +
-        " <span class='text-muted'> points of damage to the</span> " +
-        currentMonster.Name +
-        " <span class='text-muted'>.</span>"
-    );
+    if (currentMonster.ID === MONSTER_IDS.WYRM) {
+      addLine(
+        logDisplay,
+        "<span class='text-muted'>You cast </span> " +
+          currentScroll.SpellName +
+          " <span class='text-muted'>. It deals </span>" +
+          damageToMonster +
+          " <span class='text-muted'> points of damage to </span> " +
+          currentMonster.Name +
+          " <span class='text-muted'>.</span>"
+      );
+    } else {
+      addLine(
+        logDisplay,
+        "<span class='text-muted'>You cast </span> " +
+          currentScroll.SpellName +
+          " <span class='text-muted'>. It deals </span>" +
+          damageToMonster +
+          " <span class='text-muted'> points of damage to the</span> " +
+          currentMonster.Name +
+          " <span class='text-muted'>.</span>"
+      );
+    }
 
     if (currentMonster.CurrentHitPoints <= 0) {
-      if (currentMonster.ID === 16) {
+      if (currentMonster.ID === MONSTER_IDS.WYRM) {
         addLine(
           logDisplay,
           "<span class='text-muted'>You defeated </span> " +
@@ -448,12 +462,12 @@ scrollBtn.addEventListener("click", function (e) {
         );
       }
 
-      updateMovementButtons(player.CurrentLocation);
-
       receiveExp(currentMonster);
       receiveGold(currentMonster);
       lootItems(currentMonster);
       player.CurrentHitPoints = player.MaximumHitPoints;
+
+      updateMovementButtons(player.CurrentLocation);
       updateUIAfterFight();
       spawnMonster(player.CurrentLocation);
     } else {
@@ -727,7 +741,6 @@ function moveTo(newLocation) {
   updatePlayerStats();
 
   if (newLocation.QuestAvailableHere !== undefined) {
-    console.log(player);
     let playerAlreadyHasQuest = player.hasThisQuest(
       newLocation.QuestAvailableHere
     );
@@ -865,7 +878,6 @@ function showInteractableUI(location) {
 }
 
 function spawnMonster(newLocation) {
-  console.log(player);
   let standardMonster = monsterByID(newLocation.MonsterLivingHere.ID);
 
   currentMonster = new Monster(
@@ -884,15 +896,16 @@ function spawnMonster(newLocation) {
     ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
   );
 
-  if (newLocation.MonsterLivingHere.ID === 16 && player.HasSlayWyrm === false) {
+  if (newLocation.MonsterLivingHere.ID === MONSTER_IDS.WYRM && player.HasSlayWyrm === false) {
     addLine(
       logDisplay,
       "<span class='text-muted'>You see </span> " +
         newLocation.MonsterLivingHere.Name +
         "<span class='text-muted'>.</span>"
     );
+    console.log("a");
   } else if (
-    newLocation.MonsterLivingHere.ID === 16 &&
+    newLocation.MonsterLivingHere.ID === MONSTER_IDS.WYRM &&
     player.HasSlayWyrm === true
   ) {
     currentMonster = null;
