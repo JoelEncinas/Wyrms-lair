@@ -70,6 +70,7 @@ const potionOptions = document.getElementById("potion-options");
 const scrollBtn = document.getElementById("scroll-btn");
 const scrollOptions = document.getElementById("scroll-options");
 
+let vendorModalVisible = false;
 const vendorBtn = document.getElementById("vendor-btn");
 const vendorModal = document.getElementById("vendor-modal");
 const vendorModalTitle = document.getElementById("vendor-modal-title");
@@ -216,6 +217,17 @@ document.addEventListener("keydown", function (e) {
       moveTo(player.CurrentLocation.LocationToWest);
     }
   }
+  if (e.key === "Escape") {
+    vendorModalVisible = false;
+  }
+  if (e.key === "f") {
+    if (!vendorBtn.classList.contains("d-none") && !vendorModalVisible) {
+      const modalInstance = new bootstrap.Modal(vendorModal);
+      modalInstance.show();
+      vendorModalVisible = true;
+      vendorLogic();
+    }
+  }
 });
 
 northBtn.addEventListener("click", function (e) {
@@ -236,14 +248,6 @@ westBtn.addEventListener("click", function (e) {
 
 vendorBtn.addEventListener("click", function (e) {
   vendorLogic();
-});
-
-document.addEventListener("keydown", function (e) {
-  if (e.key === "f") {
-    const modalInstance = new bootstrap.Modal(vendorModal);
-    modalInstance.show();
-    vendorLogic();
-  }
 });
 
 function vendorLogic() {
