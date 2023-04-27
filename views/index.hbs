@@ -5,56 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/bootstrap.css" />
     <link rel="stylesheet" href="../css/styles.css" />
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <title>WL - Home</title>
   </head>
   <body>
 
-    {{> main_navbar}}
+    <!-- main navbar here-->
 
     <div id="index-container" class="container text-center">
       <div class="cta my-5 mx-1 pb-5">
-        <h1 class="display-4 pb-2">JS-RPG</h1>
-        <p class="lead">Lorem ipsum, dolor sit amet consectetur adipisicing
-          elit. Asperiores harum accusamus, tempora ipsum similique itaque nisi
-          neque praesentium, non obcaecati numquam cupiditate commodi
-          accusantium reprehenderit quibusdam repellat deleniti vel nemo.</p>
-        <a href="/auth/register" class="btn btn-outline-info">Register</a>
-
+        <h1 class="display-4 pb-2">Wyrm's Lair</h1>
+        <p class="lead mb-4">Challenging and engaging text-based old-school RPG
+          that will test your abilities as an adventurer. Are you ready to
+          embark on this epic quest and defeat the dragon? The adventure awaits!</p>
+        <a id="cta" href="/auth/register" class="btn btn-danger btn-lg">Play Now</a>
       </div>
 
-      <div class="accordion my-5 mx-1" id="accordionExample">
-        <h1 class="pb-2">Old School RPG</h1>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="card border-danger mb-3" style="max-width: 20rem;">
+              <div class="card-header">Monsters</div>
+              <div class="card-body">
+                <p class="card-text">Fight a wide variety of fierce monsters and
+                  become a legendary hero.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="card border-danger mb-3" style="max-width: 20rem;">
+              <div class="card-header">Quests</div>
+              <div class="card-body">
+                <p class="card-text">Meet memorable characters and complete
+                  exciting quests.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="card border-danger mb-3" style="max-width: 20rem;">
+              <div class="card-header">Items</div>
+              <div class="card-body">
+                <p class="card-text">Discover powerful items and keep upgrading
+                  your hero.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion my-5 mx-1" id="faq">
+        <h2 class="pb-2">FAQ</h2>
         <div class="accordion-item">
           <h2 class="accordion-header" id="headingOne">
             <button
-              class="accordion-button"
+              class="accordion-button collapsed"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseOne"
-              aria-expanded="true"
+              aria-expanded="false"
               aria-controls="collapseOne"
             >
-              Accordion Item #1
+              What is Wyrm's Lair?
             </button>
           </h2>
           <div
             id="collapseOne"
-            class="accordion-collapse collapse show"
+            class="accordion-collapse collapse"
             aria-labelledby="headingOne"
-            data-bs-parent="#accordionExample"
-            style=""
+            data-bs-parent="#faq"
           >
             <div class="accordion-body">
-              <strong>This is the first item's accordion body.</strong>
-              It is shown by default, until the collapse plugin adds the
-              appropriate classes that we use to style each element. These
-              classes control the overall appearance, as well as the showing and
-              hiding via CSS transitions. You can modify any of this with custom
-              CSS or overriding our default variables. It's also worth noting
-              that just about any HTML can go within the
-              <code>.accordion-body</code>, though the transition does limit
-              overflow.
+              Wyrm's Lair is a text-based RPG set in a fantasy world of magic
+              and monsters. It features exciting quests, powerful items, and
+              fierce battles against legendary beasts.
             </div>
           </div>
         </div>
@@ -68,25 +91,19 @@
               aria-expanded="false"
               aria-controls="collapseTwo"
             >
-              Accordion Item #2
+              How do I start playing?
             </button>
           </h2>
           <div
             id="collapseTwo"
             class="accordion-collapse collapse"
             aria-labelledby="headingTwo"
-            data-bs-parent="#accordionExample"
+            data-bs-parent="#faq"
           >
             <div class="accordion-body">
-              <strong>This is the second item's accordion body.</strong>
-              It is hidden by default, until the collapse plugin adds the
-              appropriate classes that we use to style each element. These
-              classes control the overall appearance, as well as the showing and
-              hiding via CSS transitions. You can modify any of this with custom
-              CSS or overriding our default variables. It's also worth noting
-              that just about any HTML can go within the
-              <code>.accordion-body</code>, though the transition does limit
-              overflow.
+              You can play Wyrm's Lair in the browser! You don't need to install
+              anything, all you need is to register. Once you log in, you will
+              be able to begin your adventure!
             </div>
           </div>
         </div>
@@ -100,31 +117,23 @@
               aria-expanded="false"
               aria-controls="collapseThree"
             >
-              Accordion Item #3
+              Is the game free to play?
             </button>
           </h2>
           <div
             id="collapseThree"
             class="accordion-collapse collapse"
             aria-labelledby="headingThree"
-            data-bs-parent="#accordionExample"
+            data-bs-parent="#faq"
           >
             <div class="accordion-body">
-              <strong>This is the third item's accordion body.</strong>
-              It is hidden by default, until the collapse plugin adds the
-              appropriate classes that we use to style each element. These
-              classes control the overall appearance, as well as the showing and
-              hiding via CSS transitions. You can modify any of this with custom
-              CSS or overriding our default variables. It's also worth noting
-              that just about any HTML can go within the
-              <code>.accordion-body</code>, though the transition does limit
-              overflow.
+              Yes, Wyrm's Lair is free to play 100%.
             </div>
           </div>
         </div>
       </div>
 
-      {{> footer}}
+      <!-- footer here -->
     </div>
   </body>
 
