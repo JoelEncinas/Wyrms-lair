@@ -572,8 +572,7 @@ function updateTradeTableVendor() {
     if (player.Gold <= 0) {
       headers = "<p>You have no money!</p>";
     } else {
-      headers =
-        '<td>Name</td><td>Quantity</td><td>Price</td>';
+      headers = "<td>Item</td><td>Quantity</td><td>Price</td>";
     }
 
     const headerRow = document.createElement("tr");
@@ -622,8 +621,7 @@ function updateTradeTablePlayer() {
   if (player.Inventory.length === 1) {
     headers = "<p>No items to sell...</p>";
   } else {
-    headers =
-      '<td>Name</td><td>Quantity</td><td>Price</td>';
+    headers = "<td>Item</td><td>Quantity</td><td>Price</td>";
   }
 
   const headerRow = document.createElement("tr");
@@ -659,8 +657,7 @@ function updateInventoryTable(inventory) {
   inventoryTable.innerHTML = "";
 
   const headerRow = document.createElement("tr");
-  headerRow.innerHTML =
-    '<td>Name</td><td>Quantity</td>';
+  headerRow.innerHTML = "<td>Item</td><td>Quantity</td>";
   inventoryTable.appendChild(headerRow);
 
   for (const item of inventory) {
@@ -675,23 +672,30 @@ function updateQuestsTable() {
   questsTable.innerHTML = "";
 
   const headerRow = document.createElement("tr");
-  headerRow.innerHTML =
-    '<td>Name</td><td>Completed</td>';
+  headerRow.innerHTML = "<td>Quest</td><td>Completed</td>";
   questsTable.appendChild(headerRow);
 
-  for (const quest of player.Quests) {
+  if (player.Quests.length === 0) {
     const questRow = document.createElement("tr");
     const checkBoxCell = document.createElement("td");
-    const checkBox = document.createElement("input");
-    checkBox.className = "form-check-input";
-    checkBox.type = "checkbox";
-    checkBox.id = `flexCheck${quest.IsCompleted ? "Checked" : "Default"}`;
-    checkBox.checked = quest.IsCompleted;
-    checkBox.disabled = true;
-    checkBoxCell.appendChild(checkBox);
-    questRow.innerHTML = `<td>${quest.Details.Name}</td>`;
+    questRow.innerHTML = `<td>No quests yet!</td>`;
     questRow.appendChild(checkBoxCell);
     questsTable.appendChild(questRow);
+  } else {
+    for (const quest of player.Quests) {
+      const questRow = document.createElement("tr");
+      const checkBoxCell = document.createElement("td");
+      const checkBox = document.createElement("input");
+      checkBox.className = "form-check-input";
+      checkBox.type = "checkbox";
+      checkBox.id = `flexCheck${quest.IsCompleted ? "Checked" : "Default"}`;
+      checkBox.checked = quest.IsCompleted;
+      checkBox.disabled = true;
+      checkBoxCell.appendChild(checkBox);
+      questRow.innerHTML = `<td>${quest.Details.Name}</td>`;
+      questRow.appendChild(checkBoxCell);
+      questsTable.appendChild(questRow);
+    }
   }
 }
 
