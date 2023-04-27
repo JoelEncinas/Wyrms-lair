@@ -1,7 +1,7 @@
 # Wyrm's Lair
 <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="node" style="max-width: 100%;"> <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="express" style="max-width: 100%;"> <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="mongodb" style="max-width: 100%;"> <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="jsonwebtokens" style="max-width: 100%;"> <img src="https://img.shields.io/badge/handlebars-AF4B0C?style=for-the-badge&logo=handlebarsdotjs&logoColor=white" alt="handlebars" style="max-width: 100%;"> <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" alt="bootstrap" style="max-width: 100%;">
 
-Challenging and engaging text-based old-school RPG based on the all time classic Scott Lilly [C# RPG](https://scottlilly.com/learn-c-by-building-a-simple-rpg-index/). The game is done from scratch in vanilla javascript and expands the game with a bunch of features:
+Classic text-based old-school RPG based on the classic game from Scott Lilly's [C# RPG](https://scottlilly.com/learn-c-by-building-a-simple-rpg-index/). It's a full stack application done in javascript that builds the game from the ground up and expands adding a ton of features:
 
 - Expanded world featuring the classic locations + 4 brand new regions each with a bunch of locations:
     - More weapons, items, npcs...
