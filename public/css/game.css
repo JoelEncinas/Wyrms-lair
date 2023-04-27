@@ -94,6 +94,12 @@ th {
   height: 40px;
 }
 
+#weapon-btn,
+#potion-btn,
+#scroll-btn {
+  width: 100%;
+}
+
 /* VENDOR MODAL */
 
 #vendor-vendor-inventory,
