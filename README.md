@@ -4,15 +4,18 @@
 Classic text-based old-school RPG based on the classic game from Scott Lilly's [C# RPG](https://scottlilly.com/learn-c-by-building-a-simple-rpg-index/). It's a full stack application done in javascript that builds the game from the ground up and expands adding a ton of features:
 
 - Expanded world featuring the classic locations + 4 brand new regions each with a bunch of locations:
+
     - More weapons, items, npcs...
     - Level cap of 25
 - Player can choose race
 - Crafting:
+
     - Weapons, potions and scrolls
 - Added Scrolls which enable powerful spells
 - Button bindings, now you can play the game with the keyboard
 - Level restricted area
 - Improved trades with vendors:
+
     - Player's inventory won't show if no item available to sell, instead a message will show
     - Vendor's inventory won't show if player has no gold and a message will show
 - Str and Int that scale with Level
@@ -22,6 +25,7 @@ Classic text-based old-school RPG based on the classic game from Scott Lilly's [
 - Monsters don't give exp if player is way higher level
 - Monsters that add poison damage to attacks
 - Improved log with color highlight and improved clarity
+
     - Added log entry when character levels up
     - Displays special message if hit is crit
 - Revamped UI with bars for hp and experience   
