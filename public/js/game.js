@@ -219,6 +219,23 @@ document.addEventListener("keydown", function (e) {
       moveTo(player.CurrentLocation.LocationToWest);
     }
   }
+
+  if (e.key === "q") {
+    if (!weaponBtn.classList.contains("d-none")) {
+      weaponLogic();
+    }
+  }
+  if (e.key === "e") {
+    if (!potionBtn.classList.contains("d-none")) {
+      potionLogic();
+    }
+  }
+  if (e.key === "r") {
+    if (!scrollBtn.classList.contains("d-none")) {
+      scrollLogic();
+    }
+  }
+
   if (e.key === "Escape") {
     vendorModalVisible = false;
   }
@@ -345,6 +362,10 @@ function updateVendorGold() {
 }
 
 weaponBtn.addEventListener("click", function (e) {
+  weaponLogic();
+});
+
+function weaponLogic() {
   hideMovementButtons();
 
   player.CurrentWeapon = parseInt(
@@ -417,9 +438,13 @@ weaponBtn.addEventListener("click", function (e) {
   } else {
     monsterAttack(currentMonster);
   }
-});
+}
 
 potionBtn.addEventListener("click", function (e) {
+  potionLogic();
+});
+
+function potionLogic() {
   hideMovementButtons();
 
   player.CurrentPotion = parseInt(
@@ -450,9 +475,13 @@ potionBtn.addEventListener("click", function (e) {
     potionBtn,
     player.CurrentPotion
   );
-});
+}
 
 scrollBtn.addEventListener("click", function (e) {
+  scrollLogic();
+});
+
+function scrollLogic() {
   hideMovementButtons();
 
   player.CurrentScroll = parseInt(
@@ -549,7 +578,7 @@ scrollBtn.addEventListener("click", function (e) {
 
   updateInventoryTable(player.Inventory);
   updateItemListInUI(Scroll, scrollOptions, scrollBtn, player.CurrentScroll);
-});
+}
 
 function updatePlayerStats() {
   hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
