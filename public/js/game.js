@@ -71,6 +71,7 @@ const scrollBtn = document.getElementById("scroll-btn");
 const scrollOptions = document.getElementById("scroll-options");
 
 const vendorBtn = document.getElementById("vendor-btn");
+const vendorModal = document.getElementById("vendor-modal");
 const vendorModalTitle = document.getElementById("vendor-modal-title");
 const vendorTitle = document.getElementById("vendor-title");
 const vendorPlayerGold = document.getElementById("vendor-player-gold");
@@ -194,47 +195,58 @@ function loadUI() {
   updateAllItemListInUI();
 }
 
-northBtn.addEventListener("click", function (e) {
-  moveTo(player.CurrentLocation.LocationToNorth);
-});
-
 document.addEventListener("keydown", function (e) {
   if (e.key === "w") {
-    moveTo(player.CurrentLocation.LocationToNorth);
+    if (!northBtn.classList.contains("disabled")) {
+      moveTo(player.CurrentLocation.LocationToNorth);
+    }
   }
+  if (e.key === "d") {
+    if (!eastBtn.classList.contains("disabled")) {
+      moveTo(player.CurrentLocation.LocationToEast);
+    }
+  }
+  if (e.key === "s") {
+    if (!southBtn.classList.contains("disabled")) {
+      moveTo(player.CurrentLocation.LocationToSouth);
+    }
+  }
+  if (e.key === "a") {
+    if (!westBtn.classList.contains("disabled")) {
+      moveTo(player.CurrentLocation.LocationToWest);
+    }
+  }
+});
+
+northBtn.addEventListener("click", function (e) {
+  moveTo(player.CurrentLocation.LocationToNorth);
 });
 
 eastBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToEast);
 });
 
-document.addEventListener("keydown", function (e) {
-  if (e.key === "d") {
-    moveTo(player.CurrentLocation.LocationToEast);
-  }
-});
-
 southBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToSouth);
-});
-
-document.addEventListener("keydown", function (e) {
-  if (e.key === "s") {
-    moveTo(player.CurrentLocation.LocationToSouth);
-  }
 });
 
 westBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToWest);
 });
 
+vendorBtn.addEventListener("click", function (e) {
+  vendorLogic();
+});
+
 document.addEventListener("keydown", function (e) {
-  if (e.key === "a") {
-    moveTo(player.CurrentLocation.LocationToWest);
+  if (e.key === "f") {
+    const modalInstance = new bootstrap.Modal(vendorModal);
+    modalInstance.show();
+    vendorLogic();
   }
 });
 
-vendorBtn.addEventListener("click", function (e) {
+function vendorLogic() {
   let vendor = player.CurrentLocation.VendorWorkingHere;
 
   vendorModalTitle.innerText = "Trade";
@@ -244,7 +256,7 @@ vendorBtn.addEventListener("click", function (e) {
 
   updateTradeTablePlayer();
   updateTradeTableVendor();
-});
+}
 
 craftBtn.addEventListener("click", function (e) {
   let craft = player.CurrentLocation.CraftHere;

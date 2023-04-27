@@ -29,6 +29,62 @@
         </button>
         <div class="navbar-collapse collapse" id="game-navbar" style="">
           <ul class="navbar-nav ms-auto d-flex align-items-center">
+
+            <li class="nav-item mx-2 py-2">
+              <div class="controls-container">
+                <button
+                  id="controls"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#controls-modal"
+                >
+                  Controls
+                </button>
+              </div>
+
+              <div
+                class="modal fade"
+                id="controls-modal"
+                tabindex="-1"
+                aria-labelledby="controls-modal-title"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5
+                        class="modal-title"
+                        id="controls-modal-title"
+                      >Controls</h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <h5>Movement</h5>
+                        <p>[W] - Move North</p>
+                        <p>[A] - Move West</p>
+                        <p>[S] - Move South</p>
+                        <p>[D] - Move East</p>
+
+                        <h5>Actions</h5>
+                        <p>[Q] - Use Weapon</p>
+                        <p>[E] - Use Potion</p>
+                        <p>[R] - Use Scroll</p>
+                        <p>[F] - Open Trade</p>
+                        <p>[G] - Open Craft</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+
             <li class="nav-item mx-2 py-2">
               <form
                 class="link-form"
