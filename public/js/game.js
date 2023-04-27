@@ -319,7 +319,7 @@ function updateCraftUI() {
     craft.Recipe.RecipeItemToTake.Quantity
   ) {
     hideElement(craftNotEnoughComponents);
-    craftConvertBtnContainer.innerHTML = `<button class="btn btn-outline-dark" type="button">Craft</button>`;
+    craftConvertBtnContainer.innerHTML = `<button class="btn btn-primary" type="button">Craft</button>`;
     const button = craftConvertBtnContainer.querySelector("button");
 
     button.addEventListener("click", () => {
