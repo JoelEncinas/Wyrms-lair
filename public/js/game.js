@@ -84,7 +84,9 @@ const vendorPlayerInventory = document.getElementById(
   "vendor-player-inventory"
 );
 
+let craftModalVisible = false;
 const craftBtn = document.getElementById("craft-btn");
+const craftModal = document.getElementById("craft-modal");
 const craftModalTitle = document.getElementById("craft-modal-title");
 const craftTitle = document.getElementById("craft-title");
 const craftRecipeTitle = document.getElementById("craft-recipe-title");
@@ -228,6 +230,15 @@ document.addEventListener("keydown", function (e) {
       vendorLogic();
     }
   }
+
+  if (e.key === "g") {
+    if (!craftBtn.classList.contains("d-none") && !craftModalVisible) {
+      const modalInstance = new bootstrap.Modal(craftModal);
+      modalInstance.show();
+      craftModalVisible = true;
+      craftLogic();
+    }
+  }
 });
 
 northBtn.addEventListener("click", function (e) {
@@ -263,6 +274,10 @@ function vendorLogic() {
 }
 
 craftBtn.addEventListener("click", function (e) {
+  craftLogic();
+});
+
+function craftLogic() {
   let craft = player.CurrentLocation.CraftHere;
 
   craftModalTitle.innerText = "Craft";
@@ -274,7 +289,7 @@ craftBtn.addEventListener("click", function (e) {
 
   updateCraftUI();
   updateInventoryTable(player.Inventory);
-});
+}
 
 function updateCraftUI() {
   craftConvertBtnContainer.innerHTML = "";
