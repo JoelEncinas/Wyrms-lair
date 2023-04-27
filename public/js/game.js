@@ -583,7 +583,6 @@ function scrollLogic() {
 function updatePlayerStats() {
   updateHp();
   goldText.innerText = player.Gold;
-  console.log(player.Experience);
 
   let remainingExp = player.Level * 200 - player.Experience;
   experienceBar.style.width = `${100 - (remainingExp / 200) * 100}%`;
@@ -1009,7 +1008,6 @@ function spawnMonster(newLocation) {
         newLocation.MonsterLivingHere.Name +
         "<span class='text-muted'>.</span>"
     );
-    console.log("a");
   } else if (
     newLocation.MonsterLivingHere.ID === MONSTER_IDS.WYRM &&
     player.HasSlayWyrm === true
