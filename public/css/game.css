@@ -24,6 +24,10 @@ th {
 
 /* GAME */
 
+#game {
+  max-width: 992px;
+}
+
 #location {
   height: 150px;
 }
@@ -100,10 +104,18 @@ th {
   width: 100%;
 }
 
+#experience-bar-progress {
+  height: 8px;
+}
+
+.gold-font {
+  font-size: 12px;
+}
+
 /* VENDOR MODAL */
 
 #vendor-vendor-inventory,
 #vendor-player-inventory {
-  max-height: 200px;
+  height: 200px;
   overflow-y: scroll;
 }

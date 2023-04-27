@@ -957,6 +957,7 @@ function populateLocations() {
     "Sabana the Mage",
     recipeByID(RECIPE_IDS.CRAFT_SCROLL_FIREBALL_I)
   );
+  
   sunsetOasis.CraftHere = sabanaTheMage;
 
   const seaOfBones = new Location(

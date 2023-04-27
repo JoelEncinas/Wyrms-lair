@@ -44,9 +44,9 @@ let saveDataSubmit = document.getElementById("save-data-submit");
 let saveDataForm = document.getElementById("save-data-form");
 
 let raceText = document.getElementById("race");
-let hpText = document.getElementById("hit-points");
+let hpBar = document.getElementById("hp-bar");
 let goldText = document.getElementById("gold");
-let experienceText = document.getElementById("experience");
+let experienceBar = document.getElementById("experience-bar");
 let levelText = document.getElementById("level");
 
 let locationName = document.getElementById("location-name");
@@ -581,10 +581,25 @@ function scrollLogic() {
 }
 
 function updatePlayerStats() {
-  hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
+  updateHp();
   goldText.innerText = player.Gold;
-  experienceText.innerText = player.Experience;
+  console.log(player.Experience);
+
+  let remainingExp = player.Level * 200 - player.Experience;
+  experienceBar.style.width = `${100 - (remainingExp / 200) * 100}%`;
+  experienceBar.setAttribute("aria-valuenow", `${remainingExp}`);
+  experienceBar.setAttribute("aria-valuemin", "0");
+  experienceBar.setAttribute("aria-valuemax", "200");
+
   levelText.innerText = player.Level;
+}
+
+function updateHp() {
+  let hpDiff = (player.CurrentHitPoints / player.MaximumHitPoints) * 100;
+  hpBar.style.width = `${hpDiff}%`;
+  hpBar.setAttribute("aria-valuenow", `${hpDiff}`);
+  hpBar.setAttribute("aria-valuemin", "0");
+  hpBar.setAttribute("aria-valuemax", `${player.MaximumHitPoints}`);
 }
 
 function hideMovementButtons() {
@@ -627,7 +642,7 @@ function updateTradeTableVendor() {
       if (player.Gold > 0) {
         if (item.Details.Price !== -1) {
           const itemRow = document.createElement("tr");
-          itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Details.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ItemID}">Buy 1</button></td>`;
+          itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Details.Price}</td><td><button class="btn btn-success" type="button" value="${item.ItemID}">Buy 1</button></td>`;
           table.appendChild(itemRow);
 
           const button = itemRow.querySelector("button");
@@ -675,7 +690,7 @@ function updateTradeTablePlayer() {
   for (const item of player.Inventory) {
     if (item.Details.Price !== -1) {
       const itemRow = document.createElement("tr");
-      itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Details.Price}</td><td><button class="btn btn-outline-dark" type="button" value="${item.ItemID}">Sell 1</button></td>`;
+      itemRow.innerHTML = `<td>${item.Details.Name}</td><td>${item.Quantity}</td><td>${item.Details.Price}</td><td><button class="btn btn-danger" type="button" value="${item.ItemID}">Sell 1</button></td>`;
       table.appendChild(itemRow);
 
       const button = itemRow.querySelector("button");
@@ -1044,7 +1059,7 @@ function monsterAttack(currentMonster) {
   }
 
   player.CurrentHitPoints -= damageToPlayer;
-  hpText.innerText = `${player.CurrentHitPoints} / ${player.MaximumHitPoints}`;
+  updateHp();
 
   if (player.CurrentHitPoints <= 0) {
     playerDeath();
