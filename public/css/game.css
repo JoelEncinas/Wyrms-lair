@@ -32,6 +32,14 @@ th {
   height: 150px;
 }
 
+#location-name {
+  font-size: 18px;
+}
+
+#location-description {
+  font-size: 16px;
+}
+
 #inventory-quests {
   height: 350px;
 }
