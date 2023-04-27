@@ -238,11 +238,18 @@
         </div>
       </div>
 
-      <div id="inventory-log" class="row my-2">
-        <div id="inventory" class="col-md-6">
-          <h2 id="inventory-toggle" class="h6">Inventory</h2>
-          <table id="inventory-table" class="table table-hover">
-          </table>
+      <div class="row my-2">
+        <div id="inventory-quests" class="col-md-6">
+          <div id="inventory" class="mb-2">
+            <h2 id="inventory-title" class="h6">Inventory</h2>
+            <table id="inventory-table" class="table table-hover">
+            </table>
+          </div>
+          <div id="quests">
+            <h2 class="h6">Quests</h2>
+            <table id="quests-table" class="table table-hover">
+            </table>
+          </div>
         </div>
         <div id="log" class="col-md-6">
           <h2 class="h6">Adventure Log</h2>
@@ -252,13 +259,123 @@
         </div>
       </div>
 
-      <div id="quests-actions" class="row pt-5">
-        <div id="quests" class="col-md-6">
-          <h2 class="h6">Quests Log</h2>
-          <table id="quests-table" class="table table-hover">
-          </table>
+      <div id="actions" class="row">
+        <div id="character-cities-actions" class="col-md-2 d-flex justify-content-around align-items-center">
+          <button
+            id="vendor-btn"
+            type="button"
+            class="btn btn-outline-primary d-none"
+            data-bs-toggle="modal"
+            data-bs-target="#vendor-modal"
+          >
+            Trade
+          </button>
+
+          <div
+            class="modal fade"
+            id="vendor-modal"
+            tabindex="-1"
+            aria-labelledby="vendor-modal-title"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="vendor-modal-title"></h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <h2 class="h5 mb-3" id="vendor-title"></h2>
+                    <div id="vendor-vendor-inventory">
+                      <table id="vendor-vendor-table" class="table table-hover">
+                      </table>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <h2 class="h5 mb-3">My Inventory</h2>
+                    <div id="vendor-player-inventory">
+                      <table id="vendor-player-table" class="table table-hover">
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <p id="vendor-player-gold"></p>
+                  <p id="vendor-modal-location"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button
+              id="craft-btn"
+              type="button"
+              class="btn btn-outline-primary d-none"
+              data-bs-toggle="modal"
+              data-bs-target="#craft-modal"
+            >
+              Craft
+            </button>
+
+            <div
+              class="modal fade"
+              id="craft-modal"
+              tabindex="-1"
+              aria-labelledby="craft-modal-title"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="craft-modal-title"></h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <h2 class="h5 mb-3" id="craft-title"></h2>
+                    <h3 class="h5 mb-3" id="craft-recipe-title"></h3>
+                    <div
+                      class="d-flex justify-content-around align-items-center"
+                    >
+                      <div>
+                        <p id="craft-item-take-name"></p>
+                        <p id="craft-item-take-quantity"></p>
+                      </div>
+                      <span>&gt;</span>
+                      <div>
+                        <p id="craft-item-give-name"></p>
+                        <p id="craft-item-give-quantity"></p>
+                      </div>
+                    </div>
+
+                    <div id="craft-convert-btn-container">
+
+                    </div>
+                    <p id="craft-not-enough-components" class="text-center">You
+                      don't have the components...</p>
+                  </div>
+                  <div class="modal-footer justify-content-between">
+                    <p></p>
+                    <p id="craft-modal-location"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div id="character-actions" class="col-md-6">
+
+        <div id="character-actions" class="col-md-4">
           <div id="character-movement">
             <div>
               <button id="west" class="btn btn-outline-dark d-block">
@@ -277,172 +394,49 @@
               <button id="east" class="btn btn-outline-dark d-block">
                 East
               </button>
-
             </div>
           </div>
-          <div id="character-actions">
-            <div>
-              <button
-                id="vendor-btn"
-                type="button"
-                class="btn btn-outline-primary d-none"
-                data-bs-toggle="modal"
-                data-bs-target="#vendor-modal"
-              >
-                Trade
-              </button>
+        </div>
 
-              <div
-                class="modal fade"
-                id="vendor-modal"
-                tabindex="-1"
-                aria-labelledby="vendor-modal-title"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="vendor-modal-title"></h5>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="row">
-                        <h2 class="h5 mb-3" id="vendor-title"></h2>
-                        <div id="vendor-vendor-inventory">
-                          <table
-                            id="vendor-vendor-table"
-                            class="table table-hover"
-                          >
-                          </table>
-                        </div>
-                      </div>
-                      <div class="row mt-3">
-                        <h2 class="h5 mb-3">My Inventory</h2>
-                        <div id="vendor-player-inventory">
-                          <table
-                            id="vendor-player-table"
-                            class="table table-hover"
-                          >
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                      <p id="vendor-player-gold"></p>
-                      <p id="vendor-modal-location"></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div id="character-combat-actions" class="col-md-6">
+          <div class="form-group">
+            <select id="weapon-options" class="form-select d-none">
+            </select>
+            <button
+              id="weapon-btn"
+              class="btn btn-outline-danger d-none"
+            >Attack</button>
+          </div>
 
-            <div>
-              <button
-                id="craft-btn"
-                type="button"
-                class="btn btn-outline-primary d-none"
-                data-bs-toggle="modal"
-                data-bs-target="#craft-modal"
-              >
-                Craft
-              </button>
+          <div class="form-group">
+            <select id="potion-options" class="form-select d-none">
+            </select>
+            <button
+              id="potion-btn"
+              class="btn btn-outline-success d-none"
+            >Drink</button>
+          </div>
 
-              <div
-                class="modal fade"
-                id="craft-modal"
-                tabindex="-1"
-                aria-labelledby="craft-modal-title"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="craft-modal-title"></h5>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div class="modal-body">
-                      <h2 class="h5 mb-3" id="craft-title"></h2>
-                      <h3 class="h5 mb-3" id="craft-recipe-title"></h3>
-                      <div
-                        class="d-flex justify-content-around align-items-center"
-                      >
-                        <div>
-                          <p id="craft-item-take-name"></p>
-                          <p id="craft-item-take-quantity"></p>
-                        </div>
-                        <span>&gt;</span>
-                        <div>
-                          <p id="craft-item-give-name"></p>
-                          <p id="craft-item-give-quantity"></p>
-                        </div>
-                      </div>
-
-                      <div id="craft-convert-btn-container">
-
-                      </div>
-                      <p
-                        id="craft-not-enough-components"
-                        class="text-center"
-                      >You don't have the components...</p>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                      <p></p>
-                      <p id="craft-modal-location"></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <select id="weapon-options" class="form-select d-none">
-              </select>
-              <button
-                id="weapon-btn"
-                class="btn btn-outline-danger d-none"
-              >Attack</button>
-            </div>
-
-            <div class="form-group">
-              <select id="potion-options" class="form-select d-none">
-              </select>
-              <button
-                id="potion-btn"
-                class="btn btn-outline-success d-none"
-              >Drink</button>
-            </div>
-
-            <div class="form-group">
-              <select id="scroll-options" class="form-select d-none">
-              </select>
-              <button
-                id="scroll-btn"
-                class="btn btn-outline-warning d-none"
-              >Cast</button>
-            </div>
+          <div class="form-group">
+            <select id="scroll-options" class="form-select d-none">
+            </select>
+            <button
+              id="scroll-btn"
+              class="btn btn-outline-warning d-none"
+            >Cast</button>
           </div>
         </div>
       </div>
+    </div>
 
-      <div id="stats" class="row my-2">
-        <div id="character-stats" class="col-md-6">
-          <h2 class="h6">Stats</h2>
-          <span class="d-block">Race <span id="race"></span></span>
-          <span class="d-block">Hp <span id="hit-points"></span></span>
-          <span class="d-block">Gold <span id="gold"></span></span>
-          <span class="d-block">Exp <span id="experience"></span></span>
-          <span class="d-block">Lv <span id="level"></span></span>
-        </div>
+    <div id="stats" class="row my-2">
+      <div id="character-stats" class="col-md-6">
+        <h2 class="h6">Stats</h2>
+        <span class="d-block">Race <span id="race"></span></span>
+        <span class="d-block">Hp <span id="hit-points"></span></span>
+        <span class="d-block">Gold <span id="gold"></span></span>
+        <span class="d-block">Exp <span id="experience"></span></span>
+        <span class="d-block">Lv <span id="level"></span></span>
       </div>
     </div>
 

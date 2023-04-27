@@ -28,20 +28,26 @@ th {
   height: 150px;
 }
 
-#inventory-log {
-  height: 200px;
+#inventory-quests {
+  height: 350px;
 }
 
 #inventory {
+  height: 200px;
   overflow-y: scroll;
 }
 
-#quests-actions {
+#inventory-table tr:first-child td {
+  padding-bottom: 8px;
+}
+
+#quests {
   height: 100px;
+  overflow-y: scroll;
 }
 
 #log-display {
-  height: 200px;
+  height: 350px;
   overflow-y: scroll;
   padding: 10px 0;
 }
@@ -61,6 +67,23 @@ th {
 #south,
 #east {
   width: 80px;
+}
+
+#north {
+  margin-bottom: 15px;
+}
+
+#west {
+  margin-right: 15px;
+}
+
+#east {
+  margin-left: 15px;
+}
+
+#vendor-btn,
+#craft-btn {
+  height: 40px;
 }
 
 /* VENDOR MODAL */

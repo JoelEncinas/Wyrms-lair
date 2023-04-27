@@ -573,7 +573,7 @@ function updateTradeTableVendor() {
       headers = "<p>You have no money!</p>";
     } else {
       headers =
-        '<th scope="col">Name</th><th scope="col">Quantity</th><th scope="col">Price</th>';
+        '<td>Name</td><td>Quantity</td><td>Price</td>';
     }
 
     const headerRow = document.createElement("tr");
@@ -623,7 +623,7 @@ function updateTradeTablePlayer() {
     headers = "<p>No items to sell...</p>";
   } else {
     headers =
-      '<th scope="col">Name</th><th scope="col">Quantity</th><th scope="col">Price</th>';
+      '<td>Name</td><td>Quantity</td><td>Price</td>';
   }
 
   const headerRow = document.createElement("tr");
@@ -660,7 +660,7 @@ function updateInventoryTable(inventory) {
 
   const headerRow = document.createElement("tr");
   headerRow.innerHTML =
-    '<th scope="col">Name</th><th scope="col">Quantity</th>';
+    '<td>Name</td><td>Quantity</td>';
   inventoryTable.appendChild(headerRow);
 
   for (const item of inventory) {
@@ -676,7 +676,7 @@ function updateQuestsTable() {
 
   const headerRow = document.createElement("tr");
   headerRow.innerHTML =
-    '<th scope="col">Name</th><th scope="col">Completed</th>';
+    '<td>Name</td><td>Completed</td>';
   questsTable.appendChild(headerRow);
 
   for (const quest of player.Quests) {
@@ -796,9 +796,9 @@ function moveTo(newLocation) {
         if (playerHasAllItemsToCompleteQuest) {
           addLine(
             logDisplay,
-            "<span class='text-warning'>You complete</span> <strong>" +
+            "<span class='text-warning'>You complete</span> " +
               newLocation.QuestAvailableHere.Name +
-              "</strong> <span class='text-warning'>quest.</span>"
+              " <span class='text-warning'>quest.</span>"
           );
 
           player.removeQuestCompletionItems(newLocation.QuestAvailableHere);
@@ -847,9 +847,9 @@ function moveTo(newLocation) {
     } else {
       addLine(
         logDisplay,
-        "<span class='text-warning'>You receive</span> <strong>" +
+        "<span class='text-warning'>You receive</span> " +
           newLocation.QuestAvailableHere.Name +
-          "</strong><span class='text-warning'>. " +
+          "<span class='text-warning'>. " +
           newLocation.QuestAvailableHere.Description +
           " To complete it, return with:</span>"
       );
@@ -1019,17 +1019,17 @@ function receiveExp(currentMonster) {
   if (Math.abs(player.Level - currentMonster.Level) <= 3) {
     addLine(
       logDisplay,
-      "<span class='text-warning'>You gain <strong>" +
+      "<span class='text-warning'>You gain " +
         player.experiencePointsForDefeatingAMonster() +
-        "</srong>xp</span>."
+        "xp</span>."
     );
 
     player.addExperiencePoints(player.experiencePointsForDefeatingAMonster())
       ? addLine(
           logDisplay,
-          "<span class='text-warning'>Congratulations! You are now level <strong>" +
+          "<span class='text-warning'>Congratulations! You are now level " +
             player.Level +
-            "</strong>!</span>"
+            "!</span>"
         )
       : null;
   }
@@ -1040,9 +1040,9 @@ function receiveGold(currentMonster) {
     player.Gold += currentMonster.RewardGold;
     addLine(
       logDisplay,
-      "<span class='text-warning'>You Loot <strong>" +
+      "<span class='text-warning'>You Loot " +
         currentMonster.RewardGold +
-        "</strong> gold</span>."
+        " gold</span>."
     );
   }
 }
