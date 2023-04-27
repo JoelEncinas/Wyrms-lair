@@ -10,7 +10,6 @@
     <title>Wyrm's Lair</title>
   </head>
   <body>
-
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
       <div class="container">
         <a class="navbar-brand" href="/">
@@ -230,6 +229,9 @@
     </nav>
 
     <div id="game" class="container p-3">
+    {{#if saved_game}}
+      {{> saved_game}}
+    {{/if}}
 
       <div id="location" class="row my-2 text-center">
         <div id="location" class="col-md-7 mx-auto p-2">
