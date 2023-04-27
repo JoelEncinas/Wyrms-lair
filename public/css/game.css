@@ -16,10 +16,20 @@ th {
   padding-bottom: 10px !important;
 }
 
+/* GAME_NAVBAR */
+
+.link-form {
+  margin-block-end: 0 !important;
+}
+
+#delete-account-modal {
+  top: 25%;
+}
+
 /* GAME */
 
-#stats-location {
-  height: 140px;
+#location {
+  height: 150px;
 }
 
 #inventory-log {

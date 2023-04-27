@@ -1,22 +1,150 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-primary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">JS-RPG</a>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="/images/brand.png" />
+    </a>
     <button
-      class="navbar-toggler"
+      class="navbar-toggler collapsed"
       type="button"
       data-bs-toggle="collapse"
-      data-bs-target="#navbarColor01"
-      aria-controls="navbarColor01"
-      aria-expanded="true"
+      data-bs-target="#game-navbar"
+      aria-controls="main-navbar"
+      aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="navbar-collapse collapse show" id="navbarColor01" style="">
+    <div class="navbar-collapse collapse" id="game-navbar" style="">
       <ul class="navbar-nav ms-auto d-flex align-items-center">
-        <li class="nav-item">
-          <form action="/auth/logout" method="post">
-            <button class="btn btn-outline-danger" type="submit">Logout</button>
+        <li class="nav-item mx-2 py-2">
+          <form
+            class="link-form"
+            id="save-data-form"
+            action="/game/save"
+            method="post"
+          >
+            <input
+              id="save-data-currentHitPoints"
+              type="hidden"
+              name="currentHitPoints"
+              value="{{character.currentHitPoints}}"
+            />
+            <input
+              id="save-data-maximumHitPoints"
+              type="hidden"
+              name="maximumHitPoints"
+              value="{{character.maximumHitPoints}}"
+            />
+            <input
+              id="save-data-gold"
+              type="hidden"
+              name="gold"
+              value="{{character.gold}}"
+            />
+            <input
+              id="save-data-experience"
+              type="hidden"
+              name="experience"
+              value="{{character.experience}}"
+            />
+            <input
+              id="save-data-inventory"
+              type="hidden"
+              name="inventory"
+              value="{{character.inventory}}"
+            />
+            <input
+              id="save-data-level"
+              type="hidden"
+              name="level"
+              value="{{character.level}}"
+            />
+            <input
+              id="save-data-quests"
+              type="hidden"
+              name="quests"
+              value="{{character.quests}}"
+            />
+            <input
+              id="save-data-currentLocation"
+              type="hidden"
+              name="currentLocation"
+              value="{{character.currentLocation}}"
+            />
+            <input
+              id="save-data-currentWeapon"
+              type="hidden"
+              name="currentWeapon"
+              value="{{character.currentWeapon}}"
+            />
+            <input
+              id="save-data-currentPotion"
+              type="hidden"
+              name="currentPotion"
+              value="{{character.currentPotion}}"
+            />
+            <input
+              id="save-data-currentScroll"
+              type="hidden"
+              name="currentScroll"
+              value="{{character.currentScroll}}"
+            />
+            <input
+              id="save-data-hasSlayWyrm"
+              type="hidden"
+              name="hasSlayWyrm"
+              value="{{character.hasSlayWyrm}}"
+            />
+            <button
+              class="btn btn-success"
+              id="save-data-submit"
+              type="submit"
+            >Save</button>
+          </form>
+        </li>
+        <li class="nav-item mx-2 py-2">
+          <button
+            id="delete-account-btn"
+            class="btn btn-danger"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#delete-account-modal"
+          >
+            Delete account
+          </button>
+
+          <div
+            class="modal fade"
+            id="delete-account-modal"
+            tabindex="-1"
+            aria-labelledby="delete-account-modal-title"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="delete-account-modal-title">Are
+                    you sure?</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <p class="text-center">This action can't be undone.</p>
+                  <form class="text-center" action="/auth/delete-account" method="post">
+                    <button class="btn btn-danger" type="submit">Yes, delete all data</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item mx-2 py-2">
+          <form class="link-form" action="/auth/logout" method="post">
+            <button class="btn btn-secondary" type="submit">Logout</button>
           </form>
         </li>
       </ul>

@@ -40,7 +40,7 @@ export const ITEM_IDS = {
   ROLL_OF_PAPYRUS: 17,
   SCORPION_TAIL: 18,
   MYSTERY_MEAT: 19,
-  MYSTERY_SOUP: 20,
+  STRONG_TONIC: 20,
   GELATINOUS_GOO: 21,
   SILVER_SPADE: 22,
   BLUE_CRYSTAL: 23,
@@ -261,9 +261,9 @@ function populateItems() {
   );
   items.push(
     new HealingPotion(
-      ITEM_IDS.MYSTERY_SOUP,
-      "Mystery Soup",
-      "Mystery Soups",
+      ITEM_IDS.STRONG_TONIC,
+      "Strong Tonic",
+      "Strong Tonics",
       15,
       100
     )
@@ -747,7 +747,7 @@ function populateQuests() {
     new QuestCompletionItem(itemByID(ITEM_IDS.MYSTERY_MEAT), 3)
   );
 
-  theHungryMage.addRewardItems(itemByID(ITEM_IDS.MYSTERY_SOUP));
+  theHungryMage.addRewardItems(itemByID(ITEM_IDS.STRONG_TONIC));
 
   const honestWork = new Quest(
     QUEST_IDS.HONEST_WORK,

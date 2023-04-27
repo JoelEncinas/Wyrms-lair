@@ -198,16 +198,40 @@ northBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToNorth);
 });
 
+document.addEventListener("keydown", function (e) {
+  if (e.key === "w") {
+    moveTo(player.CurrentLocation.LocationToNorth);
+  }
+});
+
 eastBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToEast);
+});
+
+document.addEventListener("keydown", function (e) {
+  if (e.key === "d") {
+    moveTo(player.CurrentLocation.LocationToEast);
+  }
 });
 
 southBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToSouth);
 });
 
+document.addEventListener("keydown", function (e) {
+  if (e.key === "s") {
+    moveTo(player.CurrentLocation.LocationToSouth);
+  }
+});
+
 westBtn.addEventListener("click", function (e) {
   moveTo(player.CurrentLocation.LocationToWest);
+});
+
+document.addEventListener("keydown", function (e) {
+  if (e.key === "a") {
+    moveTo(player.CurrentLocation.LocationToWest);
+  }
 });
 
 vendorBtn.addEventListener("click", function (e) {
@@ -896,7 +920,10 @@ function spawnMonster(newLocation) {
     ...standardMonster.LootTable.map((lootItem) => ({ ...lootItem }))
   );
 
-  if (newLocation.MonsterLivingHere.ID === MONSTER_IDS.WYRM && player.HasSlayWyrm === false) {
+  if (
+    newLocation.MonsterLivingHere.ID === MONSTER_IDS.WYRM &&
+    player.HasSlayWyrm === false
+  ) {
     addLine(
       logDisplay,
       "<span class='text-muted'>You see </span> " +

@@ -13,7 +13,6 @@ router.get("/register", (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     const { username, password, race } = req.body;
-    console.log(req.body);
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(200).render("register", { existing_user: true });
@@ -109,7 +108,7 @@ router.post("/delete-account", (req, res) => {
       await Character.findOneAndDelete({ user: decoded.userId });
 
       res.clearCookie("token");
-      res.status(200).redirect("/auth/login");
+      res.status(200).redirect("/");
     });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
