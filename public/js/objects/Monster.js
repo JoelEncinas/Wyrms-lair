@@ -1,5 +1,4 @@
 import { LivingCreature } from "./LivingCreature.js";
-import { randomNumberGenerator } from "../utils/randomNumberGenerator.js";
 
 export class Monster extends LivingCreature {
   constructor(
@@ -89,6 +88,10 @@ export class Monster extends LivingCreature {
   }
 
   getDamageToPlayer() {
-    return randomNumberGenerator(this._MinimumDamage, this._MaximumDamage);
+    return (
+      Math.floor(
+        Math.random() * (this._MaximumDamage - this._MinimumDamage + 1)
+      ) + this._MinimumDamage
+    );
   }
 }

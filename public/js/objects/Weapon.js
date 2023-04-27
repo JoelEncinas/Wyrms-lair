@@ -1,5 +1,4 @@
 import { Item } from "./Item.js";
-import { randomNumberGenerator } from "../utils/randomNumberGenerator.js";
 
 export class Weapon extends Item {
   constructor(id, name, namePlural, price, minimumDamage, maximumDamage) {
@@ -27,7 +26,10 @@ export class Weapon extends Item {
   getPhysicalDamage(strengthModifier) {
     let isCrit = Math.random() < 0.05 ? true : false;
     let damage =
-      randomNumberGenerator(this._MinimumDamage, this._MaximumDamage) +
+      Math.floor(
+        Math.random() * (this._MaximumDamage - this._MinimumDamage + 1)
+      ) +
+      this._MinimumDamage +
       strengthModifier;
 
     if (isCrit) {

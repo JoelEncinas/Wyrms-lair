@@ -1,5 +1,4 @@
 import { Item } from "./Item.js";
-import { randomNumberGenerator } from "../utils/randomNumberGenerator.js";
 
 export class Scroll extends Item {
   constructor(
@@ -53,7 +52,10 @@ export class Scroll extends Item {
 
   getMagicalDamage(intellectModifier) {
     return (
-      randomNumberGenerator(this._MinimumDamage, this._MaximumDamage) +
+      Math.floor(
+        Math.random() * (this._MaximumDamage - this._MinimumDamage + 1)
+      ) +
+      this._MinimumDamage +
       intellectModifier
     );
   }
