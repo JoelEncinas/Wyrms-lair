@@ -33,11 +33,11 @@ router.get("/", (req, res) => {
       });
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-// TODO
 router.get("/save", async (req, res) => {
   try {
     const token = req.cookies.token;
@@ -61,7 +61,6 @@ router.get("/save", async (req, res) => {
   }
 });
 
-// TODO
 router.post("/save", async (req, res) => {
   try {
     const {
@@ -76,7 +75,7 @@ router.post("/save", async (req, res) => {
       currentWeapon,
       currentPotion,
       currentScroll,
-      hasSlayWyrm
+      hasSlayWyrm,
     } = req.body;
 
     const token = req.cookies.token;

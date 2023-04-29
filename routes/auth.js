@@ -23,7 +23,6 @@ router.post("/register", async (req, res) => {
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
-    // default values
     const newCharacter = new Character({
       user: newUser._id,
       currentHitPoints: 40,
@@ -53,12 +52,10 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login route
 router.get("/login", (req, res) => {
   res.status(200).render("login");
 });
 
-// Log in an existing user
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -82,9 +79,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Logout route
 router.post("/logout", (req, res) => {
-  // Clear JWT token cookie
   res.clearCookie("token");
   res.status(200).redirect("/auth/login");
 });
