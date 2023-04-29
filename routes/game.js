@@ -8,12 +8,12 @@ router.get("/", (req, res) => {
   try {
     const token = req.cookies.token;
     if (!token) {
-      return notAuthorized();
+      return notAuthorized(res);
     }
 
     jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
       if (err) {
-        return notAuthorized();
+        return notAuthorized(res);
       }
 
       const saveGame = req.cookies.save_game;
@@ -42,12 +42,12 @@ router.get("/save", async (req, res) => {
   try {
     const token = req.cookies.token;
     if (!token) {
-      return notAuthorized();
+      return notAuthorized(res);
     }
 
     jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
       if (err) {
-        return notAuthorized();
+        return notAuthorized(res);
       }
 
       const character = await Character.findOne({
@@ -80,12 +80,12 @@ router.post("/save", async (req, res) => {
 
     const token = req.cookies.token;
     if (!token) {
-      return notAuthorized();
+      return notAuthorized(res);
     }
 
     jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
       if (err) {
-        return notAuthorized();
+        return notAuthorized(res);
       }
 
       await Character.findOneAndUpdate(
@@ -115,7 +115,7 @@ router.post("/save", async (req, res) => {
   }
 });
 
-function notAuthorized() {
+function notAuthorized(res) {
   return res.status(401).redirect("/auth/login");
 }
 
