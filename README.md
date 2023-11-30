@@ -3,34 +3,38 @@
 
 Classic text-based old-school RPG based on the classic game from Scott Lilly's [C# RPG](https://scottlilly.com/learn-c-by-building-a-simple-rpg-index/). It's a full stack application done in javascript that builds the game from the ground up and expands adding a ton of features:
 
-- Expanded world featuring the classic locations + 4 brand new regions each with a bunch of locations:
+- Expanded the world featuring the classic intro region + 4 brand new regions each with a bunch of locations and a lot of secrets to discover:
 
     - More weapons, items, npcs...
-    - Level cap of 25
-- Player can choose race
-- Crafting:
-
-    - Weapons, potions and scrolls
-- Added Scrolls which enable powerful spells
-- Button bindings, now you can play the game with the keyboard
-- Level restricted area
+    - Increased level cap to 25.
+    
+- Players can now choose the race of their character.
+- Added Crafting:
+    - Weapons, potions and scrolls.
+    
+- Added Scrolls which enable powerful spells.
+- Added button bindings, now you can play the game with the keyboard.
+- Created level restricted areas.
 - Improved trades with vendors:
 
-    - Player's inventory won't show if no item available to sell, instead a message will show
-    - Vendor's inventory won't show if player has no gold and a message will show
-- Str and Int that scale with Level
-- Added chance to crit
-- Final boss that doesn't respawn
-- Respawn points for each region
-- Monsters don't give exp if player is way higher level
-- Monsters that add poison damage to attacks
-- Improved log with color highlight and improved clarity
+    - Player's inventory won't show if there is no item available to sell, a message will be displayed instead.
+    - Vendor's inventory won't show if the player has no gold and a message will be displayed instead.
+    
+- Added attributes *Str* and *Int* that scale with Level.
+- Added critical chance.
+- Added a final boss that doesn't respawn.
+- Created respawn points for the character in each region.
+- Now monsters don't give exp if the player is way higher level.
+- Added poison mechanic to some mobs.
+- Improved log with color highlight and better text style:
+    - Added log entry that notifies when character levels up.
+    - New log entry if the hit is a crit.
+      
+- Revamped the UI with bars for hp and experience:
+    - Hp and experience bar have some animations.
 
-    - Added log entry when character levels up
-    - Displays special message if hit is crit
-- Revamped UI with bars for hp and experience   
-- Character save in the cloud with mongoDB
+- Players can save their characters to the cloud with mongoDB.
 
 
 ## 📷 App screenshots
-<img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/1.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/2.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/3.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/4.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/5.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/6.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/7.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/8.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/9.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/10.PNG" alt="demo" width="600" height="400"> 
+<img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/1.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/4.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/5.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/6.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/7.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/8.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/9.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/10.PNG" alt="demo" width="600" height="400"> 
