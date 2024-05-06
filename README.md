@@ -38,3 +38,7 @@ Classic text-based old-school RPG based on the classic game from Scott Lilly's [
 
 ## 📷 App screenshots
 <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/1.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/4.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/5.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/6.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/7.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/8.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/9.PNG" alt="demo" width="600" height="400"> <img src="https://github.com/JoelEncinas/js-rpg/blob/main/demo_imgs/10.PNG" alt="demo" width="600" height="400"> 
+
+## 🛠️ Contributing
+
+If you'd like to contribute, please fork the repository and open a pull request to the `main` branch.
